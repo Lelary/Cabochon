@@ -19,9 +19,10 @@ class Marble
 private:
 	int _px, _py;
 
-	int getX();
-	int getY();
+	int getPx();
+	int getPy();
 
 	void setPx(int puzzleX);
 	void setPy(int puzzleY);
+
 };
