@@ -7,5 +7,9 @@ namespace frameworks
 	//class DirectX9;
 	//class Windows;
 	class Console;
+
+	//typedef DirectX9 Graphics;
+	//typedef Windows System;
+	typedef Console System;
 }
 #endif
