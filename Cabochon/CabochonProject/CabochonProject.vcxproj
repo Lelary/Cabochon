@@ -69,11 +69,14 @@
     <ClInclude Include="controls.h" />
     <ClInclude Include="dynamic_singleton.h" />
     <ClInclude Include="frameworks.h" />
+    <ClInclude Include="grid.h" />
     <ClInclude Include="local_static_singleton.h" />
     <ClInclude Include="marble.h" />
+    <ClInclude Include="marble_control.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="basic_singleton.h" />
     <ClInclude Include="template_dynamic_singleton.h" />
+    <ClInclude Include="temporary.h" />
     <ClInclude Include="typedefs.h" />
     <ClInclude Include="patterns.h" />
   </ItemGroup>

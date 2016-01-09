@@ -28,6 +28,9 @@
     <Filter Include="헤더 파일\pattern">
       <UniqueIdentifier>{8ce400a4-3ba7-409a-9f98-4749566f885c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\controls">
+      <UniqueIdentifier>{c0c29410-8450-49bc-aa9a-98854aa2e2fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -65,6 +68,15 @@
     </ClInclude>
     <ClInclude Include="template_dynamic_singleton.h">
       <Filter>헤더 파일\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="marble_control.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="temporary.h">
+      <Filter>헤더 파일\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="grid.h">
+      <Filter>헤더 파일\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

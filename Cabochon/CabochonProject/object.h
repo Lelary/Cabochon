@@ -21,13 +21,14 @@ private:
 	scalar _x, _y;
 	scalar _width, _height;
 
-
-
 public:
-	scalar getX();
-	scalar getY();
-	scalar getWidth();
-	scalar getHeight();
+	Object(){}
+	virtual ~Object(){}
+
+	scalar getX() const;
+	scalar getY() const;
+	scalar getWidth() const;
+	scalar getHeight() const;
 
 	void setX(scalar x);
 	void setY(scalar y);

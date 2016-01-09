@@ -1,5 +1,7 @@
 #include "object.h"
 using components::Marble;
+using components::marble_ptr;
+
 /*
 	2016. 1. 5
 	class Marble
@@ -18,11 +20,28 @@ class Marble
 {
 private:
 	int _px, _py;
+public:
+	Marble(){}
+	virtual ~Marble(){}
 
-	int getPx();
-	int getPy();
+	int getPx() const;
+	int getPy() const;
 
 	void setPx(int puzzleX);
 	void setPy(int puzzleY);
 
+	/*
+		2016. 1. 10. 
+		다른 곳으로 이사가야 할 함수
+		팩토리로 구현할 것
+		
+		이사안가는게 낫나?
+		사용되는 곳 : 
+			1. 구슬 쏠때, 
+			2. 맵 생성
+	*/
+	static marble_ptr makeMarble()
+	{
+		return std::make_unique<Marble>();
+	}
 };

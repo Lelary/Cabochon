@@ -4,6 +4,8 @@
 /*
 	2016. 1. 5.
 	대체로 싱글톤
+	2016. 1. 9.
+	싱글톤으로 만드는 대신에 싱글톤 객체가 이 객체들을 가짐
 
 */
 namespace controls
@@ -24,6 +26,8 @@ namespace controls
 	//Generator가 따로 필요 할까?
 	class MarbleGenerator;
 	
+
+
 	// 나중에 구현
 	// class LevelControl;
 }
