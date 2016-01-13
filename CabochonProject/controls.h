@@ -21,9 +21,22 @@ namespace controls
 	class MarbleControl;
 
 	//SteeringGeerControl has a Marble or two Marbles
-	class SteeringGeerControl;
+	/*
+		2016. 1. 11
+		여기서 Marble에 대한 factory를 수행함
+	*/
+	class SteeringGearControl;
 
 	//Generator가 따로 필요 할까?
+	/*
+		2016. 1. 13
+		필요하지 않을까? 
+		생성하는 경우		
+			1. 맵 생성시
+			2. SteeringGearControl 에서
+
+		Generator 라고 할지 Factory 라고 할지 결정해야함
+	*/
 	class MarbleGenerator;
 	
 
