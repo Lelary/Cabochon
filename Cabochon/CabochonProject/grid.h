@@ -1,14 +1,16 @@
 #ifndef _GRID_H
 #define _GRID_H
 
-#include "typedefs.h"
+#include "mathematics.h"
 #include "temporary.h"
 #include "components.h"
-#include <tuple>
+using mathematics::scalar;
 using components::Grid;
 using namespace temporary;
 using temporary::maxX;
 using temporary::maxY;
+using mathematics::Vector2;
+using temporary::radius;
 
 /*
 	2016. 1. 10
@@ -31,25 +33,31 @@ using temporary::maxY;
 class Grid
 {
 private:
-	int width;
-	int height;
+	static const int width;
+	static const int height;
 	//사분면
-	enum Quadrant{ none, one = 0, two, three, four, num };
+	enum class Quadrant{ none, first = 1, second, third, fourth, num };
 public:
 /*
 	2016. 1. 10
 	함수명들은 다시 생각해봐야함
-*/
 
-	static bool isIn(scalar x, scalar y);
-	static bool isInSub(scalar x, scalar y);
+	2016. 1. 13
+	지금 함수명이 괜찮은 것 같다
+*/
+	Grid() = delete;
+	Grid(const Grid& rhs) = delete;
+	~Grid() = delete;
+
+	static bool isInGrid(scalar x, scalar y, int gx, int gy);
+	static bool isInGridSub(scalar x, scalar y, int gx, int gy, Quadrant q);
 
 	static Quadrant getQuadrant(scalar x, scalar y);
+	static Vector2<int> getGridPosition(scalar x, scalar y);
 
-	//typedef필요
-	std::tuple<int, int> isWhere(scalar x, scalar y);
-
-	
 };
+// radius of marble.. 
+const int Grid::width = radius;
+const int Grid::height = radius;
 
 #endif

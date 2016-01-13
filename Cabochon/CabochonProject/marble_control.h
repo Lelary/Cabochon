@@ -24,7 +24,9 @@ public:
 		marbles[3][4] = Marble::makeMarble();
 		marbles[3][5] = std::move(marbles[3][4]);
 	}
+	MarbleControl(const MarbleControl& rhs);
 	virtual ~MarbleControl(){}
+	MarbleControl& operator=(const MarbleControl& rhs);
 
 	const int getMaxX() const;
 	const int getMaxY() const;

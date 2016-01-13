@@ -31,6 +31,18 @@
     <Filter Include="헤더 파일\controls">
       <UniqueIdentifier>{c0c29410-8450-49bc-aa9a-98854aa2e2fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\mathematics">
+      <UniqueIdentifier>{ffe63c5b-7132-44c0-915b-fd556956cfc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\mathematics">
+      <UniqueIdentifier>{3f5891a0-1356-4470-a150-f339efcd5d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\components">
+      <UniqueIdentifier>{48cda983-6494-413f-a6a1-ac4311664fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\frameworks">
+      <UniqueIdentifier>{8c53b165-9725-4810-97b0-def9e945d5a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -78,13 +90,31 @@
     <ClInclude Include="grid.h">
       <Filter>헤더 파일\components</Filter>
     </ClInclude>
+    <ClInclude Include="mathematics.h">
+      <Filter>헤더 파일\namespaces</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>헤더 파일\mathematics</Filter>
+    </ClInclude>
+    <ClInclude Include="angle.h">
+      <Filter>헤더 파일\mathematics</Filter>
+    </ClInclude>
+    <ClInclude Include="steering_geer.h">
+      <Filter>헤더 파일\components</Filter>
+    </ClInclude>
+    <ClInclude Include="steering_gear_control.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="console.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\frameworks</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>소스 파일\frameworks</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>소스 파일\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -64,6 +64,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="angle.h" />
     <ClInclude Include="components.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="controls.h" />
@@ -73,16 +74,21 @@
     <ClInclude Include="local_static_singleton.h" />
     <ClInclude Include="marble.h" />
     <ClInclude Include="marble_control.h" />
+    <ClInclude Include="mathematics.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="basic_singleton.h" />
+    <ClInclude Include="steering_gear_control.h" />
+    <ClInclude Include="steering_geer.h" />
     <ClInclude Include="template_dynamic_singleton.h" />
     <ClInclude Include="temporary.h" />
     <ClInclude Include="typedefs.h" />
     <ClInclude Include="patterns.h" />
+    <ClInclude Include="vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="console.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
