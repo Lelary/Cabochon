@@ -24,7 +24,7 @@ Marble::Marble(const IntPosition& gridPosition)
 }
 
 Marble::Marble(const Marble& rhs)
-	:_gridPosition(rhs._gridPosition)
+	:Object(rhs), _gridPosition(rhs._gridPosition)
 {
 	/*
 	2016. 1. 15

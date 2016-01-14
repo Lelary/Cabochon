@@ -18,7 +18,7 @@ namespace components
 
 	public:
 		SteeringGear();
-		SteeringGear(Angle angle);
+		SteeringGear(const Angle& angle);
 		SteeringGear(const SteeringGear& rhs);
 		virtual ~SteeringGear();
 		SteeringGear& operator=(const SteeringGear& rhs);
