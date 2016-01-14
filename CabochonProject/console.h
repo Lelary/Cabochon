@@ -3,7 +3,6 @@
 
 #include "frameworks.h"
 #include "patterns.h"
-#include "typedefs.h"
 #include "controls.h"
 #include "marble_control.h"
 using frameworks::Console;

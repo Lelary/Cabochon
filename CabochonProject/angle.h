@@ -1,30 +1,36 @@
 #ifndef _ANGLE_H
 #define _ANGLE_H
-
 #include "mathematics.h"
-using mathematics::Angle;
-using mathematics::scalar;
-
-class Angle
+namespace mathematics
 {
-private:
-	scalar _degree;
-	
-public:
-	Angle();
-	Angle(const Angle& rhs);
-	virtual ~Angle();
-	Angle& operator=(const Angle& rhs);
+/*
+	2016. 1. 16.
+	cpp 작성 1차 완료
+*/
+	class Angle
+	{
+	private:
+		scalar _degree;
 
-	scalar getDegree();
-	void setDegree(scalar degree);
+	public:
+		Angle();
+		Angle(scalar degree);
+		Angle(const Angle& rhs);
+		virtual ~Angle();
+		Angle& operator=(const Angle& rhs);
+		Angle operator+(const Angle& rhs);
+		Angle operator-(const Angle& rhs);
 
-	/*
-		2016. 1. 11
-		operator overloading 필수
-		0 <= degree < 360
-	*/
+		scalar getDegree() const;
+		void setDegree(scalar degree);
 
-};
+		/*
+			2016. 1. 11
+			operator overloading 필수
+			+ -
+			0 <= degree < 360
+			*/
+	};
+}
 
 #endif

@@ -1,20 +1,20 @@
 #ifndef _VECTOR2_H
 #define _VECTOR2_H
-
 #include "mathematics.h"
-using mathematics::Vector2;
 
-template <typename T>
-struct Vector2 < T >
+namespace mathematics
 {
-	T x;
-	T y;
-};
-/*
-	vector2에
-	operator overloading
-	추가
-*/
+	template < typename T >
+	struct Vector2
+	{
+		T _x;
+		T _y;
+	};
 
-
+	/*
+		vector2에
+		operator overloading
+		추가
+	*/
+}
 #endif
