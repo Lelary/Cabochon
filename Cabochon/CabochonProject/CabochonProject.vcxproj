@@ -81,14 +81,17 @@
     <ClInclude Include="steering_geer.h" />
     <ClInclude Include="template_dynamic_singleton.h" />
     <ClInclude Include="temporary.h" />
-    <ClInclude Include="typedefs.h" />
     <ClInclude Include="patterns.h" />
     <ClInclude Include="vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="angle.cpp" />
     <ClCompile Include="console.cpp" />
+    <ClCompile Include="grid.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="marble.cpp" />
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="steering_gear.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

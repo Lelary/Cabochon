@@ -1,10 +1,6 @@
 #include "components.h"
 #include "mathematics.h"
 #include "vector2.h"
-using components::Object;
-using mathematics::scalar;
-using mathematics::Position;
-
 /*
 	2016. 1. 5
 	class Object
@@ -25,46 +21,61 @@ using mathematics::Position;
 	TODO
 		나중에 Sprite를 가짐
 
+	2016. 1. 16.
+	cpp 작성 1차 완료
+
 */
-class Object
+namespace components
 {
-private:
-	Position _position;
-	scalar _width, _height;
+	using mathematics::scalar;
+	using mathematics::Position;
 
-	/*
-		2016. 1. 13.
-		스트라이프 예시
+	class Object
+	{
 
-		Stripe stripe;
-	*/
+	private:
+		Position _position;
+		scalar _width, _height;
 
-public:
-	Object();
-	Object(const Object& rhs);
-	virtual ~Object();
-	Object& operator=(const Object& rhs);
+		/*
+			2016. 1. 13.
+			스트라이프 예시
 
-	scalar getPosition() const;
-	scalar getCenter() const;
-	scalar getWidth() const;
-	scalar getHeight() const;
+			Stripe stripe;
+			*/
 
-	void setPosition(const Position& position);
-	void setPosition(scalar x, scalar y);
-	void setCenter(const Position& position);
-	void setCenter(scalar x, scalar y);
-	void setWidth(scalar width);
-	void setHeight(scalar height);
+	public:
+		Object();
+		Object(const Position& position, scalar width, scalar height);
+		Object(const Object& rhs);
+		virtual ~Object();
+		Object& operator=(const Object& rhs);
 
-	/*
-		2016. 1. 13
-		get/set Center 가 의미하는 바가 애매하다.
+		// the position of Left Top 
+		Position getPosition() const;
+		//scalar getCenter() const;
+		scalar getWidth() const;
+		scalar getHeight() const;
 
-		center는 position+(width/2, height/2) 를 계산하게 하고싶은데,
-		center 라는 이름 때문에 position은 그대로 두고 회전중심을 변경하는 것으로 오해될 수 있음.
-	
-		현재 이게임에는 회전중심이 따로 필요치 않음.
+		// the position of Left Top 
+		void setPosition(const Position& position);
 
-	*/
-};
+		// the position of Left Top 
+		void setPosition(scalar x, scalar y);
+		//void setCenter(const Position& position);
+		//void setCenter(scalar x, scalar y);
+		void setWidth(scalar width);
+		void setHeight(scalar height);
+
+		/*
+			2016. 1. 13
+			get/set Center 가 의미하는 바가 애매하다.
+
+			center는 position+(width/2, height/2) 를 계산하게 하고싶은데,
+			center 라는 이름 때문에 position은 그대로 두고 회전중심을 변경하는 것으로 오해될 수 있음.
+
+			현재 이게임에는 회전중심이 따로 필요치 않음.
+
+			*/
+	};
+}

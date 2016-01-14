@@ -66,9 +66,6 @@
     <ClInclude Include="console.h">
       <Filter>헤더 파일\frameworks</Filter>
     </ClInclude>
-    <ClInclude Include="typedefs.h">
-      <Filter>헤더 파일\etc</Filter>
-    </ClInclude>
     <ClInclude Include="basic_singleton.h">
       <Filter>헤더 파일\pattern</Filter>
     </ClInclude>
@@ -114,6 +111,18 @@
       <Filter>소스 파일\frameworks</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
+      <Filter>소스 파일\components</Filter>
+    </ClCompile>
+    <ClCompile Include="angle.cpp">
+      <Filter>소스 파일\mathematics</Filter>
+    </ClCompile>
+    <ClCompile Include="marble.cpp">
+      <Filter>소스 파일\components</Filter>
+    </ClCompile>
+    <ClCompile Include="steering_gear.cpp">
+      <Filter>소스 파일\components</Filter>
+    </ClCompile>
+    <ClCompile Include="grid.cpp">
       <Filter>소스 파일\components</Filter>
     </ClCompile>
   </ItemGroup>

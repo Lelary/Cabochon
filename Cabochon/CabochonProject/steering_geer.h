@@ -3,25 +3,29 @@
 #define _STEERING_GEAR_H
 #include "components.h"
 #include "object.h"
-using components::SteeringGear;
-using mathematics::Angle;
+#include "angle.h"
 
-class SteeringGear
-	:public Object
+namespace components
 {
-private:
-	Angle _angle;
+	using components::SteeringGear;
+	using mathematics::Angle;
 
-public:
-	SteeringGear();
-	SteeringGear(const SteeringGear& rhs);
-	virtual ~SteeringGear();
-	SteeringGear& operator=(const SteeringGear& rhs);
+	class SteeringGear
+		:public Object
+	{
+	private:
+		Angle _angle;
 
-	Angle getAngle() const;
-	void setAngle(Angle angle);
+	public:
+		SteeringGear();
+		SteeringGear(Angle angle);
+		SteeringGear(const SteeringGear& rhs);
+		virtual ~SteeringGear();
+		SteeringGear& operator=(const SteeringGear& rhs);
 
+		Angle getAngle() const;
+		void setAngle(Angle angle);
 
-};
-
+	};
+}
 #endif //_STEERING_GEAR_H
