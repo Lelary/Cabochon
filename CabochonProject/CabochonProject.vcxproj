@@ -77,8 +77,8 @@
     <ClInclude Include="mathematics.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="basic_singleton.h" />
+    <ClInclude Include="steering_gear.h" />
     <ClInclude Include="steering_gear_control.h" />
-    <ClInclude Include="steering_geer.h" />
     <ClInclude Include="template_dynamic_singleton.h" />
     <ClInclude Include="temporary.h" />
     <ClInclude Include="patterns.h" />
