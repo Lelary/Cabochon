@@ -38,11 +38,14 @@ namespace components
 	/*
 		2016. 1. 16
 		instance를 만들 필요가 없으므로 생성자 delete.
+
+		cpp 파일에 함수 구현 1차 작성 완료
 	*/
 	class Grid
 	{
 	public:
-		enum class Quadrant{ none = -1, first = 1, second, third, fourth, num };
+		enum class RowType{ none = -1, even, odd };
+		enum class Quadrant{ none = -1, first = 1, second, third, fourth};
 	private:
 		// radius of marble.. 
 		static const int width = radius;
@@ -56,13 +59,23 @@ namespace components
 			2016. 1. 13
 			지금 함수명이 괜찮은 것 같다
 		*/
+		/*
+			2016. 1. 16
+			정적 멤버 상수, 정적 멤버 함수 만을 가지고 있으므로 객체 생성을 제한한다.
+			(필요하지않으므로)
+		*/
 		Grid() = delete;
 		Grid(const Grid& rhs) = delete;
 		~Grid() = delete;
 
+		static RowType getRowType(scalar y);
+
+		static bool isInGrid(scalar x, scalar y);
 		static bool isInGrid(scalar x, scalar y, int gx, int gy);
 		static bool isInGrid(Position position, IntPosition gridPosition);
 
+		static bool isInGridSub(scalar x, scalar y, Quadrant q);
+		static bool isInGridSub(Position position, Quadrant q);
 		static bool isInGridSub(scalar x, scalar y, int gx, int gy, Quadrant q);
 		static bool isInGridSub(Position position, IntPosition gridPosition, Quadrant q);
 

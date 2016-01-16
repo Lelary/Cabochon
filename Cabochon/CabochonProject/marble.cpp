@@ -34,7 +34,10 @@ Marble::Marble(const Marble& rhs)
 
 Marble::~Marble()
 {
-
+	/*
+	2016. 1. 16
+	nothing to do.
+	*/
 }
 
 Marble& Marble::operator=(const Marble& rhs)
