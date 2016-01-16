@@ -43,6 +43,9 @@
     <Filter Include="소스 파일\frameworks">
       <UniqueIdentifier>{8c53b165-9725-4810-97b0-def9e945d5a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\controls">
+      <UniqueIdentifier>{6c774193-4c1a-47d6-9be6-71875f703eb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -124,6 +127,12 @@
     </ClCompile>
     <ClCompile Include="grid.cpp">
       <Filter>소스 파일\components</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringGearControl.cpp">
+      <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="marble_control.cpp">
+      <Filter>소스 파일\controls</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

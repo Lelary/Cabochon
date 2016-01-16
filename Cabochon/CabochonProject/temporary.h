@@ -14,11 +14,7 @@
 
 namespace temporary
 {
-	// 구슬 판의 최대 크기 = 구슬이 가질수 있는 최대위치 +1
-	// 구슬판의 마지막 행은 dead zone
 	//-> constants 관련 헤더파일로
-	static const unsigned int maxX = 6;
-	static const unsigned int maxY = 10;
 	static const unsigned int radius = 3;
 
 	//-> 어디로?

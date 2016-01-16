@@ -165,3 +165,13 @@ IntPosition Grid::getGridPosition(Position position)
 {
 	return getGridPosition(position._x, position._y);
 }
+
+
+const int Grid::getMaxX()
+{
+	return maxX;
+}
+const int Grid::getMaxY()
+{
+	return maxY;
+}

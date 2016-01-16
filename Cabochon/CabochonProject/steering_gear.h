@@ -5,6 +5,10 @@
 #include "object.h"
 #include "angle.h"
 
+/*
+	2016. 1. 16
+	멤버 함수 작성 1차 완료
+*/
 namespace components
 {
 	using components::SteeringGear;
