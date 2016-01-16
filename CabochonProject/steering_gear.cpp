@@ -51,6 +51,9 @@ void SteeringGear::setAngle(Angle angle)
 	/*
 	2016. 1. 15
 	추가적인 각도 예외 처리?
+
+	2016. 1. 16
+	SteeringGearControl에서 하자
 	*/
 	_angle = angle;
 }

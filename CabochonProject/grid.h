@@ -12,8 +12,6 @@ namespace components
 	using mathematics::Position;
 	using mathematics::IntPosition;
 
-	using temporary::maxX;
-	using temporary::maxY;
 	using temporary::radius;
 
 	/*
@@ -47,10 +45,19 @@ namespace components
 		enum class RowType{ none = -1, even, odd };
 		enum class Quadrant{ none = -1, first = 1, second, third, fourth};
 	private:
+		/*
+			2016. 1. 16
+			구슬 판의 최대 크기 = 구슬이 가질수 있는 최대위치 +1
+			구슬판의 마지막 행은 dead zone
+			maxX는 8이지만 실제로는 
+			해당 행이 even인 경우 8이며, odd 일 경우 8-1=7 이다.
+			maxY는 차후 변경 가능
+		*/
+		static const unsigned int maxX = 8;
+		static const unsigned int maxY = 12;
 		// radius of marble.. 
 		static const int width = radius;
 		static const int height = radius;
-		//사분면
 	public:
 		/*
 			2016. 1. 10
@@ -84,6 +91,9 @@ namespace components
 
 		static IntPosition getGridPosition(scalar x, scalar y);
 		static IntPosition getGridPosition(Position position);
+
+		static const int getMaxX();
+		static const int getMaxY();
 	};
 }
 #endif

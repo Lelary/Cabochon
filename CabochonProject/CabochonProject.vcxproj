@@ -90,7 +90,9 @@
     <ClCompile Include="grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="marble.cpp" />
+    <ClCompile Include="marble_control.cpp" />
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="SteeringGearControl.cpp" />
     <ClCompile Include="steering_gear.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
