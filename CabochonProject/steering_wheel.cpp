@@ -57,3 +57,16 @@ void SteeringWheel::setAngle(Angle angle)
 	*/
 	_angle = angle;
 }
+
+void SteeringWheel::setOrigin()
+{
+	setAngle(0);
+}
+void SteeringWheel::rotateLeft(unsigned int angle)
+{
+	setAngle(_angle - static_cast<scalar>(angle));
+}
+void SteeringWheel::rotateRight(unsigned int angle)
+{
+	setAngle(_angle + static_cast<scalar>(angle));
+}

@@ -19,6 +19,7 @@ namespace components
 	{
 	private:
 		Angle _angle;
+		void setAngle(Angle angle);
 
 	public:
 		SteeringWheel();
@@ -28,8 +29,10 @@ namespace components
 		SteeringWheel& operator=(const SteeringWheel& rhs);
 
 		Angle getAngle() const;
-		void setAngle(Angle angle);
 
+		void setOrigin();
+		void rotateLeft(unsigned int angle);
+		void rotateRight(unsigned int angle);
 	};
 }
 #endif //_STEERING_WHEEL_H

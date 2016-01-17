@@ -6,6 +6,7 @@ namespace components
 //클래스 선언====================================
 	class Object;
 	class Marble;
+	class ShootedMarble;
 	class SteeringWheel;
 	//class Board;
 	//class BackGround;	
