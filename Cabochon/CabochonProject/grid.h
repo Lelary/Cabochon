@@ -7,11 +7,11 @@
 
 namespace components
 {
-	using components::Grid;
 	using mathematics::scalar;
 	using mathematics::Position;
 	using mathematics::IntPosition;
-
+	using temporary::maxX;
+	using temporary::maxY;
 	using temporary::radius;
 
 	/*
