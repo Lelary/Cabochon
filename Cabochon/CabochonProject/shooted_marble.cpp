@@ -48,6 +48,10 @@ void ShootedMarble::move()
 	}
 }
 
+marble_ptr& ShootedMarble::getMarble()
+{
+	return _marble;
+}
 Velocity ShootedMarble::getVelocity() const
 {
 	return _velocity;
