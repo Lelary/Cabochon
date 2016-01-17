@@ -17,7 +17,8 @@ namespace mathematics
 
 	typedef float scalar;	
 
-	using Position = Vector2 < scalar > ;
+	using Position = Vector2 < scalar >;
+	using Velocity = Vector2 < scalar >;
 	using IntPosition = Vector2 < int > ;
 	
 }
