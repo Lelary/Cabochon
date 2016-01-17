@@ -1,3 +1,4 @@
+//2016. 1. 17
 #ifndef _SHOOTED_MARBLE_H
 #define _SHOOTED_MARBLE_H
 #include "marble.h"
@@ -19,13 +20,13 @@ namespace components
 	class ShootedMarble
 	{
 	private:
-		marble_ptr marble;
-		Velocity velocity;
+		marble_ptr _marble;
+		Velocity _velocity;
 	public:
 		ShootedMarble();
-		ShootedMarble(const ShootedMarble& rhs);
+		ShootedMarble(const ShootedMarble& rhs) = delete;
 		virtual ~ShootedMarble();
-		ShootedMarble& operator=(const ShootedMarble& rhs);
+		ShootedMarble& operator=(const ShootedMarble& rhs) = delete;
 
 		/*
 		2016. 1. 17
@@ -35,6 +36,7 @@ namespace components
 		( marble_array에 추가해야하기 때문)
 		Attach 하게 될지 판단하고 정지하는 것은 여기서 해도 된다.
 		(하지않더라도 무관)
+
 		*/
 		void move();
 	};
