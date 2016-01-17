@@ -1,16 +1,16 @@
 //2016. 1. 15.
-#include "steering_gear.h"
-using components::SteeringGear;
+#include "steering_wheel.h"
+using components::SteeringWheel;
 using mathematics::Angle;
 
-SteeringGear::SteeringGear()
+SteeringWheel::SteeringWheel()
 {
 	/*
 	2016. 1. 15
 	nothing to do.
 	*/
 }
-SteeringGear::SteeringGear(const Angle& angle)
+SteeringWheel::SteeringWheel(const Angle& angle)
 	:_angle(angle)
 {
 	/*
@@ -18,7 +18,7 @@ SteeringGear::SteeringGear(const Angle& angle)
 	nothing to do.
 	*/
 }
-SteeringGear::SteeringGear(const SteeringGear& rhs)
+SteeringWheel::SteeringWheel(const SteeringWheel& rhs)
 	: Object(rhs), _angle(rhs._angle)
 {
 	/*
@@ -26,14 +26,14 @@ SteeringGear::SteeringGear(const SteeringGear& rhs)
 	현재 자기 대입 처리를 하지 않아도 됨
 	*/
 }
-SteeringGear::~SteeringGear()
+SteeringWheel::~SteeringWheel()
 {
 	/*
 	2016. 1. 15
 	nothing to do.
 	*/
 }
-SteeringGear& SteeringGear::operator=(const SteeringGear& rhs)
+SteeringWheel& SteeringWheel::operator=(const SteeringWheel& rhs)
 {
 	if (&rhs == this)
 		return *this;
@@ -42,18 +42,18 @@ SteeringGear& SteeringGear::operator=(const SteeringGear& rhs)
 	return *this;
 }
 
-Angle SteeringGear::getAngle() const
+Angle SteeringWheel::getAngle() const
 {
 	return _angle;
 }
-void SteeringGear::setAngle(Angle angle)
+void SteeringWheel::setAngle(Angle angle)
 {
 	/*
 	2016. 1. 15
 	추가적인 각도 예외 처리?
 
 	2016. 1. 16
-	SteeringGearControl에서 하자
+	SteeringWheelControl에서 하자
 	*/
 	_angle = angle;
 }

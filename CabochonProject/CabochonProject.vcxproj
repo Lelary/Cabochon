@@ -77,8 +77,8 @@
     <ClInclude Include="mathematics.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="basic_singleton.h" />
-    <ClInclude Include="steering_gear.h" />
-    <ClInclude Include="steering_gear_control.h" />
+    <ClInclude Include="steering_wheel.h" />
+    <ClInclude Include="steering_wheel_control.h" />
     <ClInclude Include="template_dynamic_singleton.h" />
     <ClInclude Include="temporary.h" />
     <ClInclude Include="patterns.h" />
@@ -92,8 +92,8 @@
     <ClCompile Include="marble.cpp" />
     <ClCompile Include="marble_control.cpp" />
     <ClCompile Include="object.cpp" />
-    <ClCompile Include="SteeringGearControl.cpp" />
-    <ClCompile Include="steering_gear.cpp" />
+    <ClCompile Include="steering_wheel.cpp" />
+    <ClCompile Include="steering_wheel_control.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
