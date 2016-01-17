@@ -49,7 +49,7 @@ namespace components
 		Velocity getVelocity() const;
 		void setVelocity(Velocity velocity);
 		void setVelocity(scalar vx, scalar vy);
-		void setVelocity(scalar speed, scalar angle);
+		void setVelocity(scalar speed, Angle angle);
 		void setMarble(marble_ptr& marble);
 
 	};

@@ -42,19 +42,5 @@ namespace components
 		IntPosition getGridPosition() const;
 		void setGridPosition(IntPosition gridPosition);
 
-		/*
-			2016. 1. 10.
-			다른 곳으로 이사가야 할 함수
-			팩토리로 구현할 것
-
-			이사안가는게 낫나?
-			사용되는 곳 :
-			1. 구슬 쏠때,
-			2. 맵 생성
-		*/
-		static marble_ptr makeMarble()
-		{
-			return std::make_unique<Marble>();
-		}
 	};
 }

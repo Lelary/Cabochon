@@ -8,9 +8,7 @@ using temporary::marble_array;
 
 MarbleControl::MarbleControl()
 {
-	//임시로 move, unique_ptr 사용해봄
-	marbles[3][4] = Marble::makeMarble();
-	marbles[3][5] = std::move(marbles[3][4]);
+
 }
 
 MarbleControl::~MarbleControl()
