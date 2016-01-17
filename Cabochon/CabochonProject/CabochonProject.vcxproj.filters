@@ -105,6 +105,9 @@
     <ClInclude Include="steering_wheel_control.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
+    <ClInclude Include="shooted_marble.h">
+      <Filter>헤더 파일\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

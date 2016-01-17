@@ -14,6 +14,7 @@
 namespace controls
 {
 	using controls::SteeringWheelControl;
+	using mathematics::scalar;
 	using components::marble_ptr;
 	using components::SteeringWheel;
 
@@ -25,9 +26,9 @@ namespace controls
 	class SteeringWheelControl
 	{
 	private:
-		SteeringWheel steeringWheel;
-		marble_ptr marbleCurrent;
-		marble_ptr marbleNext;
+		SteeringWheel _steeringWheel;
+		marble_ptr _marbleCurrent;
+		marble_ptr _marbleNext;
 
 		/*
 			2016. 1. 13
@@ -35,6 +36,15 @@ namespace controls
 		*/
 		//MarbleGenerator marbleGenerator;
 		//Timer timer;
+
+		/*
+			2016. 1. 17
+			버튼 입력 한번에 회전할 임의의 각도
+			deltaTime 적용 필요한지 체크해야함
+			(키입력 추가 후에)
+		*/
+		const int angularVelocity = 3;
+		const int absMaxDegree = 81;
 
 	public:
 		SteeringWheelControl();
@@ -46,6 +56,13 @@ namespace controls
 			2016. 1. 13
 			미작성
 		*/
+		scalar getDegree() const;
+		void setOrigin();
+		void rotateLeft();
+		void rotateRight();
+		
+
+
 
 	};
 
