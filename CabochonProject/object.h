@@ -1,3 +1,6 @@
+#ifndef _OBJECTS_H
+#define _OBJECTS_H
+
 #include "components.h"
 #include "mathematics.h"
 #include "vector2.h"
@@ -78,3 +81,5 @@ namespace components
 			*/
 	};
 }
+
+#endif
