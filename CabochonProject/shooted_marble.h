@@ -7,27 +7,36 @@
 
 상속관계로 만들지
 wrapper로 composite로 만들지 결정해야함
+Marble에 속도 벡터와 움직임를 추가하기 위해 필요하다.
 
+wrapper가 간단하다.
+wrapper로 작성.
 */
 
 namespace components
 {
-	using mathematics::IntPosition;
-
+	using mathematics::Velocity;
 	class ShootedMarble
-		:public Marble
 	{
 	private:
-		
+		marble_ptr marble;
+		Velocity velocity;
 	public:
 		ShootedMarble();
 		ShootedMarble(const ShootedMarble& rhs);
 		virtual ~ShootedMarble();
 		ShootedMarble& operator=(const ShootedMarble& rhs);
 
+		/*
+		2016. 1. 17
 
-
-
+		Velocity 만큼 이동하며, 벽과 충돌처리를 해야한다.
+		다른 Marble과의 Attach 처리는 MarbleControl이 맡으며
+		( marble_array에 추가해야하기 때문)
+		Attach 하게 될지 판단하고 정지하는 것은 여기서 해도 된다.
+		(하지않더라도 무관)
+		*/
+		void move();
 	};
 }
 
