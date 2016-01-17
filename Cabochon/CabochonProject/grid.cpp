@@ -4,6 +4,8 @@ using components::Grid;
 using mathematics::scalar;
 using mathematics::Position;
 using mathematics::IntPosition;
+using temporary::maxX;
+using temporary::maxY;
 
 /*
 	2016. 1. 16
@@ -164,14 +166,4 @@ IntPosition Grid::getGridPosition(scalar x, scalar y)
 IntPosition Grid::getGridPosition(Position position)
 {
 	return getGridPosition(position._x, position._y);
-}
-
-
-const int Grid::getMaxX()
-{
-	return maxX;
-}
-const int Grid::getMaxY()
-{
-	return maxY;
 }
