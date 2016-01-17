@@ -2,6 +2,8 @@
 #ifndef _SHOOTED_MARBLE_H
 #define _SHOOTED_MARBLE_H
 #include "marble.h"
+#include "grid.h"
+#include "angle.h"
 
 /*
 2016. 1. 17
@@ -17,6 +19,8 @@ wrapper로 작성.
 namespace components
 {
 	using mathematics::Velocity;
+	using mathematics::Angle;
+
 	class ShootedMarble
 	{
 	private:
@@ -24,6 +28,7 @@ namespace components
 		Velocity _velocity;
 	public:
 		ShootedMarble();
+		ShootedMarble(marble_ptr& marble);
 		ShootedMarble(const ShootedMarble& rhs) = delete;
 		virtual ~ShootedMarble();
 		ShootedMarble& operator=(const ShootedMarble& rhs) = delete;
@@ -39,6 +44,20 @@ namespace components
 
 		*/
 		void move();
+
+		/*
+		2016. 1. 18
+
+		MarbleControl에게 marble_ptr의 소유권을 넘길때 사용할 함수 필요
+		*/
+		//marble_ptr getMarble() const; 
+		Velocity getVelocity() const;
+
+		void setVelocity(Velocity velocity);
+		void setVelocity(scalar vx, scalar vy);
+		void setVelocity(scalar speed, scalar angle);
+		void setMarble(marble_ptr& marble);
+
 	};
 }
 
