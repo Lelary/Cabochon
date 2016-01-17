@@ -167,3 +167,20 @@ IntPosition Grid::getGridPosition(Position position)
 {
 	return getGridPosition(position._x, position._y);
 }
+
+int Grid::getLeftWall()
+{
+	return leftWall;
+}
+int Grid::getRightWall()
+{
+	return rightWall;
+}
+int Grid::getCeiling()
+{
+	return ceiling;
+}
+int Grid::getFloor()
+{
+	return floor;
+}

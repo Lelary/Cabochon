@@ -46,8 +46,12 @@ namespace components
 		enum class Quadrant{ none = -1, first = 1, second, third, fourth};
 	private:
 		// radius of marble.. 
-		static const int width = radius;
-		static const int height = radius;
+		static const int width = 2 * radius;
+		static const int height = 2 * radius;
+		static const int leftWall = 0;
+		static const int rightWall = width * maxX;
+		static const int ceiling = 0;
+		static const int floor = height * maxY;
 	public:
 		/*
 			2016. 1. 10
@@ -81,6 +85,11 @@ namespace components
 
 		static IntPosition getGridPosition(scalar x, scalar y);
 		static IntPosition getGridPosition(Position position);
+
+		static int getLeftWall();
+		static int getRightWall();
+		static int getCeiling();
+		static int getFloor();
 	};
 }
 #endif
