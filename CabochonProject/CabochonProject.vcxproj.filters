@@ -108,6 +108,9 @@
     <ClInclude Include="shooted_marble.h">
       <Filter>헤더 파일\components</Filter>
     </ClInclude>
+    <ClInclude Include="marble_generator.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -139,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="shooted_marble.cpp">
       <Filter>소스 파일\components</Filter>
+    </ClCompile>
+    <ClCompile Include="marble_generator.cpp">
+      <Filter>소스 파일\controls</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

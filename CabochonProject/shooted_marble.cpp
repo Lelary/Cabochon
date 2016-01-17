@@ -3,6 +3,7 @@
 using components::ShootedMarble;
 using components::Grid;
 using components::marble_ptr;
+using mathematics::scalar;
 using mathematics::Velocity;
 using mathematics::Angle;
 
@@ -65,7 +66,7 @@ void ShootedMarble::setVelocity(scalar vx, scalar vy)
 {
 	_velocity = { vx, vy };
 }
-void ShootedMarble::setVelocity(scalar speed, scalar angle)
+void ShootedMarble::setVelocity(scalar speed, Angle angle)
 {
 	/*
 	2016. 1. 18.
@@ -73,7 +74,7 @@ void ShootedMarble::setVelocity(scalar speed, scalar angle)
 
 	Steering Wheel Control 에서 올 정보. 이므로 윗쪽을 향하는 것이 0도
 	*/
-	_velocity = { speed*cosf(angle), speed*sinf(angle) };
+	_velocity = { speed*cosf(angle.getDegree()), speed*sinf(angle.getDegree()) };
 	
 }
 

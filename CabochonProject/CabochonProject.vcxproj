@@ -74,6 +74,7 @@
     <ClInclude Include="local_static_singleton.h" />
     <ClInclude Include="marble.h" />
     <ClInclude Include="marble_control.h" />
+    <ClInclude Include="marble_generator.h" />
     <ClInclude Include="mathematics.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="basic_singleton.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="marble.cpp" />
     <ClCompile Include="marble_control.cpp" />
+    <ClCompile Include="marble_generator.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="shooted_marble.cpp" />
     <ClCompile Include="steering_wheel.cpp" />
