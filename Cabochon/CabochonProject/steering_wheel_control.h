@@ -1,8 +1,8 @@
-#ifndef _STEERING_GEAR_CONTROL_H
-#define _STEERING_GEAR_CONTROL_H
+#ifndef _STEERING_WHEEL_CONTROL_H
+#define _STEERING_WHEEL_CONTROL_H
 
 #include "controls.h"
-#include "steering_gear.h"
+#include "steering_wheel.h"
 #include "marble.h"
 //#include "timer.h"
 
@@ -13,19 +13,19 @@
 
 namespace controls
 {
-	using controls::SteeringGearControl;
+	using controls::SteeringWheelControl;
 	using components::marble_ptr;
-	using components::SteeringGear;
+	using components::SteeringWheel;
 
 	/*
 		2016. 1. 13
 		marble 을 그대로 가지고 있지 않고
 		marble_ptr = unique_ptr 로 가지고 있을 것
 	*/
-	class SteeringGearControl
+	class SteeringWheelControl
 	{
 	private:
-		SteeringGear steeringGear;
+		SteeringWheel steeringWheel;
 		marble_ptr marbleCurrent;
 		marble_ptr marbleNext;
 
@@ -37,10 +37,10 @@ namespace controls
 		//Timer timer;
 
 	public:
-		SteeringGearControl();
-		SteeringGearControl(const SteeringGearControl& rhs)=delete;
-		virtual ~SteeringGearControl();
-		SteeringGearControl& operator=(const SteeringGearControl& rhs)=delete;
+		SteeringWheelControl();
+		SteeringWheelControl(const SteeringWheelControl& rhs)=delete;
+		virtual ~SteeringWheelControl();
+		SteeringWheelControl& operator=(const SteeringWheelControl& rhs)=delete;
 
 		/*
 			2016. 1. 13
@@ -51,4 +51,4 @@ namespace controls
 
 }
 
-#endif // _STEERING_GEAR_CONTROL_H
+#endif // _STEERING_WHEEL_CONTROL_H

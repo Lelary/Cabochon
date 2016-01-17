@@ -1,8 +1,8 @@
 //2016. 1. 16.
 
-#include "steering_gear_control.h"
+#include "steering_wheel_control.h"
 
-using controls::SteeringGearControl;
+using controls::SteeringWheelControl;
 using components::marble_ptr;
-using components::SteeringGear;
+using components::SteeringWheel;
 

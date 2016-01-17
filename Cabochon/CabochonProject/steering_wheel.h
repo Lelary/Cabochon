@@ -1,6 +1,6 @@
 // 2016. 1. 13.
-#ifndef _STEERING_GEAR_H
-#define _STEERING_GEAR_H
+#ifndef _STEERING_WHEEL_H
+#define _STEERING_WHEEL_H
 #include "components.h"
 #include "object.h"
 #include "angle.h"
@@ -11,25 +11,25 @@
 */
 namespace components
 {
-	using components::SteeringGear;
+	using components::SteeringWheel;
 	using mathematics::Angle;
 
-	class SteeringGear
+	class SteeringWheel
 		:public Object
 	{
 	private:
 		Angle _angle;
 
 	public:
-		SteeringGear();
-		SteeringGear(const Angle& angle);
-		SteeringGear(const SteeringGear& rhs);
-		virtual ~SteeringGear();
-		SteeringGear& operator=(const SteeringGear& rhs);
+		SteeringWheel();
+		SteeringWheel(const Angle& angle);
+		SteeringWheel(const SteeringWheel& rhs);
+		virtual ~SteeringWheel();
+		SteeringWheel& operator=(const SteeringWheel& rhs);
 
 		Angle getAngle() const;
 		void setAngle(Angle angle);
 
 	};
 }
-#endif //_STEERING_GEAR_H
+#endif //_STEERING_WHEEL_H

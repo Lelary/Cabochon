@@ -32,7 +32,6 @@ namespace components
 
 	class Object
 	{
-
 	private:
 		Position _position;
 		scalar _width, _height;

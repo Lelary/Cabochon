@@ -99,11 +99,11 @@
     <ClInclude Include="angle.h">
       <Filter>헤더 파일\mathematics</Filter>
     </ClInclude>
-    <ClInclude Include="steering_gear_control.h">
-      <Filter>헤더 파일\controls</Filter>
-    </ClInclude>
-    <ClInclude Include="steering_gear.h">
+    <ClInclude Include="steering_wheel.h">
       <Filter>헤더 파일\components</Filter>
+    </ClInclude>
+    <ClInclude Include="steering_wheel_control.h">
+      <Filter>헤더 파일\controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,17 +122,17 @@
     <ClCompile Include="marble.cpp">
       <Filter>소스 파일\components</Filter>
     </ClCompile>
-    <ClCompile Include="steering_gear.cpp">
-      <Filter>소스 파일\components</Filter>
-    </ClCompile>
     <ClCompile Include="grid.cpp">
       <Filter>소스 파일\components</Filter>
     </ClCompile>
-    <ClCompile Include="SteeringGearControl.cpp">
-      <Filter>소스 파일\controls</Filter>
-    </ClCompile>
     <ClCompile Include="marble_control.cpp">
       <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="steering_wheel_control.cpp">
+      <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="steering_wheel.cpp">
+      <Filter>소스 파일\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
