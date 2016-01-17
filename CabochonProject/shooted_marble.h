@@ -45,14 +45,8 @@ namespace components
 		*/
 		void move();
 
-		/*
-		2016. 1. 18
-
-		MarbleControl에게 marble_ptr의 소유권을 넘길때 사용할 함수 필요
-		*/
-		//marble_ptr getMarble() const; 
+		marble_ptr& getMarble();
 		Velocity getVelocity() const;
-
 		void setVelocity(Velocity velocity);
 		void setVelocity(scalar vx, scalar vy);
 		void setVelocity(scalar speed, scalar angle);
