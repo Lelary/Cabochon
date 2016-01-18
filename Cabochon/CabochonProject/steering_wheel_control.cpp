@@ -28,6 +28,26 @@ scalar SteeringWheelControl::getDegree() const
 {
 	return _steeringWheel.getAngle().getDegree() - 90;
 }
+
+
+marble_ptr& SteeringWheelControl::getMarbleCurrent()
+{
+	return _marbleCurrent;
+}
+marble_ptr& SteeringWheelControl::getMarbleNext()
+{
+	return _marbleNext;
+}
+
+void SteeringWheelControl::setMarbleCurrent(marble_ptr& marble)
+{
+	_marbleCurrent = std::move(marble);
+}
+void SteeringWheelControl::setMarbleNext(marble_ptr& marble)
+{
+	_marbleNext = std::move(marble);
+}
+
 void SteeringWheelControl::setOrigin()
 {
 	_steeringWheel.setOrigin();

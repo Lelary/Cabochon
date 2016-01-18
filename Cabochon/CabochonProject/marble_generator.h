@@ -10,8 +10,13 @@ namespace controls
 	using components::marble_ptr;
 	using components::Marble;
 
+	/*
+	2016. 1. 18.
+	색깔 관련 코드는 나중에 추가.
+	*/
 	class MarbleGenerator
 	{
+	private:
 	public:
 		MarbleGenerator()=delete;
 		MarbleGenerator(const MarbleGenerator& rhs)=delete;
