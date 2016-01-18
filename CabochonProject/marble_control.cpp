@@ -20,5 +20,5 @@ MarbleControl::~MarbleControl()
 }
 int MarbleControl::getCurrentHeight() const
 {
-	return currentHeight;
+	return _currentHeight;
 }

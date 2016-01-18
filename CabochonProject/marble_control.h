@@ -5,12 +5,14 @@
 #include "controls.h"
 #include "marble.h"
 #include "grid.h"
+#include "shooted_marble.h"
 #include <array>
 
 namespace controls
 {
 	using controls::MarbleControl;
 	using components::Marble;
+	using components::ShootedMarble;
 	using components::Grid;
 	using temporary::marble_array;
 
@@ -29,11 +31,21 @@ namespace controls
 	class MarbleControl
 	{
 	private:
+		using shooted_ptr = std::unique_ptr < ShootedMarble >;
+
 		//marble_ptr 에 대한 2차원 배열
-		marble_array marbles;
+		marble_array _marbles;
+		/*
+			steeringWheelControl 로 부터 소유권이 이전될 것.
+		*/
+		shooted_ptr _shootedMarble;
 
 		//현재 높이
-		int currentHeight;
+		/*
+			2016. 1. 18.
+			멤버변수는삭제하고 getter만 남길것.
+		*/
+		int _currentHeight;
 
 	public:
 		MarbleControl();
@@ -42,6 +54,9 @@ namespace controls
 		MarbleControl& operator=(const MarbleControl& rhs) = delete;
 
 		int getCurrentHeight() const;
+
+		shooted_ptr& getShootedMarble();
+		void setShootedMarble(shooted_ptr& shootedMarble);
 	};
 
 }
