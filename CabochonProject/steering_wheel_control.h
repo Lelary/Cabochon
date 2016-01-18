@@ -52,11 +52,13 @@ namespace controls
 		virtual ~SteeringWheelControl();
 		SteeringWheelControl& operator=(const SteeringWheelControl& rhs)=delete;
 
-		/*
-			2016. 1. 13
-			πÃ¿€º∫
-		*/
 		scalar getDegree() const;
+		marble_ptr& getMarbleCurrent();
+		marble_ptr& getMarbleNext();
+		
+		void setMarbleCurrent(marble_ptr& marble);
+		void setMarbleNext(marble_ptr& marble);
+
 		void setOrigin();
 		void rotateLeft();
 		void rotateRight();

@@ -26,6 +26,7 @@ namespace components
 	private:
 		marble_ptr _marble;
 		Velocity _velocity;
+
 	public:
 		ShootedMarble();
 		ShootedMarble(marble_ptr& marble);
