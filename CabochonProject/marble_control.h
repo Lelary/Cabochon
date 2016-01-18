@@ -14,6 +14,18 @@ namespace controls
 	using components::Grid;
 	using temporary::marble_array;
 
+/*
+	2016. 1. 18.
+	TODO.
+
+	1. 부착 (ceiling, marble_array).
+	2. 같은 컬러 3개 이상인지 확인
+	3. 같은 컬러 삭제 등록
+	4. ceiling 과 union 되지 않은 블록 삭제 등록
+	5. 삭제 애니메이션
+	6. 삭제+점수추가.
+*/
+
 	class MarbleControl
 	{
 	private:
