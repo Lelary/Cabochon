@@ -12,9 +12,11 @@ namespace controls
 {
 	using controls::MarbleControl;
 	using components::Marble;
+	using components::marble_ptr;
 	using components::ShootedMarble;
 	using components::Grid;
 	using temporary::marble_array;
+	using mathematics::IntPosition;
 
 /*
 	2016. 1. 18.
@@ -31,21 +33,12 @@ namespace controls
 	class MarbleControl
 	{
 	private:
-		using shooted_ptr = std::unique_ptr < ShootedMarble >;
-
 		//marble_ptr 에 대한 2차원 배열
 		marble_array _marbles;
-		/*
-			steeringWheelControl 로 부터 소유권이 이전될 것.
-		*/
-		shooted_ptr _shootedMarble;
 
-		//현재 높이
-		/*
-			2016. 1. 18.
-			멤버변수는삭제하고 getter만 남길것.
-		*/
-		int _currentHeight;
+		using shooted_ptr = std::unique_ptr < ShootedMarble >;
+		// steeringWheelControl 로 부터 소유권이 이전될 것.
+		shooted_ptr _shootedMarble;
 
 	public:
 		MarbleControl();
@@ -53,10 +46,24 @@ namespace controls
 		virtual ~MarbleControl();
 		MarbleControl& operator=(const MarbleControl& rhs) = delete;
 
+		//현재 높이
 		int getCurrentHeight() const;
 
+		//Shooted Marble
 		shooted_ptr& getShootedMarble();
 		void setShootedMarble(shooted_ptr& shootedMarble);
+
+		//attach shooted marble
+		bool isAttachable(shooted_ptr& shootedMarble, IntPosition gridPosition);
+		bool isAttachable(shooted_ptr& shootedMarble);
+		void attach(shooted_ptr& shootedMarble, IntPosition gridPosition);
+		void attach(shooted_ptr& shootedMarble);
+
+		// build map
+		bool existMarble(IntPosition gridPosition);
+		void addMarble(marble_ptr& marble, IntPosition gridPosition);
+		void removeMarble(IntPosition gridPosition);
+
 	};
 
 }

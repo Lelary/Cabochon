@@ -18,7 +18,3 @@ MarbleControl::~MarbleControl()
 	Nothing to do yet.
 	*/
 }
-int MarbleControl::getCurrentHeight() const
-{
-	return _currentHeight;
-}
