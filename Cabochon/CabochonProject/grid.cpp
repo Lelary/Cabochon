@@ -22,6 +22,17 @@ Grid::RowType Grid::getRowType(scalar y)
 	else
 		return RowType::odd;
 }
+Grid::RowType Grid::getRowType(int y)
+{
+	//grid 안에 없음
+	if (y < 0 || y >= maxY)
+		return RowType::none;
+
+	if (y%2 == 0)
+		return RowType::even;
+	else
+		return RowType::odd;
+}
 
 /*
 	2016. 1. 16
