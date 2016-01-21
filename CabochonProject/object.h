@@ -55,15 +55,20 @@ namespace components
 
 		// the position of Left Top 
 		Position getPosition() const;
+		// the position of middle
+		Position getMiddlePosition() const;
 		//scalar getCenter() const;
 		scalar getWidth() const;
 		scalar getHeight() const;
 
 		// the position of Left Top 
 		void setPosition(const Position& position);
-
 		// the position of Left Top 
 		void setPosition(scalar x, scalar y);
+		// the position of middle, changes position property.
+		void setMiddlePosition(const Position& position);
+		// the position of middle, changes position property.
+		void setMiddlePosition(scalar x, scalar y);
 		//void setCenter(const Position& position);
 		//void setCenter(scalar x, scalar y);
 		void setWidth(scalar width);
@@ -78,7 +83,17 @@ namespace components
 
 			현재 이게임에는 회전중심이 따로 필요치 않음.
 
-			*/
+			2016. 1. 21
+			->
+				// 위치속성 (Position + {width/2, height/2})
+				get/set MiddlePosition, 
+
+				// 회전속성 (회전중심)
+				get/set Center.
+		*/
+
+
+
 	};
 }
 
