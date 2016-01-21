@@ -14,10 +14,10 @@ using temporary::maxY;
 Grid::RowType Grid::getRowType(scalar y)
 {
 	//grid 안에 없음
-	if (y < 0.0f || y> height * maxY)
+	if (y < 0.0f || y> blockHeight * maxY)
 		return RowType::none;
 
-	if (y / (2 * height) > height)
+	if (y / (2 * blockHeight) > blockHeight)
 		return RowType::even;
 	else
 		return RowType::odd;
@@ -30,17 +30,17 @@ Grid::RowType Grid::getRowType(scalar y)
 bool Grid::isInGrid(scalar x, scalar y)
 {
 	//grid 안에 없음
-	if (x < 0.0f || x> width * maxX)
+	if (x < 0.0f || x> blockWidth * maxX)
 		return false;
 
 	//grid 안에 없음
-	if (y < 0.0f || y> height * maxY)
+	if (y < 0.0f || y> blockHeight * maxY)
 		return false;
 	
 	//추가 체크
 	if (getRowType(y) == RowType::odd)
 	{
-		if (x < width / 2.0f || x > width * maxX - width / 2.0f)
+		if (x < blockWidth / 2.0f || x > blockWidth * maxX - blockWidth / 2.0f)
 			return false;
 	}
 
@@ -118,20 +118,20 @@ Grid::Quadrant Grid::getQuadrant(scalar x, scalar y)
 	gridPosition = getGridPosition(x, y);
 	
 	//칸번호를 통해 칸 내에서의 상대적 위치를 구함.
-	position._x = x - gridPosition._x * width;
-	position._y = y - gridPosition._y * height;
+	position._x = x - gridPosition._x * blockWidth;
+	position._y = y - gridPosition._y * blockHeight;
 
 	//상대적 위치로부터 해당칸에서 어느 사분면에 속하는지 구함
-	if (position._x > width / 2.0f)
+	if (position._x > blockWidth / 2.0f)
 	{
-		if (position._y > height / 2.0f)
+		if (position._y > blockHeight / 2.0f)
 			return Quadrant::first;
 		else
 			return Quadrant::fourth;
 	}
 	else
 	{
-		if (position._y > height / 2.0f)
+		if (position._y > blockHeight / 2.0f)
 			return Quadrant::second;
 		else
 			return Quadrant::third;
@@ -159,9 +159,9 @@ IntPosition Grid::getGridPosition(scalar x, scalar y)
 		return{ -1, -1 };
 
 	if (getRowType(y) == RowType::even)
-		return{ static_cast<int>(x / width), static_cast<int>(y / height) };
+		return{ static_cast<int>(x / blockWidth), static_cast<int>(y / blockHeight) };
 	else
-		return{ static_cast<int>((x + width / 2) / width), static_cast<int>(y / height) };
+		return{ static_cast<int>((x + blockWidth / 2) / blockWidth), static_cast<int>(y / blockHeight) };
 }
 IntPosition Grid::getGridPosition(Position position)
 {

@@ -12,7 +12,11 @@ namespace components
 	using mathematics::IntPosition;
 	using temporary::maxX;
 	using temporary::maxY;
-	using temporary::radius;
+	using temporary::marbleRadius;
+	using temporary::boardWidth;
+	using temporary::boardHeight;
+	using temporary::blockWidth;
+	using temporary::blockHeight;
 
 	/*
 		2016. 1. 10
@@ -46,12 +50,11 @@ namespace components
 		enum class Quadrant{ none = -1, first = 1, second, third, fourth};
 	private:
 		// radius of marble.. 
-		static const int width = 2 * radius;
-		static const int height = 2 * radius;
 		static const int leftWall = 0;
-		static const int rightWall = width * maxX;
+		static const int rightWall = boardWidth;
 		static const int ceiling = 0;
-		static const int floor = height * maxY;
+		static const int floor = boardHeight;
+		// floor != boardHeight * maxY
 	public:
 		/*
 			2016. 1. 10
