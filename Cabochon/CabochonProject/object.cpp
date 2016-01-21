@@ -51,6 +51,11 @@ Position Object::getPosition() const
 {
 	return _position;
 }
+// the position of middle
+Position Object::getMiddlePosition() const
+{
+	return{ _position._x + _width / 2.0f, _position._y + _height / 2.0f };
+}
 scalar Object::getWidth() const
 {
 	return _width;
@@ -71,6 +76,18 @@ void Object::setPosition(scalar x, scalar y)
 {
 	_position = { x, y };
 }
+
+// the position of middle, changes position property.
+void Object::setMiddlePosition(const Position& position)
+{
+	_position = { position._x - _width/2.0f, position._y - _height/2.0f };
+}
+// the position of middle, changes position property.
+void Object::setMiddlePosition(scalar x, scalar y)
+{
+	_position = { x - _width/2.0f, y - _height/2.0f };
+}
+
 void Object::setWidth(scalar width)
 {
 	_width = width;
