@@ -123,10 +123,24 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	3. 반지름 검사. (원형충돌검사)
 	
 	*/
+	// 1. gridPosition의 nullptr검사.
+	if ((_marbles[gridPosition._x][gridPosition._y]) == nullptr)
+		return false;
 
 	auto testSet = getTestSet(shootedMarble);
-	
-
+	for (auto testPosition : testSet)
+	{
+		// 2. gridPosition이 testSet에 존재하는지 검사
+		if (testPosition._x == gridPosition._x && testPosition._y == gridPosition._y)
+		{
+			// 3. 반지름 검사. (원형 충돌 검사)
+			if ()
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 {
