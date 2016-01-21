@@ -73,6 +73,7 @@ namespace components
 		~Grid() = delete;
 
 		static RowType getRowType(scalar y);
+		static RowType getRowType(int y);
 
 		static bool isInGrid(scalar x, scalar y);
 		static bool isInGrid(scalar x, scalar y, int gx, int gy);

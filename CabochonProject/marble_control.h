@@ -53,16 +53,20 @@ namespace controls
 		shooted_ptr& getShootedMarble();
 		void setShootedMarble(shooted_ptr& shootedMarble);
 
+		//Attach 가능성이 있는 Grid 위치 반환. nullptr검사는 하지 않음.
+		std::vector<IntPosition> getTestSet(const shooted_ptr& shootedMarble) const;
+		//Attach 가능성이 있는 Grid 위치 반환. nullptr검사는 하지 않음.
+		std::vector<IntPosition> getTestSet(const IntPosition& gridPosition) const;
 		//attach shooted marble
-		bool isAttachable(shooted_ptr& shootedMarble, IntPosition gridPosition);
-		bool isAttachable(shooted_ptr& shootedMarble);
-		void attach(shooted_ptr& shootedMarble, IntPosition gridPosition);
+		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
+		bool isAttachable(const shooted_ptr& shootedMarble) const;
+		void attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition);
 		void attach(shooted_ptr& shootedMarble);
 
 		// build map
-		bool existMarble(IntPosition gridPosition);
-		void addMarble(marble_ptr& marble, IntPosition gridPosition);
-		void removeMarble(IntPosition gridPosition);
+		bool existMarble(IntPosition& gridPosition);
+		void addMarble(marble_ptr& marble, IntPosition& gridPosition);
+		void removeMarble(IntPosition& gridPosition);
 
 	};
 
