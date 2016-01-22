@@ -42,5 +42,8 @@ namespace components
 		IntPosition getGridPosition() const;
 		void setGridPosition(IntPosition gridPosition);
 
+		bool circularHitTest(const Marble& anotherMarble) const;
+		static bool circularHitTest(const Marble& marble1, const Marble& marble2);
+
 	};
 }

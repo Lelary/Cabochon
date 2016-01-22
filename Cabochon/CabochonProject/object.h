@@ -75,6 +75,14 @@ namespace components
 		void setHeight(scalar height);
 
 		/*
+			2016. 1. 22.
+			충돌관련함수를 어디에 작성할지 고민.중.
+			현재 클래스에서 삭제 가능 있음.
+			Marble 클래스에 오버로딩(parameter 가 다름)한 함수는 삭제 안할 것으로 예상.
+		*/
+		//bool circularHitTest(const Position& position1, scalar radius1, const Position& position2, scalar radius2);
+
+		/*
 			2016. 1. 13
 			get/set Center 가 의미하는 바가 애매하다.
 
