@@ -118,13 +118,15 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	2016. 1. 22.
 
 	1. shootedMarble이 gridPosition에 포함되었는지 검사.
-	2. isAttachable(const shooted_ptr& shootedMarble)const 호출.
+	2. Attach 하고자 하는 위치가 비었는지 검사.
+	3. isAttachable(const shooted_ptr& shootedMarble)const 호출.
 	*/
 
-	if (Grid::isInGrid(shootedMarble->getMarble()->getPosition(), gridPosition))
-		return isAttachable(shootedMarble);
-	else
-		return false;
+	if (Grid::isInGrid(shootedMarble->getMarble()->getCentralPosition(), gridPosition))
+		if (existMarble(gridPosition) == false)
+			return isAttachable(shootedMarble);
+
+	return false;
 }
 bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 {
@@ -132,19 +134,26 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	2016. 1. 22.
 	shootedMarble의 인접 위치의 Marble에 대해 붙을 가능성이 있는지 검사.
 
-	1. testSet을 얻음.
-	2. nullptr 검사
-	3. 반지름 검사. (원형충돌검사)
+	1. nullptr 검사. (marble이 붙고자 하는 위치(현재위치)에 이미 존재하는 marble이 있는지 검사)
+	2. testSet을 얻음.
+	3. nullptr 검사. (testSet (인접 marble 위치) 중 marble이 없는 위치는 다음 검사 제외.)
+	4. 반지름 검사. (원형충돌검사)
 	*/
 
-	//1. testSet을 얻음.
+
+	//1. nullptr 검사.
+	IntPosition gridPosition = Grid::getGridPosition(shootedMarble->getMarble()->getCentralPosition());
+	if (existMarble(gridPosition)==true)
+		return false;
+
+	//2. testSet을 얻음.
 	auto testSet = getTestSet(shootedMarble);
 	for (auto testPosition : testSet)
 	{
-		//2. nullptr 검사
-		if ((_marbles[testPosition._x][testPosition._y]) != nullptr)
+		//3. nullptr 검사
+		if (existMarble(testPosition)==true)
 		{
-			// 3. 반지름 검사. (원형 충돌 검사)
+			// 4. 반지름 검사. (원형 충돌 검사)
 			if (shootedMarble->getMarble()->circularHitTest(*_marbles[testPosition._x][testPosition._y]))
 			{
 				return true;
@@ -155,26 +164,30 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 }
 void MarbleControl::attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition)
 {
-	if(isAttachable(shootedMarble, gridPosition))
+	if (isAttachable(shootedMarble, gridPosition))
+		addMarble(shootedMarble->getMarble(), gridPosition);
 		
 }
 void MarbleControl::attach(shooted_ptr& shootedMarble)
 {
 	if (isAttachable(shootedMarble))
 	{
-		IntPosition gridPosition = Grid::getGridPosition(shootedMarble->getMarble()->getPosition());
-		_marbles[gridPosition._x][gridPosition._y] = std::move(shootedMarble->getMarble());
+		IntPosition gridPosition = Grid::getGridPosition(shootedMarble->getMarble()->getCentralPosition());
+		addMarble(shootedMarble->getMarble(), gridPosition);
 	}
 }
 
 // build map
-bool MarbleControl::existMarble(const IntPosition& gridPosition)
+bool MarbleControl::existMarble(const IntPosition& gridPosition) const
 {
-
+	if (_marbles[gridPosition._x][gridPosition._y] == nullptr)
+		return false;
+	return true;
 }
 void MarbleControl::addMarble(marble_ptr& marble, const IntPosition& gridPosition)
 {
-
+	if (existMarble(gridPosition)==false)
+		_marbles[gridPosition._x][gridPosition._y] = std::move(marble);
 }
 void MarbleControl::removeMarble(const IntPosition& gridPosition)
 {

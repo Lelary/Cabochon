@@ -77,18 +77,18 @@ namespace components
 
 		static bool isInGrid(scalar x, scalar y);
 		static bool isInGrid(scalar x, scalar y, int gx, int gy);
-		static bool isInGrid(Position position, IntPosition gridPosition);
+		static bool isInGrid(Position centralPosition, IntPosition gridPosition);
 
 		static bool isInGridSub(scalar x, scalar y, Quadrant q);
-		static bool isInGridSub(Position position, Quadrant q);
+		static bool isInGridSub(Position centralPosition, Quadrant q);
 		static bool isInGridSub(scalar x, scalar y, int gx, int gy, Quadrant q);
-		static bool isInGridSub(Position position, IntPosition gridPosition, Quadrant q);
+		static bool isInGridSub(Position centralPosition, IntPosition gridPosition, Quadrant q);
 
 		static Quadrant getQuadrant(scalar x, scalar y);
-		static Quadrant getQuadrant(Position position);
+		static Quadrant getQuadrant(Position centralPosition);
 
 		static IntPosition getGridPosition(scalar x, scalar y);
-		static IntPosition getGridPosition(Position position);
+		static IntPosition getGridPosition(Position centralPosition);
 
 		static int getLeftWall();
 		static int getRightWall();
