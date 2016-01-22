@@ -68,7 +68,7 @@ void Marble::setGridPosition(IntPosition gridPosition)
 
 bool Marble::circularHitTest(const Marble& anotherMarble) const
 {
-	circularHitTest(*this, anotherMarble);
+	return circularHitTest(*this, anotherMarble);
 }
 bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2)
 {
