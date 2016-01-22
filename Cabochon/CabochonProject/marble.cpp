@@ -49,23 +49,6 @@ Marble& Marble::operator=(const Marble& rhs)
 	return *this;
 }
 
-IntPosition Marble::getGridPosition() const
-{ 
-	return _gridPosition;
-}
-void Marble::setGridPosition(IntPosition gridPosition)
-{ 
-	// 범위 검사
-	if (gridPosition._x < noPosition || gridPosition._x >= maxX)
-		return;
-
-	// 범위 검사
-	if (gridPosition._y < noPosition || gridPosition._y >= maxY)
-		return;
-
-	_gridPosition = gridPosition;
-}
-
 bool Marble::circularHitTest(const Marble& anotherMarble) const
 {
 	return circularHitTest(*this, anotherMarble);

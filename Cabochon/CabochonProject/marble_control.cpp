@@ -55,7 +55,7 @@ void MarbleControl::setShootedMarble(shooted_ptr& shootedMarble)
 //Attach 가능성이 있는 Grid 위치 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMarble) const
 {
-	IntPosition marblePosition = shootedMarble->getMarble()->getGridPosition();
+	IntPosition marblePosition = Grid::getGridPosition(shootedMarble->getMarble()->getCentralPosition());
 	return getTestSet(marblePosition);
 }
 //Attach 가능성이 있는 Grid 위치 반환.
