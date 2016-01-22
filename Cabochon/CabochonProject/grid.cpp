@@ -75,9 +75,9 @@ bool Grid::isInGrid(scalar x, scalar y, int gx, int gy)
 	else
 		return false;
 }
-bool Grid::isInGrid(Position position, IntPosition gridPosition)
+bool Grid::isInGrid(Position centralPosition, IntPosition gridPosition)
 {
-	return isInGrid(position._x, position._y, gridPosition._x, gridPosition._y);
+	return isInGrid(centralPosition._x, centralPosition._y, gridPosition._x, gridPosition._y);
 }
 
 bool Grid::isInGridSub(scalar x, scalar y, Quadrant q)
@@ -91,9 +91,9 @@ bool Grid::isInGridSub(scalar x, scalar y, Quadrant q)
 	else
 		return false;
 }
-bool Grid::isInGridSub(Position position, Quadrant q)
+bool Grid::isInGridSub(Position centralPosition, Quadrant q)
 {
-	return isInGridSub(position._x, position._y, q);
+	return isInGridSub(centralPosition._x, centralPosition._y, q);
 }
 bool Grid::isInGridSub(scalar x, scalar y, int gx, int gy, Quadrant q)
 {
@@ -107,9 +107,9 @@ bool Grid::isInGridSub(scalar x, scalar y, int gx, int gy, Quadrant q)
 		return false;
 
 }
-bool Grid::isInGridSub(Position position, IntPosition gridPosition, Quadrant q)
+bool Grid::isInGridSub(Position centralPosition, IntPosition gridPosition, Quadrant q)
 {
-	return isInGridSub(position._x, position._y, gridPosition._x, gridPosition._y, q);
+	return isInGridSub(centralPosition._x, centralPosition._y, gridPosition._x, gridPosition._y, q);
 }
 
 /*
@@ -119,7 +119,7 @@ bool Grid::isInGridSub(Position position, IntPosition gridPosition, Quadrant q)
 Grid::Quadrant Grid::getQuadrant(scalar x, scalar y)
 {
 	IntPosition gridPosition;
-	Position position;
+	Position centralPosition;
 
 	//grid 안에 없음
 	if (isInGrid(x, y) == false)
@@ -129,29 +129,29 @@ Grid::Quadrant Grid::getQuadrant(scalar x, scalar y)
 	gridPosition = getGridPosition(x, y);
 	
 	//칸번호를 통해 칸 내에서의 상대적 위치를 구함.
-	position._x = x - gridPosition._x * blockWidth;
-	position._y = y - gridPosition._y * blockHeight;
+	centralPosition._x = x - gridPosition._x * blockWidth;
+	centralPosition._y = y - gridPosition._y * blockHeight;
 
 	//상대적 위치로부터 해당칸에서 어느 사분면에 속하는지 구함
-	if (position._x > blockWidth / 2.0f)
+	if (centralPosition._x > blockWidth / 2.0f)
 	{
-		if (position._y > blockHeight / 2.0f)
+		if (centralPosition._y > blockHeight / 2.0f)
 			return Quadrant::first;
 		else
 			return Quadrant::fourth;
 	}
 	else
 	{
-		if (position._y > blockHeight / 2.0f)
+		if (centralPosition._y > blockHeight / 2.0f)
 			return Quadrant::second;
 		else
 			return Quadrant::third;
 	}
 
 }
-Grid::Quadrant Grid::getQuadrant(Position position)
+Grid::Quadrant Grid::getQuadrant(Position centralPosition)
 {
-	return getQuadrant(position._x, position._y);
+	return getQuadrant(centralPosition._x, centralPosition._y);
 }
 
 /*
@@ -174,9 +174,9 @@ IntPosition Grid::getGridPosition(scalar x, scalar y)
 	else
 		return{ static_cast<int>((x + blockWidth / 2) / blockWidth), static_cast<int>(y / blockHeight) };
 }
-IntPosition Grid::getGridPosition(Position position)
+IntPosition Grid::getGridPosition(Position centralPosition)
 {
-	return getGridPosition(position._x, position._y);
+	return getGridPosition(centralPosition._x, centralPosition._y);
 }
 
 int Grid::getLeftWall()

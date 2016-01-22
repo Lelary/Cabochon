@@ -65,7 +65,7 @@ namespace controls
 		void attach(shooted_ptr& shootedMarble);
 
 		// build map
-		bool existMarble(const IntPosition& gridPosition);
+		bool existMarble(const IntPosition& gridPosition) const;
 		void addMarble(marble_ptr& marble, const IntPosition& gridPosition);
 		void removeMarble(const IntPosition& gridPosition);
 
