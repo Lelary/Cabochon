@@ -41,9 +41,6 @@ namespace components
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
 
-		IntPosition getGridPosition() const;
-		void setGridPosition(IntPosition gridPosition);
-
 		bool circularHitTest(const Marble& anotherMarble) const;
 		static bool circularHitTest(const Marble& marble1, const Marble& marble2);
 
