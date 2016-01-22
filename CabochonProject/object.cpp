@@ -52,7 +52,7 @@ Position Object::getPosition() const
 	return _position;
 }
 // the position of middle
-Position Object::getMiddlePosition() const
+Position Object::getCentralPosition() const
 {
 	return{ _position._x + _width / 2.0f, _position._y + _height / 2.0f };
 }
@@ -78,12 +78,12 @@ void Object::setPosition(scalar x, scalar y)
 }
 
 // the position of middle, changes position property.
-void Object::setMiddlePosition(const Position& position)
+void Object::setCentralPosition(const Position& position)
 {
 	_position = { position._x - _width/2.0f, position._y - _height/2.0f };
 }
 // the position of middle, changes position property.
-void Object::setMiddlePosition(scalar x, scalar y)
+void Object::setCentralPosition(scalar x, scalar y)
 {
 	_position = { x - _width/2.0f, y - _height/2.0f };
 }

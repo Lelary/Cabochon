@@ -56,8 +56,8 @@ namespace components
 		// the position of Left Top 
 		Position getPosition() const;
 		// the position of middle
-		Position getMiddlePosition() const;
-		//scalar getCenter() const;
+		Position getCentralPosition() const;
+		//scalar getCenterOfRotation() const;
 		scalar getWidth() const;
 		scalar getHeight() const;
 
@@ -66,11 +66,11 @@ namespace components
 		// the position of Left Top 
 		void setPosition(scalar x, scalar y);
 		// the position of middle, changes position property.
-		void setMiddlePosition(const Position& position);
+		void setCentralPosition(const Position& position);
 		// the position of middle, changes position property.
-		void setMiddlePosition(scalar x, scalar y);
-		//void setCenter(const Position& position);
-		//void setCenter(scalar x, scalar y);
+		void setCentralPosition(scalar x, scalar y);
+		//void setCenterOfRotation(const Position& position);
+		//void setCenterOfRotation(scalar x, scalar y);
 		void setWidth(scalar width);
 		void setHeight(scalar height);
 
@@ -90,6 +90,10 @@ namespace components
 
 				// 회전속성 (회전중심)
 				get/set Center.
+
+			2016. 1. 22.
+			->	CenteralPosition,
+				CenterOfRotation
 		*/
 
 
