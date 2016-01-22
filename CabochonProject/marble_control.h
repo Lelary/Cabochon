@@ -7,6 +7,7 @@
 #include "grid.h"
 #include "shooted_marble.h"
 #include <array>
+#include <vector>
 
 namespace controls
 {
@@ -60,13 +61,13 @@ namespace controls
 		//attach shooted marble
 		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
-		void attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition);
+		void attach(shooted_ptr& shootedMarble, const IntPosition& marblePosition);
 		void attach(shooted_ptr& shootedMarble);
 
 		// build map
-		bool existMarble(IntPosition& gridPosition);
-		void addMarble(marble_ptr& marble, IntPosition& gridPosition);
-		void removeMarble(IntPosition& gridPosition);
+		bool existMarble(const IntPosition& gridPosition);
+		void addMarble(marble_ptr& marble, const IntPosition& gridPosition);
+		void removeMarble(const IntPosition& gridPosition);
 
 	};
 

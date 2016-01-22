@@ -1,7 +1,6 @@
 //2016. 1. 16.
 
 #include "marble_control.h"
-#include <vector>
 
 using controls::MarbleControl;
 using components::Marble;
@@ -57,7 +56,7 @@ void MarbleControl::setShootedMarble(shooted_ptr& shootedMarble)
 std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMarble) const
 {
 	IntPosition marblePosition = shootedMarble->getMarble()->getGridPosition();
-	return std::move(getTestSet(marblePosition));
+	return getTestSet(marblePosition);
 }
 //Attach 가능성이 있는 Grid 위치 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosition) const
@@ -86,6 +85,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 			2016. 1. 22.
 			exception 추가해야함.
 		*/
+		break;
 	}
 
 	//범위검사 ( 0~maxX-1, 0~maxY-1), odd row 의 경우 0~maxY-2
@@ -134,7 +134,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 		if (testPosition._x == gridPosition._x && testPosition._y == gridPosition._y)
 		{
 			// 3. 반지름 검사. (원형 충돌 검사)
-			if ()
+			if (shootedMarble->getMarble()->circularHitTest(*_marbles[gridPosition._x][gridPosition._y]))
 			{
 				return true;
 			}
@@ -156,6 +156,15 @@ void MarbleControl::attach(shooted_ptr& shootedMarble)
 }
 
 // build map
-bool MarbleControl::existMarble(IntPosition gridPosition);
-void MarbleControl::addMarble(marble_ptr& marble, IntPosition gridPosition);
-void MarbleControl::removeMarble(IntPosition gridPosition);
+bool MarbleControl::existMarble(const IntPosition& gridPosition)
+{
+
+}
+void MarbleControl::addMarble(marble_ptr& marble, const IntPosition& gridPosition)
+{
+
+}
+void MarbleControl::removeMarble(const IntPosition& gridPosition)
+{
+
+}

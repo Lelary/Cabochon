@@ -1,3 +1,5 @@
+#ifndef _MARBLE_H
+#define _MARBLE_H
 #include "object.h"
 
 /*
@@ -47,3 +49,4 @@ namespace components
 
 	};
 }
+#endif
