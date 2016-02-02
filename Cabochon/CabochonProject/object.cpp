@@ -122,3 +122,16 @@ TextureManager Object::getTexture() const
 {
 	return _texture;
 }
+
+void Object::draw(COLOR_ARGB color)
+{
+	_image.draw(color);
+}
+void Object::draw(SpriteData sd, COLOR_ARGB color)
+{
+	_image.draw(sd, color);
+}
+void Object::update(scalar frameTime)
+{
+	_image.update(frameTime);
+}

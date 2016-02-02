@@ -75,6 +75,8 @@ namespace components
 		void setHeight(scalar height);
 
 		//---------------------------------------------------
+		// Sprite 관련.
+
 		Image getImage() const;
 		TextureManager getTexture() const;
 		scalar getScale();
@@ -83,7 +85,10 @@ namespace components
 		void setTexture(const TextureManager& textureManager);
 		void setScale(scalar scale);
 
-
+		virtual void draw(COLOR_ARGB color = graphicsNS::WHITE);
+		virtual void draw(SpriteData sd, COLOR_ARGB color);
+		//-----------------------------------------------------
+		virtual void update(scalar frameTime);
 		/*
 			2016. 1. 22.
 			충돌관련함수를 어디에 작성할지 고민.중.
