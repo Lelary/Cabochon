@@ -8,7 +8,7 @@
 #include <Windows.h>
 #include <stdlib.h> // 메모리 누수를 탐지하기 위해.
 #include <crtdbg.h> // 메모리 누수를 탐지하기 위해.
-#include "spacewar.h"
+#include "../cabochon.h"
 
 int WINAPI WinMain(HINSTANCE , HINSTANCE,  LPSTR, int);
 bool CreateMainWindow(HWND&, HINSTANCE, int);
@@ -19,7 +19,7 @@ LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM);
 */
 bool AnotherInstance();
 
-Spacewar *game = NULL;
+Cabochon *game = NULL;
 HWND hwnd = NULL;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -27,12 +27,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 디버그 모드로 빌드 시 메모리 누수를 확인한다. 
 #if defined(DEBUG) | defined(_DEBUG)
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHCK_DF);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
 	MSG msg;
 	
-	game = new Spacewar;
+	game = new Cabochon;
 
 	// 윈도우 생성.
 	if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
