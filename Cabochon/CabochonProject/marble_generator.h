@@ -31,6 +31,11 @@ namespace controls
 		2. ¸Ê »ý¼º
 		*/
 		static marble_ptr makeMarble();
+
+		// pure virtual function
+		// nothing to do.
+		virtual void render();
+		virtual void update();
 	};
 
 

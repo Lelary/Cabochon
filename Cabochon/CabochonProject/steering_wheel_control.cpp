@@ -75,3 +75,12 @@ void SteeringWheelControl::rotateRight()
 		_steeringWheel.rotateRight(angularVelocity);
 }
 
+
+void SteeringWheelControl::render()
+{
+
+}
+void SteeringWheelControl::update()
+{
+
+}

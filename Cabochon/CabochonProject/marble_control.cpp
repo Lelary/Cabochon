@@ -193,3 +193,13 @@ void MarbleControl::removeMarble(const IntPosition& gridPosition)
 {
 
 }
+
+
+void MarbleControl::render()
+{
+
+}
+void MarbleControl::update()
+{
+
+}

@@ -71,6 +71,9 @@ namespace controls
 		void addMarble(marble_ptr& marble, const IntPosition& gridPosition);
 		void removeMarble(const IntPosition& gridPosition);
 
+		//pure virtual functions
+		virtual void render();
+		virtual void update();
 	};
 
 }

@@ -65,9 +65,9 @@ namespace controls
 		void rotateLeft();
 		void rotateRight();
 		
-
-
-
+		// pure virtual function
+		virtual void render();
+		virtual void update();
 	};
 
 }
