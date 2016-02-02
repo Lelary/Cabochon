@@ -6,10 +6,13 @@
 	대체로 싱글톤
 	2016. 1. 9.
 	싱글톤으로 만드는 대신에 싱글톤 객체가 이 객체들을 가짐
-
+	2016. 2. 2.
+	Base 클래스로 Control 객체 작성. 기존 클래스들이 Control을 상속받음.
 */
 namespace controls
 {
+	class Control;
+
 	//LifeCycleControl has Timer
 	class LifeCycleControl;
 

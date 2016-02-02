@@ -4,6 +4,7 @@
 #include "controls.h"
 #include "components.h"
 #include "marble.h"
+#include "control.h"
 #include <memory>
 namespace controls
 {
@@ -15,6 +16,7 @@ namespace controls
 	색깔 관련 코드는 나중에 추가.
 	*/
 	class MarbleGenerator
+		:public Control
 	{
 	private:
 	public:

@@ -4,6 +4,7 @@
 #include "controls.h"
 #include "steering_wheel.h"
 #include "marble.h"
+#include "control.h"
 //#include "timer.h"
 
 /*
@@ -24,6 +25,7 @@ namespace controls
 		marble_ptr = unique_ptr 로 가지고 있을 것
 	*/
 	class SteeringWheelControl
+		:public Control
 	{
 	private:
 		SteeringWheel _steeringWheel;

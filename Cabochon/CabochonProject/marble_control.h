@@ -5,6 +5,7 @@
 #include "controls.h"
 #include "marble.h"
 #include "grid.h"
+#include "control.h"
 #include "shooted_marble.h"
 #include <array>
 #include <vector>
@@ -32,6 +33,7 @@ namespace controls
 */
 
 	class MarbleControl
+		:public Control
 	{
 	private:
 		//marble_ptr 에 대한 2차원 배열

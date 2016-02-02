@@ -67,6 +67,7 @@
     <ClInclude Include="angle.h" />
     <ClInclude Include="components.h" />
     <ClInclude Include="console.h" />
+    <ClInclude Include="control.h" />
     <ClInclude Include="controls.h" />
     <ClInclude Include="dx9_game_engine\constants.h" />
     <ClInclude Include="dx9_game_engine\game.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="mathematics.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="basic_singleton.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="shooted_marble.h" />
     <ClInclude Include="steering_wheel.h" />
     <ClInclude Include="steering_wheel_control.h" />

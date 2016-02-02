@@ -141,6 +141,12 @@
     <ClInclude Include="dx9_game_engine\spacewar.h">
       <Filter>헤더 파일\dx9_game_engine</Filter>
     </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>헤더 파일\frameworks</Filter>
+    </ClInclude>
+    <ClInclude Include="control.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

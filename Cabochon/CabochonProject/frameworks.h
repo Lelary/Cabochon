@@ -8,6 +8,8 @@ namespace frameworks
 	//class Windows;
 	class Console;
 
+	class Scene;
+
 	//typedef DirectX9 Graphics;
 	//typedef Windows System;
 	typedef Console System;
