@@ -68,6 +68,14 @@
     <ClInclude Include="components.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="controls.h" />
+    <ClInclude Include="dx9_game_engine\constants.h" />
+    <ClInclude Include="dx9_game_engine\game.h" />
+    <ClInclude Include="dx9_game_engine\game_error.h" />
+    <ClInclude Include="dx9_game_engine\graphics.h" />
+    <ClInclude Include="dx9_game_engine\image.h" />
+    <ClInclude Include="dx9_game_engine\input.h" />
+    <ClInclude Include="dx9_game_engine\spacewar.h" />
+    <ClInclude Include="dx9_game_engine\texture_manager.h" />
     <ClInclude Include="dynamic_singleton.h" />
     <ClInclude Include="frameworks.h" />
     <ClInclude Include="grid.h" />
@@ -89,6 +97,13 @@
   <ItemGroup>
     <ClCompile Include="angle.cpp" />
     <ClCompile Include="console.cpp" />
+    <ClCompile Include="dx9_game_engine\game.cpp" />
+    <ClCompile Include="dx9_game_engine\graphics.cpp" />
+    <ClCompile Include="dx9_game_engine\image.cpp" />
+    <ClCompile Include="dx9_game_engine\input.cpp" />
+    <ClCompile Include="dx9_game_engine\spacewar.cpp" />
+    <ClCompile Include="dx9_game_engine\texture_manager.cpp" />
+    <ClCompile Include="dx9_game_engine\winmain.cpp" />
     <ClCompile Include="grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="marble.cpp" />

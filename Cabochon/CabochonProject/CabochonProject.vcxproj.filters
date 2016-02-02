@@ -46,6 +46,12 @@
     <Filter Include="소스 파일\controls">
       <UniqueIdentifier>{6c774193-4c1a-47d6-9be6-71875f703eb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\dx9_game_engine">
+      <UniqueIdentifier>{8fc8de67-437e-4259-aaa8-e0dd7c5313d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\dx9_game_engine">
+      <UniqueIdentifier>{be02238c-c66e-4f3b-ab0f-24dad9ae035c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -111,6 +117,30 @@
     <ClInclude Include="marble_generator.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
+    <ClInclude Include="dx9_game_engine\texture_manager.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\constants.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\game.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\game_error.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\graphics.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\image.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\input.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\spacewar.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -145,6 +175,27 @@
     </ClCompile>
     <ClCompile Include="marble_generator.cpp">
       <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\winmain.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\game.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\graphics.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\image.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\input.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\spacewar.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\texture_manager.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
