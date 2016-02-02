@@ -4,6 +4,8 @@
 #include "components.h"
 #include "mathematics.h"
 #include "vector2.h"
+#include "dx9_game_engine\image.h"
+
 /*
 	2016. 1. 5
 	class Object
@@ -27,6 +29,9 @@
 	2016. 1. 16.
 	cpp 작성 1차 완료
 
+	2016. 2. 2.
+	Image, TextureManager member data 추가.
+	Position 관련 setter에서 Image의 멤버 값 또한 변경시키도록 함.
 */
 namespace components
 {
@@ -38,13 +43,8 @@ namespace components
 	private:
 		Position _position;
 		scalar _width, _height;
-
-		/*
-			2016. 1. 13.
-			스트라이프 예시
-
-			Stripe stripe;
-			*/
+		Image _image;
+		TextureManager _texture;
 
 	public:
 		Object();
@@ -73,6 +73,16 @@ namespace components
 		//void setCenterOfRotation(scalar x, scalar y);
 		void setWidth(scalar width);
 		void setHeight(scalar height);
+
+		//---------------------------------------------------
+		Image getImage() const;
+		TextureManager getTexture() const;
+		scalar getScale();
+
+		void setImage(const Image& image);
+		void setTexture(const TextureManager& textureManager);
+		void setScale(scalar scale);
+
 
 		/*
 			2016. 1. 22.

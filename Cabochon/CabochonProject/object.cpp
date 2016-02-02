@@ -69,23 +69,31 @@ scalar Object::getHeight() const
 void Object::setPosition(const Position& position)
 {
 	_position = position;
+	_image.setX(position._x);
+	_image.setY(position._y);
 }
 
 // the position of Left Top 
 void Object::setPosition(scalar x, scalar y)
 {
 	_position = { x, y };
+	_image.setX(x);
+	_image.setY(y);
 }
 
 // the position of middle, changes position property.
 void Object::setCentralPosition(const Position& position)
 {
 	_position = { position._x - _width/2.0f, position._y - _height/2.0f };
+	_image.setX(_position._x);
+	_image.setY(_position._y);
 }
 // the position of middle, changes position property.
 void Object::setCentralPosition(scalar x, scalar y)
 {
 	_position = { x - _width/2.0f, y - _height/2.0f };
+	_image.setX(_position._x);
+	_image.setY(_position._y);
 }
 
 void Object::setWidth(scalar width)
@@ -95,4 +103,22 @@ void Object::setWidth(scalar width)
 void Object::setHeight(scalar height)
 {
 	_height = height;
+}
+
+scalar Object::getScale()
+{
+	// 현재 Image 의 멤버 함수에 const가 붙어있지않음.
+	return _image.getScale();
+}
+void Object::setScale(scalar scale)
+{
+	_image.setScale(scale);
+}		
+Image Object::getImage() const
+{
+	return _image;
+}
+TextureManager Object::getTexture() const
+{
+	return _texture;
 }
