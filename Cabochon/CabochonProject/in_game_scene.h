@@ -7,6 +7,9 @@ namespace frameworks
 	class InGameScene
 		:public Scene
 	{
+	private:
+
+
 	public:
 		virtual void start();
 		virtual void update();

@@ -7,6 +7,13 @@ namespace frameworks
 	class MainScene
 		:public Scene
 	{
+	private:
+		TextureManager startButtonTexture;
+		TextureManager exitButtonTexture;
+
+		Image startButton;
+		Image exitButton;
+
 	public:
 		virtual void start();
 		virtual void update();

@@ -4,8 +4,6 @@
 #define _CABOCHON_H
 #define WIN32_LEAN_AND_MEAN
 #include "dx9_game_engine\game.h"
-#include "dx9_game_engine\texture_manager.h"
-#include "dx9_game_engine\image.h"
 #include "scene.h"
 #include "main_scene.h"
 #include "in_game_scene.h"

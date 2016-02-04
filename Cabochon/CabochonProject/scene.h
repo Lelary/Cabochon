@@ -4,6 +4,8 @@
 #define _SCENE_H
 
 #include "frameworks.h"
+#include "dx9_game_engine\texture_manager.h"
+#include "dx9_game_engine\image.h"
 
 /*
 	2016. 2. 2.
