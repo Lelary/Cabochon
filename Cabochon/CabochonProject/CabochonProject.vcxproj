@@ -101,6 +101,7 @@
     <ClInclude Include="template_dynamic_singleton.h" />
     <ClInclude Include="temporary.h" />
     <ClInclude Include="patterns.h" />
+    <ClInclude Include="texture_list.h" />
     <ClInclude Include="vector2.h" />
   </ItemGroup>
   <ItemGroup>

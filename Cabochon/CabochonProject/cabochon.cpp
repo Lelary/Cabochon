@@ -23,6 +23,9 @@ void Cabochon::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
+	if (!startButtonTexture.initialize(graphics, START_BUTTON_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
+
 	changeScene(SceneName::MainScene);		
 	
 	return;
@@ -46,16 +49,17 @@ void Cabochon::render()
 }
 void Cabochon::releaseAll()
 {
-	if (_currentScene != nullptr)
-		_currentScene->releaseAll();
+	startButtonTexture.onLostDevice();
+
+
 
 	Game::releaseAll();
 	return;
 }
 void Cabochon::resetAll()
 {
-	if (_currentScene != nullptr)
-		_currentScene->resetAll();
+	startButtonTexture.onResetDevice();
+
 
 	Game::resetAll();
 	return;
@@ -64,17 +68,17 @@ void Cabochon::resetAll()
 void Cabochon::changeScene(frameworks::SceneName newSceneName)
 {
 	// Àß¸øµÈ SceneName.
-	if (newSceneName == SceneName::Null || newSceneName == SceneName::Num) {
+	if (newSceneName == SceneName::Null || newSceneName == SceneName::Num)
 		return;
 
-		if (_currentScene != nullptr)
-			delete _currentScene;
+	if (_currentScene != nullptr)
+		delete _currentScene;
 
-		if (newSceneName == SceneName::MainScene)
-			_currentScene = new MainScene(graphics);
-		else if (newSceneName == SceneName::InGameScene)
-			_currentScene = new InGameScene(graphics);
+	if (newSceneName == SceneName::MainScene)
+		_currentScene = new MainScene();
+	else if (newSceneName == SceneName::InGameScene)
+		_currentScene = new InGameScene();
 
-		_currentScene->start();
-	}
+	_currentScene->start(graphics, &textures);
+	
 }

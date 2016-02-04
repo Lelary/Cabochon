@@ -12,8 +12,12 @@ namespace frameworks
 	class MainScene;
 	class InGameScene;
 
+	enum class TextureList;
+
 	//typedef DirectX9 Graphics;
 	//typedef Windows System;
 	typedef Console System;
 }
+class Cabochon;
+
 #endif

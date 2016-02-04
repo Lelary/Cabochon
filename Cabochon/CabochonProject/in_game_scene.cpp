@@ -3,15 +3,16 @@
 #include "in_game_scene.h"
 using frameworks::InGameScene;
 
-void InGameScene::start()
+void InGameScene::start(Graphics* graphics, std::vector<TextureManager>* textures)
 {
-	if (started)
+	if (_started)
 		return;
 
+	Scene::start(graphics, textures);
 
 
 
-	started = true;
+	_started = true;
 }
 void InGameScene::update()
 {
@@ -22,20 +23,6 @@ void InGameScene::lateUpdate()
 
 }
 void InGameScene::render()
-{
-
-}
-
-// 그래픽 디바이스가 로스트 상태가 됐을 떄 호출됨. 예약된 모든 비디오 메모리를 해제하고 그래픽 디바이스를 리셋한다.
-// Texture의 onLostDevice() 호출.
-void InGameScene::releaseAll()
-{
-
-}
-
-// 모든 표면을 재생성 하고 모든 개체를 리셋한다.
-// Texture의 onResetDevice() 호출.
-void InGameScene::resetAll()
 {
 
 }
