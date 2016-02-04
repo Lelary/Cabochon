@@ -21,8 +21,10 @@ namespace frameworks
 	protected:
 		//start 함수가 실행 되었었으면 true;
 		bool started;
+
+		Graphics* graphics;
 	public:
-		Scene():started(false){}
+		Scene(Graphics* graphics):started(false), graphics(graphics){}
 
 		virtual void start() = 0;
 		virtual void update() = 0;

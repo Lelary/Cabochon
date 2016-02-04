@@ -8,18 +8,14 @@ void MainScene::start()
 	if (started)
 		return;
 
+	if (!startButtonTexture.initialize(graphics, START_BUTTON_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
 
-	//if (!shipTexture.initialize(graphics, SHIP_IMAGE))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
+	if (!startButton.initialize(graphics, 0, 0, 0, &startButtonTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
 
-	//if (!ship.initialize(graphics, 0, 0, 0, &shipTexture))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
-
-	//planet.setX(GAME_WIDTH * 0.5f - planet.getWidth()*0.5f);
-	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
-
-	//ship.setX(GAME_WIDTH / 4);
-	//ship.setY(GAME_HEIGHT / 4);
+	startButton.setX(GAME_WIDTH / 2);
+	startButton.setY(GAME_HEIGHT * (3/4));
 
 	//ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);
 	//ship.setCurrentFrame(SHIP_START_FRAME);

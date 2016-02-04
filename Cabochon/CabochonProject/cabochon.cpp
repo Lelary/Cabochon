@@ -66,14 +66,15 @@ void Cabochon::changeScene(frameworks::SceneName newSceneName)
 	// Àß¸øµÈ SceneName.
 	if (newSceneName == SceneName::Null || newSceneName == SceneName::Num) {
 		return;
-	
-	if (_currentScene != nullptr)
-		delete _currentScene;
 
-	if (newSceneName == SceneName::MainScene)
-		_currentScene = new MainScene;
-	else if (newSceneName == SceneName::InGameScene)
-		_currentScene = new InGameScene;
+		if (_currentScene != nullptr)
+			delete _currentScene;
 
-	_currentScene->start();
+		if (newSceneName == SceneName::MainScene)
+			_currentScene = new MainScene(graphics);
+		else if (newSceneName == SceneName::InGameScene)
+			_currentScene = new InGameScene(graphics);
+
+		_currentScene->start();
+	}
 }

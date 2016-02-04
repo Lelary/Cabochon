@@ -8,6 +8,9 @@ namespace frameworks
 		:public Scene
 	{
 	private:
+		const char* START_BUTTON_IMAGE = "images\\start_button.png";
+		const char* EXIT_BUTTON_IMAGE = "images\\exit_button.png";
+
 		TextureManager startButtonTexture;
 		TextureManager exitButtonTexture;
 
@@ -15,6 +18,8 @@ namespace frameworks
 		Image exitButton;
 
 	public:
+		MainScene(Graphics* graphics) :Scene(graphics){}
+
 		virtual void start();
 		virtual void update();
 		virtual void lateUpdate();

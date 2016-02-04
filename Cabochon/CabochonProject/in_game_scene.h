@@ -11,6 +11,8 @@ namespace frameworks
 
 
 	public:
+		InGameScene(Graphics* graphics) :Scene(graphics){}
+
 		virtual void start();
 		virtual void update();
 		virtual void lateUpdate();
