@@ -1,15 +1,29 @@
-#include "cabochon.h"
+// 2016. 2. 2.
 
-Cabochon::Cabochon() {}
+#include "cabochon.h"
+using frameworks::SceneName;
+using frameworks::Scene;
+using frameworks::MainScene;
+using frameworks::InGameScene;
+
+Cabochon::Cabochon() 
+{
+	_currentScene = nullptr;
+}
 
 Cabochon::~Cabochon()
 {
+	if (_currentScene != nullptr)
+		delete _currentScene;
+
 	releaseAll();
 }
 
 void Cabochon::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
+
+	changeScene(SceneName::MainScene);		
 
 	//if (!shipTexture.initialize(graphics, SHIP_IMAGE))
 	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
@@ -33,7 +47,8 @@ void Cabochon::initialize(HWND hwnd)
 
 void Cabochon::update()
 {
-	//ship.update(frameTime);
+	if (_currentScene != nullptr)
+		_currentScene->update();
 }
 void Cabochon::ai(){}
 void Cabochon::collisions(){}
@@ -41,19 +56,41 @@ void Cabochon::render()
 {
 	graphics->spriteBegin();
 
-	//ship.draw();
+	if (_currentScene != nullptr)
+		_currentScene->render();
 
 	graphics->spriteEnd();
 }
 void Cabochon::releaseAll()
 {
-	//shipTexture.onLostDevice();
+	if (_currentScene != nullptr)
+		_currentScene->releaseAll();
+
 	Game::releaseAll();
 	return;
 }
 void Cabochon::resetAll()
 {
-	//shipTexture.onResetDevice();
+	if (_currentScene != nullptr)
+		_currentScene->resetAll();
+
 	Game::resetAll();
 	return;
+}
+
+void Cabochon::changeScene(frameworks::SceneName newSceneName)
+{
+	// Àß¸øµÈ SceneName.
+	if (newSceneName == SceneName::Null || newSceneName == SceneName::Num) {
+		return;
+	
+	if (_currentScene != nullptr)
+		delete _currentScene;
+
+	if (newSceneName == SceneName::MainScene)
+		_currentScene = new MainScene;
+	else if (newSceneName == SceneName::InGameScene)
+		_currentScene = new InGameScene;
+
+	_currentScene->start();
 }

@@ -9,6 +9,8 @@ namespace frameworks
 	class Console;
 
 	class Scene;
+	class MainScene;
+	class InGameScene;
 
 	//typedef DirectX9 Graphics;
 	//typedef Windows System;

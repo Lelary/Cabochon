@@ -147,8 +147,14 @@
     <ClInclude Include="control.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
+    <ClInclude Include="main_scene.h">
+      <Filter>헤더 파일\frameworks</Filter>
+    </ClInclude>
+    <ClInclude Include="in_game_scene.h">
+      <Filter>헤더 파일\frameworks</Filter>
+    </ClInclude>
     <ClInclude Include="cabochon.h">
-      <Filter>헤더 파일\dx9_game_engine</Filter>
+      <Filter>헤더 파일\frameworks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="cabochon.cpp">
       <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="main_scene.cpp">
+      <Filter>소스 파일\frameworks</Filter>
+    </ClCompile>
+    <ClCompile Include="in_game_scene.cpp">
+      <Filter>소스 파일\frameworks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
