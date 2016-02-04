@@ -14,8 +14,10 @@ namespace frameworks
 	public:
 		MainScene()
 			:Scene() {}
+		virtual ~MainScene(){}
 
-		virtual void start(Graphics* graphics, std::vector<TextureManager>* textures);
+
+		virtual void start(Graphics* graphics, TextureList* textureList);
 		virtual void update();
 		virtual void lateUpdate();
 		virtual void render();

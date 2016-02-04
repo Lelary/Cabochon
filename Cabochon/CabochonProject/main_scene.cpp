@@ -3,14 +3,15 @@
 #include "main_scene.h"
 using frameworks::MainScene;
 using frameworks::TextureList;
-void MainScene::start(Graphics* graphics, std::vector<TextureManager>* textures)
+
+void MainScene::start(Graphics* graphics, TextureList* textureList)
 {
 	if (_started)
 		return;
 
-	Scene::start(graphics, textures);
+	Scene::start(graphics, textureList);
 	
-	if (!startButton.initialize(_graphics, 0, 0, 0, &(*textures)[static_cast<int>(TextureList::BUTTONS)]))
+	if (!startButton.initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::StartButton)))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
 
 	startButton.setX(GAME_WIDTH / 2);

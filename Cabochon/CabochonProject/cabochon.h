@@ -7,7 +7,7 @@
 #include "scene.h"
 #include "main_scene.h"
 #include "in_game_scene.h"
-#include <vector>
+#include "texture_list.h"
 
 class Cabochon : public Game
 {
@@ -16,13 +16,11 @@ private:
 	frameworks::Scene* _currentScene;
 	void changeScene(frameworks::SceneName newSceneName);
 
+	frameworks::TextureList textureList;
 
-	const char* START_BUTTON_IMAGE = "images\\start_button.png";
-	const char* EXIT_BUTTON_IMAGE = "images\\exit_button.png";
+	//TextureManager startButtonTexture;
 
-	TextureManager startButtonTexture;
-
-	std::vector<TextureManager> textures;
+	//std::vector<TextureManager> textures;
 
 public:
 

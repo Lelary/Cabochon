@@ -6,7 +6,6 @@
 #include "frameworks.h"
 #include "dx9_game_engine\texture_manager.h"
 #include "dx9_game_engine\image.h"
-#include <vector>
 #include "dx9_game_engine\game_error.h"
 #include "texture_list.h"
 /*
@@ -24,23 +23,12 @@ namespace frameworks
 		//start 함수가 실행 되었었으면 true;
 		bool _started;
 		Graphics* _graphics;
-		std::vector<TextureManager>* _textures;
-
+		TextureList* _textureList;
 	public:
-		Scene()
-			:_started(false), _graphics(nullptr), _textures(nullptr){}
+		Scene();
+		virtual ~Scene();
 
-		virtual void start(Graphics* graphics, std::vector<TextureManager>* textures)
-		{
-			if (graphics != nullptr)
-				_graphics = graphics;
-			else
-				throw(GameError(gameErrorNS::FATAL_ERROR, "nullptr!"));
-			if (textures != nullptr)
-				_textures = textures;
-			else
-				throw(GameError(gameErrorNS::FATAL_ERROR, "nullptr!"));
-		}
+		virtual void start(Graphics* graphics, TextureList* textureList);
 		virtual void update() = 0;
 		virtual void lateUpdate() = 0;
 		virtual void render() = 0;

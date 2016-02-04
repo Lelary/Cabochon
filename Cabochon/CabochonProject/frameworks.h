@@ -12,7 +12,7 @@ namespace frameworks
 	class MainScene;
 	class InGameScene;
 
-	enum class TextureList;
+	class TextureList;
 
 	//typedef DirectX9 Graphics;
 	//typedef Windows System;

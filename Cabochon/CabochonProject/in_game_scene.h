@@ -11,9 +11,11 @@ namespace frameworks
 
 
 	public:
-		InGameScene() :Scene(){}
+		InGameScene() 
+			:Scene() {}
+		virtual ~InGameScene(){}
 
-		virtual void start(Graphics* graphics, std::vector<TextureManager>* textures);
+		virtual void start(Graphics* graphics, TextureList* textureList);
 		virtual void update();
 		virtual void lateUpdate();
 		virtual void render();

@@ -2,13 +2,14 @@
 
 #include "in_game_scene.h"
 using frameworks::InGameScene;
+using frameworks::TextureList;
 
-void InGameScene::start(Graphics* graphics, std::vector<TextureManager>* textures)
+void InGameScene::start(Graphics* graphics, TextureList* textureList)
 {
 	if (_started)
 		return;
 
-	Scene::start(graphics, textures);
+	Scene::start(graphics, textureList);
 
 
 

@@ -123,9 +123,11 @@
     <ClCompile Include="marble_control.cpp" />
     <ClCompile Include="marble_generator.cpp" />
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="shooted_marble.cpp" />
     <ClCompile Include="steering_wheel.cpp" />
     <ClCompile Include="steering_wheel_control.cpp" />
+    <ClCompile Include="texture_list.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

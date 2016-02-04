@@ -23,8 +23,7 @@ void Cabochon::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
-	if (!startButtonTexture.initialize(graphics, START_BUTTON_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
+	textureList.loadTextures(graphics);
 
 	changeScene(SceneName::MainScene);		
 	
@@ -49,18 +48,13 @@ void Cabochon::render()
 }
 void Cabochon::releaseAll()
 {
-	startButtonTexture.onLostDevice();
-
-
-
+	textureList.onLostDevice();
 	Game::releaseAll();
 	return;
 }
 void Cabochon::resetAll()
 {
-	startButtonTexture.onResetDevice();
-
-
+	textureList.onResetDevice();
 	Game::resetAll();
 	return;
 }
@@ -79,6 +73,6 @@ void Cabochon::changeScene(frameworks::SceneName newSceneName)
 	else if (newSceneName == SceneName::InGameScene)
 		_currentScene = new InGameScene();
 
-	_currentScene->start(graphics, &textures);
+	_currentScene->start(graphics, &textureList);
 	
 }

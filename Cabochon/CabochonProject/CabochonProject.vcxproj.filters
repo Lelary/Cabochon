@@ -224,5 +224,11 @@
     <ClCompile Include="in_game_scene.cpp">
       <Filter>소스 파일\frameworks</Filter>
     </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>소스 파일\frameworks</Filter>
+    </ClCompile>
+    <ClCompile Include="texture_list.cpp">
+      <Filter>소스 파일\frameworks</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
