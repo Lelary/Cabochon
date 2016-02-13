@@ -36,6 +36,9 @@ namespace frameworks
 		virtual void lateUpdate() = 0;
 		virtual void render() = 0;
 
+		virtual void releaseAll() = 0;
+		virtual void resetAll() = 0;
+
 		virtual SceneName getNextScene();
 	};
 }

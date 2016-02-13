@@ -20,5 +20,7 @@ namespace frameworks
 		virtual void lateUpdate();
 		virtual void render();
 
+		virtual void releaseAll();
+		virtual void resetAll();
 	};
 }

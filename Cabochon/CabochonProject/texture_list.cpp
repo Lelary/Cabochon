@@ -8,7 +8,7 @@ TextureList::TextureList()
 }
 TextureList::~TextureList()
 {
-
+	onLostDevice();
 }
 
 void TextureList::loadTextures(Graphics* graphics)

@@ -34,7 +34,7 @@ Text::Text()
 
 Text::~Text()
 {
-	Image::Image();
+	Image::~Image();
 }
 
 bool Text::initialize(Graphics*g, const char* file)

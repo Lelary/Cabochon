@@ -10,7 +10,7 @@ MainScene::MainScene()
 }
 MainScene::~MainScene()
 {
-
+	releaseAll();
 }
 void MainScene::start(Graphics* graphics, Input* input, TextureList* textureList)
 {
@@ -25,6 +25,8 @@ void MainScene::start(Graphics* graphics, Input* input, TextureList* textureList
 	startButton.setX(GAME_WIDTH / 2 - (startButton.getWidth()/2.0f));
 	startButton.setY(GAME_HEIGHT*(1.0f / 2.0f));
 	startButton.setScale(1);
+
+
 
 	//ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);
 	//ship.setCurrentFrame(SHIP_START_FRAME);
@@ -47,4 +49,14 @@ void MainScene::lateUpdate()
 void MainScene::render()
 {
 	startButton.draw();
+}
+
+void MainScene::releaseAll()
+{
+
+}
+
+void MainScene::resetAll()
+{
+
 }

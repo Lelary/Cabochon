@@ -4,6 +4,14 @@
 using frameworks::InGameScene;
 using frameworks::TextureList;
 
+InGameScene::InGameScene()
+{
+
+}
+InGameScene::~InGameScene()
+{
+	releaseAll();
+}
 void InGameScene::start(Graphics* graphics, Input* input, TextureList* textureList)
 {
 	if (_started)
@@ -24,6 +32,16 @@ void InGameScene::lateUpdate()
 
 }
 void InGameScene::render()
+{
+
+}
+
+void InGameScene::releaseAll()
+{
+
+}
+
+void InGameScene::resetAll()
 {
 
 }
