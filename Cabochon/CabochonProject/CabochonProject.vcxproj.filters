@@ -72,9 +72,6 @@
     <ClInclude Include="object.h">
       <Filter>헤더 파일\components</Filter>
     </ClInclude>
-    <ClInclude Include="console.h">
-      <Filter>헤더 파일\frameworks</Filter>
-    </ClInclude>
     <ClInclude Include="basic_singleton.h">
       <Filter>헤더 파일\pattern</Filter>
     </ClInclude>
@@ -159,12 +156,18 @@
     <ClInclude Include="texture_list.h">
       <Filter>헤더 파일\frameworks</Filter>
     </ClInclude>
+    <ClInclude Include="dx9_game_engine\console.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\text.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9_game_engine\text_dx.h">
+      <Filter>헤더 파일\dx9_game_engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일\frameworks</Filter>
-    </ClCompile>
-    <ClCompile Include="console.cpp">
       <Filter>소스 파일\frameworks</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
@@ -229,6 +232,15 @@
     </ClCompile>
     <ClCompile Include="texture_list.cpp">
       <Filter>소스 파일\frameworks</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\text_dx.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\text.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9_game_engine\console.cpp">
+      <Filter>소스 파일\dx9_game_engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
