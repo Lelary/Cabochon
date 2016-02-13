@@ -20,14 +20,18 @@ void MainScene::start(Graphics* graphics, Input* input, TextureList* textureList
 
 	Scene::start(graphics, input, textureList);
 	
-	if (!startButton.initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::StartButton)))
+	if (!_startButton.initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::StartButton)))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
+	if (!_exitButton.initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::ExitButton)))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
 
-	startButton.setX(GAME_WIDTH / 2 - (startButton.getWidth()/2.0f));
-	startButton.setY(GAME_HEIGHT*(1.0f / 2.0f));
-	startButton.setScale(1);
+	_startButton.setX(GAME_WIDTH / 2 - (_startButton.getWidth()/2.0f));
+	_startButton.setY(GAME_HEIGHT*(1.0f / 2.0f));
 
+	_exitButton.setX(GAME_WIDTH / 2 - (_exitButton.getWidth() / 2.0f));
+	_exitButton.setY(GAME_HEIGHT*(1.0f / 2.0f)+_exitButton.getHeight()*2);
 
+	_text.initialize(_graphics, 15, false, false, frameworks::default_settings::FONT);
 
 	//ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);
 	//ship.setCurrentFrame(SHIP_START_FRAME);
@@ -45,19 +49,23 @@ void MainScene::update()
 }
 void MainScene::lateUpdate()
 {
-
+	
 }
 void MainScene::render()
 {
-	startButton.draw();
+	_startButton.draw();
+	_exitButton.draw();
+	_text.print(" Press Enter Key to Start Game. \n \
+				The Button Images are Dummy yet. TT. \
+				", 10, 10);
 }
 
 void MainScene::releaseAll()
 {
-
+	_text.onLostDevice();
 }
 
 void MainScene::resetAll()
 {
-
+	_text.onResetDevice();
 }

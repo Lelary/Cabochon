@@ -8,7 +8,7 @@ namespace frameworks
 		:public Scene
 	{
 	private:
-
+		Image _marble;
 
 	public:
 		InGameScene();

@@ -14,11 +14,12 @@ namespace frameworks
 	public:
 		//enum TextureName { None = -1, Buttons = 0, Marbles, SteeringWheel, Num };
 
-		enum TextureName { None = -1, StartButton = 0, ExitButton, Num };
+		enum TextureName { None = -1, StartButton = 0, ExitButton, Marble, Num };
 
 	private:
 		const char* START_BUTTON_IMAGE = "images\\start_button.png";
 		const char* EXIT_BUTTON_IMAGE = "images\\exit_button.png";
+		const char* MARBLE_IMAGE = "images\\GalaxyMarble.png";
 
 		std::array<TextureManager, Num> _textures;
 

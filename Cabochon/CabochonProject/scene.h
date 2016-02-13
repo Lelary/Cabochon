@@ -16,6 +16,13 @@
 */
 namespace frameworks
 {
+	namespace default_settings
+	{
+		const char FONT[] = "Courier New";
+		const int POINT_SIZE = 14;
+		const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);
+	}
+
 	enum class SceneName { Null = -1, MainScene = 0, InGameScene, Num };
 
 	class Scene

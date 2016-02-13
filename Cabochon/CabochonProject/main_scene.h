@@ -9,11 +9,10 @@ namespace frameworks
 		:public Scene
 	{
 	private:
-		Image startButton;
-		Image exitButton;
+		Image _startButton;
+		Image _exitButton;
 
-		TextDX text;
-
+		TextDX _text;
 	public:
 		MainScene();
 		virtual ~MainScene();

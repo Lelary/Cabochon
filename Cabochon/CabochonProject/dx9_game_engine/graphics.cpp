@@ -13,7 +13,8 @@ Graphics::Graphics()
 	// 폭 및 높이는 initialize()에서 바뀐다.
 	width = GAME_WIDTH;
 	height = GAME_HEIGHT;
-	backColor = SETCOLOR_ARGB(255, 0, 0, 128); // dark blue
+	//backColor = SETCOLOR_ARGB(255, 0, 0, 128); // dark blue
+	backColor = SETCOLOR_ARGB(255, 0, 0, 0); // black
 }
 
 Graphics::~Graphics()

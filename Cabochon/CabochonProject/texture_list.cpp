@@ -19,6 +19,9 @@ void TextureList::loadTextures(Graphics* graphics)
 	if (!_textures[ExitButton].initialize(graphics, EXIT_BUTTON_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
 
+	if (!_textures[Marble].initialize(graphics, MARBLE_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
+
 	for (int i = 0; i < Num; i++)
 	{
 		if (_textures[i].getTexture() == NULL)
