@@ -12,12 +12,22 @@
 #include "input.h"
 #include "constants.h"
 #include "game_error.h"
+#include "text_dx.h"
+#include "console.h"
+
+namespace gameNS
+{
+	const char FONT[] = "Courier New";
+	const int POINT_SIZE = 14;
+	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);
+}
 
 class Game
 {
 protected :
 	Graphics* graphics;
 	Input* input;
+	Console* console;
 	HWND hwnd;
 	HRESULT hr;
 
@@ -28,9 +38,14 @@ protected :
 
 	float frameTime;	// 마지막 프레임에 필요한 시간.
 	float fps;
+	TextDX dxFont;
+	bool fpsOn;
+
 	DWORD sleepTime;	// 프레임 사이에 기다릴 밀리초 단위 시간
 	bool paused;
 	bool initialized;
+
+	std::string command;
 
 public :
 	Game();
@@ -52,6 +67,9 @@ public :
 
 	// 예약된 모든 메모리를 삭제한다.
 	virtual void deleteAll();
+
+	// 콘솔 명령을 처리한다.
+	virtual void consoleCommand();
 
 	// 게임 아이템을 렌더링 한다.
 	virtual void renderGame();

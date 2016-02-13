@@ -10,7 +10,7 @@
 
 class Image
 {
-private:
+protected:
 	Graphics* graphics;
 	TextureManager* textureManager;
 	SpriteData spriteData;
@@ -54,7 +54,7 @@ public:
 		pre : spriteBegin()이 호출된다.
 		post : spriteEnd()가 호출된다.
 	*/
-	virtual void draw(SpriteData sd, COLOR_ARGB color);
+	virtual void draw(SpriteData sd, COLOR_ARGB color=graphicsNS::WHITE);
 
 	// 게임 아이템을 갱신한다.
 	virtual void update(float frameTime);

@@ -10,6 +10,9 @@ Game::Game()
 	// 추가 초기화 작업은 input->initialize()를 호출한 뒤에 처리한다.
 	paused = false;
 	graphics = NULL;
+	console = NULL;
+	fps = 100;
+	fpsOn = false;
 	initialized = false;
 }
 
@@ -88,6 +91,16 @@ void Game::initialize(HWND hw)
 	// Input 객체를 초기화한다. 또한 마우스를 캡쳐하지 않는다.
 	input->initialize(hwnd, false);
 
+	// 콘솔을 초기화 한다.
+	console = new Console();
+	console->initialize(graphics, input);
+	console->print("---Console---");
+
+	// DirectX 글꼴 초기화
+	if (dxFont.initialize(graphics, gameNS::POINT_SIZE, false, false, gameNS::FONT) == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
+	dxFont.setFontColor(gameNS::FONT_COLOR);
+
 	// 고성능의 타이머 사용을 시도한다.
 	if (QueryPerformanceFrequency(&timerFreq) == false)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
@@ -128,19 +141,30 @@ void Game::handleLostGraphicsDevice()
 
 void Game::renderGame()
 {
-	// 렌더링 시작.
-	if (SUCCEEDED(graphics->beginScene()))
+	const int BUF_SIZE = 20;
+	static char buffer[BUF_SIZE];
+
+	if (SUCCEEDED(graphics->beginScene()))	// 렌더링 시작.
 	{
 		// Derived class 에서 호출. (Pure Virtual Function).
 		render();
 
-		//렌더링 끝.
-		graphics->endScene();
+		graphics->spriteBegin();			// 스프라이트 그리기 시작.
+		if (fpsOn)
+		{
+			// fps를 C string 으로 변환한다.
+			_snprintf_s(buffer, BUF_SIZE, "fps %d ", (int)fps);
+			dxFont.print(buffer, GAME_WIDTH - 100, GAME_HEIGHT - 28);
+		}
+		
+		graphics->spriteEnd();				// 스프라이트 그리기 끝.
+		console->draw();					// 콘솔이 그려지고 게임의 상단에 나타난다.
+
+		graphics->endScene();				//렌더링 끝.
 	}
 	handleLostGraphicsDevice();
 
-	// 백버퍼 표시.
-	graphics->showBackBuffer();
+	graphics->showBackBuffer();				// 백버퍼 표시.
 }
 
 void Game::run(HWND hwnd)
@@ -168,7 +192,6 @@ void Game::run(HWND hwnd)
 	if (frameTime > MAX_FRAME_TIME)
 		frameTime = MAX_FRAME_TIME;
 	timeStart = timeEnd;
-	input->readControllers();
 
 	// 일시 중지 상태가 아니라면 갱신.
 	if (!paused)
@@ -181,18 +204,63 @@ void Game::run(HWND hwnd)
 
 	}
 	renderGame();
+
+	// 콘솔 키를 확인 한다.
+	if (input->wasKeyPressed(CONSOLE_KEY))
+	{
+		console->showHide();
+		// 콘솔이 보인다면 게임을 일시정지 한다.
+		paused = console->getVisible();
+	}
+	// 사용자가 입력한 콘솔 명령을 처리한다.
+	consoleCommand();
+
+	// 컨트롤러 상태를 읽는다.
+	input->readControllers();
+
 	// 모든 키 확인이 끝난 후에 입력을 지운다.
 	input->clear(inputNS::KEYS_PRESSED);
 }
 
+/*
+	콘솔 명령을 처리한다.
+	새 콘솔 명령이 추가 되면 상속받은 클래스에서 이 함수를 오버라이딩 한다.
+*/
+void Game::consoleCommand()
+{
+	// 콘솔로부터 명령을 얻는다.
+	command = console->getCommand();
+	if (command == "")
+		return;
+	if (command == "help")
+	{
+		console->print("Console Commands:");
+		console->print("fps - toggle display of frames per second");
+		return;
+	}
+
+	if (command == "fps")
+	{
+		fpsOn = !fpsOn;
+		if (fpsOn)
+			console->print("fps On");
+		else
+			console->print("fps Off");
+	}
+}
+
 void Game::releaseAll()
 {
-
+	SAFE_ON_LOST_DEVICE(console);
+	dxFont.onLostDevice();
+	return;
 }
 
 void Game::resetAll()
 {
-
+	dxFont.onResetDevice();
+	SAFE_ON_RESET_DEVICE(console);
+	return;
 }
 
 void Game::deleteAll()
@@ -200,5 +268,6 @@ void Game::deleteAll()
 	releaseAll();			//모든 Graphics item에 대해 onLostDevice()를 호출한다.
 	SAFE_DELETE(graphics);
 	SAFE_DELETE(input);
+	SAFE_DELETE(console);
 	initialized = false;
 }

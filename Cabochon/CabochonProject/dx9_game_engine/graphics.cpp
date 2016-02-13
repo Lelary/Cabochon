@@ -1,6 +1,6 @@
 // 2016. 1. 30.
 // Reference : "2D Game Programming" , Charles Kelly, 2011
-// 위 Reference의 코드를 타이핑함. Ch 3, Ch4, Ch5
+// 위 Reference의 코드를 타이핑함. Ch 3, Ch4, Ch5, Ch8
 
 #include "graphics.h"
 
@@ -78,6 +78,12 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
 	result = D3DXCreateSprite(device3d, &sprite);
 	if (FAILED(result))
 		throw (GameError(gameErrorNS::FATAL_ERROR, "Error creating Direct3D sprite"));
+
+	// 프리미티브의 알파 블렌딩을 위한 설정
+	device3d->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	device3d->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	device3d->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 }
 
 void Graphics::initD3Dpp()
@@ -124,7 +130,13 @@ HRESULT Graphics::reset()
 {
 	result = E_FAIL;
 	initD3Dpp(); // D3D Presentation Parameter를 초기화 한다.
+	sprite->OnLostDevice();
 	result = device3d->Reset(&d3dpp); // 그래픽 디바이스 리셋을 시도한다.
+	// 프리미티브의 알파 블렌딩을 위한 설정
+	device3d->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	device3d->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	device3d->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	sprite->OnResetDevice();
 	return result;
 }
 
@@ -212,6 +224,50 @@ HRESULT Graphics::loadTexture(const char* filename, COLOR_ARGB transcolor, UINT&
 	return result;
 }
 
+HRESULT Graphics::loadTextureSystemMem(const char* filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture)
+{
+	// 비트맵 파일 정보를 읽기 위한 구조체
+	D3DXIMAGE_INFO info;
+	result = E_FAIL;
+
+	try{
+		if (filename == NULL)
+		{
+			texture = NULL;
+			return D3DERR_INVALIDCALL;
+		}
+
+		// 비트맵 파일로부터 폭과 높이를 가져온다.
+		result = D3DXGetImageInfoFromFile(filename, &info);
+		if (result != D3D_OK)
+			return result;
+		width = info.Width;
+		height = info.Height;
+
+		// 불러온 비트맵 이미지 파일로부터 새 텍스처를 생성한다.
+		result = D3DXCreateTextureFromFileEx(
+			device3d,			// 3d 디바이스
+			filename,			// 비트맵 파일명
+			info.Width,			// 비트맵 이미지 폭
+			info.Height,		// 비트맵 이미지 높이
+			1,					// 밉-맵 레벨(1은 체인 없음)
+			0,					// 사용
+			D3DFMT_UNKNOWN,		// 표면 형식(기본 값)
+			D3DPOOL_SYSTEMMEM,	// 시스템은 락을 걸 수 없다.
+			D3DX_DEFAULT,		// 이미지 필터
+			D3DX_DEFAULT,		// 밉 필터
+			transcolor,			// 투명도를 위한 색상 키
+			&info,				// 비트맵 파일 정보(불러온 파일로부터)
+			NULL,				// 색상 팔레트
+			&texture);			// 텍스처 목적지
+	}
+	catch (...)
+	{
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in Graphics;;loadTexture"));
+	}
+	return result;
+}
+
 void Graphics::drawSprite(const SpriteData& spriteData, COLOR_ARGB color)
 {
 	if (spriteData.texture == NULL)
@@ -253,4 +309,43 @@ void Graphics::spriteBegin()
 void Graphics::spriteEnd()
 {
 	sprite->End();
+}
+
+HRESULT Graphics::createVertexBuffer(VertexC verts[], UINT size, LP_VERTEXBUFFER& vertexBuffer)
+{
+	HRESULT result = E_FAIL;
+
+	// 정점 버퍼 생성
+	result = device3d->CreateVertexBuffer(size, D3DUSAGE_WRITEONLY, D3DFVF_VERTEX, D3DPOOL_DEFAULT, &vertexBuffer, NULL);
+	if (FAILED(result))
+		return result;
+	void* ptr;
+
+	// 데이터가 안으로 전송 되기 전에 버퍼에 Lock을 걸어야 한다.
+	result = vertexBuffer->Lock(0, size, (void**)&ptr, 0);
+	if (FAILED(result))
+		return result;
+	// 정점 데이터를 버퍼에 복사한다.
+	memcpy(ptr, verts, size);
+	// 버퍼에 걸린 Lock을 해제한다.
+	vertexBuffer->Unlock();
+	return result;
+}
+
+bool Graphics::drawQuad(LP_VERTEXBUFFER vertexBuffer)
+{
+	HRESULT result = E_FAIL;
+	if (vertexBuffer == NULL)
+		return false;
+
+	device3d->SetRenderState(D3DRS_ALPHABLENDENABLE, true);				// 알파 블렌딩 활성화
+	device3d->SetStreamSource(0, vertexBuffer, 0, sizeof(VertexC));
+	device3d->SetFVF(D3DFVF_VERTEX);
+	result = device3d->DrawPrimitive(D3DPT_TRIANGLEFAN, 0, 2);
+	device3d->SetRenderState(D3DRS_ALPHABLENDENABLE, false);			// 알파 블렌딩 비활성화
+
+	if (FAILED(result))
+		return false;
+
+	return true;
 }

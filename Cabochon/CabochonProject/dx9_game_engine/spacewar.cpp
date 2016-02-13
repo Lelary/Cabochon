@@ -1,4 +1,3 @@
-/*
 // 2016. 1. 30.
 // Reference : "2D Game Programming" , Charles Kelly, 2011
 // 위 Reference의 코드를 타이핑함. Ch 4.
@@ -91,4 +90,7 @@ void Spacewar::resetAll()
 	return;
 }
 
-*/
+
+
+
+
