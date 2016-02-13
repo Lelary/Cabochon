@@ -8,7 +8,7 @@ namespace frameworks
 		:public Scene
 	{
 	private:
-		Image _marble;
+		std::array<Image, 8> _marbles;
 
 	public:
 		InGameScene();

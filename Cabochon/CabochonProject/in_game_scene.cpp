@@ -20,15 +20,17 @@ void InGameScene::start(Graphics* graphics, Input* input, TextureList* textureLi
 
 	Scene::start(graphics, input, textureList);
 
+	float newWidth = 50;
 
-	if (!_marble.initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::Marble)))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
+	for (int i = 0; i < _marbles.size(); i++)
+	{
+		if (!_marbles[i].initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::Marble)))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
 
-	float newWidth = 64;
-	_marble.setX(100);
-	_marble.setY(100);
-	_marble.setScale(newWidth / _marble.getWidth());
-
+		_marbles[i].setX(i*newWidth);
+		_marbles[i].setY(0);
+		_marbles[i].setScale(newWidth / _marbles[i].getWidth());
+	}
 	_started = true;
 }
 void InGameScene::update()
@@ -41,7 +43,8 @@ void InGameScene::lateUpdate()
 }
 void InGameScene::render()
 {
-	_marble.draw();
+	for (int i = 0; i < _marbles.size(); i++)
+		_marbles[i].draw();
 }
 
 void InGameScene::releaseAll()
