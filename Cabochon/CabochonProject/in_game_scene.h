@@ -11,9 +11,8 @@ namespace frameworks
 
 
 	public:
-		InGameScene() 
-			:Scene() {}
-		virtual ~InGameScene(){}
+		InGameScene();
+		virtual ~InGameScene();
 
 		virtual void start(Graphics* graphics, Input* input, TextureList* textureList);
 		virtual void update();

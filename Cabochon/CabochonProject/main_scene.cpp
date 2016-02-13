@@ -5,6 +5,7 @@ using frameworks::MainScene;
 using frameworks::TextureList;
 
 MainScene::MainScene()
+	:Scene()
 {
 	
 }
