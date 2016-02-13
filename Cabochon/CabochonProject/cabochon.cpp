@@ -34,6 +34,8 @@ void Cabochon::update()
 {
 	if (_currentScene != nullptr)
 		_currentScene->update();
+	if (_currentScene->getNextScene() != SceneName::Null)
+		changeScene(_currentScene->getNextScene());
 }
 void Cabochon::ai(){}
 void Cabochon::collisions(){}
@@ -73,6 +75,6 @@ void Cabochon::changeScene(frameworks::SceneName newSceneName)
 	else if (newSceneName == SceneName::InGameScene)
 		_currentScene = new InGameScene();
 
-	_currentScene->start(graphics, &textureList);
+	_currentScene->start(graphics, input, &textureList);
 	
 }

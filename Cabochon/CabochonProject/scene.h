@@ -6,6 +6,7 @@
 #include "frameworks.h"
 #include "dx9_game_engine\texture_manager.h"
 #include "dx9_game_engine\image.h"
+#include "dx9_game_engine\input.h"
 #include "dx9_game_engine\game_error.h"
 #include "texture_list.h"
 /*
@@ -22,16 +23,20 @@ namespace frameworks
 	protected:
 		//start 함수가 실행 되었었으면 true;
 		bool _started;
+		SceneName _nextScene;
 		Graphics* _graphics;
+		Input* _input;
 		TextureList* _textureList;
 	public:
 		Scene();
 		virtual ~Scene();
 
-		virtual void start(Graphics* graphics, TextureList* textureList);
+		virtual void start(Graphics* graphics, Input* input, TextureList* textureList);
 		virtual void update() = 0;
 		virtual void lateUpdate() = 0;
 		virtual void render() = 0;
+
+		virtual SceneName getNextScene();
 	};
 }
 

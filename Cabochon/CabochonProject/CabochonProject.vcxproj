@@ -80,7 +80,6 @@
     <ClInclude Include="dx9_game_engine\graphics.h" />
     <ClInclude Include="dx9_game_engine\image.h" />
     <ClInclude Include="dx9_game_engine\input.h" />
-    <ClInclude Include="dx9_game_engine\spacewar.h" />
     <ClInclude Include="dx9_game_engine\text.h" />
     <ClInclude Include="dx9_game_engine\texture_manager.h" />
     <ClInclude Include="dx9_game_engine\text_dx.h" />
@@ -114,7 +113,6 @@
     <ClCompile Include="dx9_game_engine\graphics.cpp" />
     <ClCompile Include="dx9_game_engine\image.cpp" />
     <ClCompile Include="dx9_game_engine\input.cpp" />
-    <ClCompile Include="dx9_game_engine\spacewar.cpp" />
     <ClCompile Include="dx9_game_engine\text.cpp" />
     <ClCompile Include="dx9_game_engine\texture_manager.cpp" />
     <ClCompile Include="dx9_game_engine\text_dx.cpp" />

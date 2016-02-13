@@ -15,7 +15,7 @@ namespace frameworks
 			:Scene() {}
 		virtual ~InGameScene(){}
 
-		virtual void start(Graphics* graphics, TextureList* textureList);
+		virtual void start(Graphics* graphics, Input* input, TextureList* textureList);
 		virtual void update();
 		virtual void lateUpdate();
 		virtual void render();

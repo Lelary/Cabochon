@@ -4,19 +4,27 @@
 using frameworks::MainScene;
 using frameworks::TextureList;
 
-void MainScene::start(Graphics* graphics, TextureList* textureList)
+MainScene::MainScene()
+{
+	
+}
+MainScene::~MainScene()
+{
+
+}
+void MainScene::start(Graphics* graphics, Input* input, TextureList* textureList)
 {
 	if (_started)
 		return;
 
-	Scene::start(graphics, textureList);
+	Scene::start(graphics, input, textureList);
 	
 	if (!startButton.initialize(_graphics, 0, 0, 0, _textureList->getTexture(TextureList::TextureName::StartButton)))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
 
-	startButton.setX(GAME_WIDTH / 2);
-	startButton.setY(GAME_HEIGHT * (3/4));
-	startButton.setScale(5);
+	startButton.setX(GAME_WIDTH / 2 - (startButton.getWidth()/2.0f));
+	startButton.setY(GAME_HEIGHT*(1.0f / 2.0f));
+	startButton.setScale(1);
 
 	//ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);
 	//ship.setCurrentFrame(SHIP_START_FRAME);
@@ -27,7 +35,10 @@ void MainScene::start(Graphics* graphics, TextureList* textureList)
 }
 void MainScene::update()
 {
-
+	if (_input->isKeyDown(ENTER_KEY))
+	{
+		_nextScene = SceneName::InGameScene;
+	}
 }
 void MainScene::lateUpdate()
 {
@@ -35,5 +46,5 @@ void MainScene::lateUpdate()
 }
 void MainScene::render()
 {
-
+	startButton.draw();
 }

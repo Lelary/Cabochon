@@ -4,12 +4,12 @@
 using frameworks::InGameScene;
 using frameworks::TextureList;
 
-void InGameScene::start(Graphics* graphics, TextureList* textureList)
+void InGameScene::start(Graphics* graphics, Input* input, TextureList* textureList)
 {
 	if (_started)
 		return;
 
-	Scene::start(graphics, textureList);
+	Scene::start(graphics, input, textureList);
 
 
 

@@ -135,9 +135,6 @@
     <ClInclude Include="dx9_game_engine\input.h">
       <Filter>헤더 파일\dx9_game_engine</Filter>
     </ClInclude>
-    <ClInclude Include="dx9_game_engine\spacewar.h">
-      <Filter>헤더 파일\dx9_game_engine</Filter>
-    </ClInclude>
     <ClInclude Include="scene.h">
       <Filter>헤더 파일\frameworks</Filter>
     </ClInclude>
@@ -210,9 +207,6 @@
       <Filter>소스 파일\dx9_game_engine</Filter>
     </ClCompile>
     <ClCompile Include="dx9_game_engine\input.cpp">
-      <Filter>소스 파일\dx9_game_engine</Filter>
-    </ClCompile>
-    <ClCompile Include="dx9_game_engine\spacewar.cpp">
       <Filter>소스 파일\dx9_game_engine</Filter>
     </ClCompile>
     <ClCompile Include="dx9_game_engine\texture_manager.cpp">
