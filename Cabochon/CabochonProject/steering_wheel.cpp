@@ -43,8 +43,8 @@ void SteeringWheel::initialize(TextureList& textureList)
 	_images[0].setFrames(1, 1);
 	_images[0].setCurrentFrame(1);
 	_images[0].setLoop(false);
-	_images[0].setX(getPosition()._x);
-	_images[0].setY(getPosition()._y);
+	_images[0].setX(getPosition()._x+20);
+	_images[0].setY(400);
 	_images[0].setScale(0.5);
 
 
@@ -54,16 +54,16 @@ void SteeringWheel::initialize(TextureList& textureList)
 	_images[1].setFrames(0, 0);
 	_images[1].setCurrentFrame(0);
 	_images[1].setLoop(false);
-	_images[1].setX(getPosition()._x);
-	_images[1].setY(getPosition()._y+100);
+	_images[1].setX(getPosition()._x+100);
+	_images[1].setY(350);
 	_images[1].setScale(0.5);
 
 	_images[2].initialize(textureList.getGraphics(), 256, 256, 2, textureList.getTexture(TextureList::TextureName::SteeringWheel));
 	_images[2].setFrames(1, 1);
 	_images[2].setCurrentFrame(1);
 	_images[2].setLoop(false);
-	_images[2].setX(getPosition()._x);
-	_images[2].setY(getPosition()._y+200);
+	_images[2].setX(getPosition()._x+100);
+	_images[2].setY(320);
 	_images[2].setScale(0.5);
 
 
