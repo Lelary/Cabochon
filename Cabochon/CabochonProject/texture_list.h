@@ -6,6 +6,7 @@
 #include "dx9_game_engine\texture_manager.h"
 #include "frameworks.h"
 #include <array>
+#include <string>
 
 namespace frameworks
 {
@@ -14,13 +15,10 @@ namespace frameworks
 	public:
 		//enum TextureName { None = -1, Buttons = 0, Marbles, SteeringWheel, Num };
 
-		enum TextureName { None = -1, StartButton = 0, ExitButton, Marble, Num };
+		enum TextureName { None = -1, StartButton = 0, ExitButton, Marbles, SteeringWheel, BackGroundCity, BackGroundMountain, Num };
 
 	private:
-		const char* START_BUTTON_IMAGE = "images\\start_button.png";
-		const char* EXIT_BUTTON_IMAGE = "images\\exit_button.png";
-		const char* MARBLE_IMAGE = "images\\GalaxyMarble.png";
-
+		std::string _textureFiles[TextureName::Num];
 		std::array<TextureManager, Num> _textures;
 
 	public:

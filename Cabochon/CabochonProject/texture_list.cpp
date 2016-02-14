@@ -4,7 +4,14 @@ using frameworks::TextureList;
 
 TextureList::TextureList()
 {
-
+	_textureFiles[StartButton] = "images\\start_button.png";
+	_textureFiles[ExitButton] = "images\\exit_button.png";
+	_textureFiles[Marbles] = "images\\marbles_textures.png";
+	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
+	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
+	_textureFiles[BackGroundCity] = "images\\back_ground_city.png";
+	_textureFiles[BackGroundMountain] = "images\\back_ground_mountain.png";
+	
 }
 TextureList::~TextureList()
 {
@@ -13,20 +20,13 @@ TextureList::~TextureList()
 
 void TextureList::loadTextures(Graphics* graphics)
 {
-	if (!_textures[StartButton].initialize(graphics, START_BUTTON_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
-
-	if (!_textures[ExitButton].initialize(graphics, EXIT_BUTTON_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
-
-	if (!_textures[Marble].initialize(graphics, MARBLE_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture"));
+	for (int i = 0; i < Num; i++)
+		if (!_textures[i].initialize(graphics, _textureFiles[i].c_str()))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture "+std::to_string(i)));
 
 	for (int i = 0; i < Num; i++)
-	{
 		if (_textures[i].getTexture() == NULL)
 			throw(GameError(gameErrorNS::FATAL_ERROR, "There is un-loaded Texture"));
-	}
 }
 
 TextureManager* TextureList::getTexture(TextureName num)
