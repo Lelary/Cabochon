@@ -1,7 +1,7 @@
 #ifndef _MARBLE_H
 #define _MARBLE_H
 #include "object.h"
-
+#include "texture_list.h"
 /*
 	2016. 1. 5
 	class Marble
@@ -26,6 +26,7 @@ namespace components
 	using components::Marble;
 	using components::marble_ptr;
 	using mathematics::IntPosition;
+	using frameworks::TextureList;
 
 	class Marble
 		:public Object
@@ -34,6 +35,9 @@ namespace components
 		static const int noPosition = -1;
 	private:
 		IntPosition _gridPosition;
+		static const int numImages = 3;
+		std::array<Image, numImages> _images;
+
 	public:
 		Marble();
 		Marble(const IntPosition& gridPosition);
@@ -41,8 +45,12 @@ namespace components
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
 
+		void initializeImages(TextureList& textureList);
+		void draw();
+
 		bool circularHitTest(const Marble& anotherMarble) const;
 		static bool circularHitTest(const Marble& marble1, const Marble& marble2);
+
 
 	};
 }

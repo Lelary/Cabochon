@@ -1,9 +1,12 @@
 #include "marble.h"
 #include "temporary.h"
+#include "texture_list.h"
+#include "dx9_game_engine\graphics.h"
 using components::Marble;
 using mathematics::IntPosition;
 using temporary::maxX;
 using temporary::maxY;
+using frameworks::TextureList;
 
 Marble::Marble()
 	:_gridPosition({ noPosition, noPosition })
@@ -47,6 +50,41 @@ Marble& Marble::operator=(const Marble& rhs)
 
 	_gridPosition = rhs._gridPosition;
 	return *this;
+}
+void Marble::initializeImages(TextureList& textureList)
+{
+	int x, y;
+	x = 0;
+	y = 0;
+	_images[0].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_images[0].setFrames(0, 0);
+	_images[0].setCurrentFrame(0);
+	_images[0].setLoop(false);
+	_images[0].setX(0);
+	_images[0].setY(0);
+
+	_images[1].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_images[1].setFrames(8, 15);
+	_images[1].setCurrentFrame(8);
+	_images[1].setFrameDelay(1);
+	_images[1].setLoop(true);
+	_images[0].setX(0);
+	_images[0].setY(0);
+
+
+	_images[2].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_images[2].setFrames(16, 16);
+	_images[2].setCurrentFrame(16);
+	_images[2].setLoop(false);
+	_images[0].setX(0);
+	_images[0].setY(0);
+}
+
+void Marble::draw()
+{
+	_images[0].draw(graphicsNS::ORANGE);
+	_images[1].draw();
+	_images[2].draw();
 }
 
 bool Marble::circularHitTest(const Marble& anotherMarble) const

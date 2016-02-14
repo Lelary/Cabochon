@@ -84,6 +84,10 @@ void SteeringWheelControl::rotateRight()
 void SteeringWheelControl::render()
 {
 	_steeringWheel.draw();
+	if (_marbleCurrent != nullptr)
+		_marbleCurrent->draw();
+	if (_marbleNext != nullptr)
+		_marbleNext->draw();
 
 }
 void SteeringWheelControl::update()
