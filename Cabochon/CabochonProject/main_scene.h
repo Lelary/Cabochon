@@ -1,4 +1,6 @@
 // 2016. 2. 3.
+#ifndef _MAIN_SCENE_H
+#define _MAIN_SCENE_H
 
 #include "scene.h"
 #include "dx9_game_engine\text_dx.h"
@@ -27,3 +29,4 @@ namespace frameworks
 
 	};
 }
+#endif

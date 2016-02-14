@@ -1,3 +1,5 @@
+#ifndef _CONTROL_H
+#define _CONTROL_H
 #include "controls.h"
 
 namespace controls
@@ -11,3 +13,4 @@ namespace controls
 		virtual void update() = 0;
 	};
 }
+#endif // _CONTROL_H

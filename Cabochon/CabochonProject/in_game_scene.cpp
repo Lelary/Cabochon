@@ -23,6 +23,10 @@ void InGameScene::start()
 	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
 	_wheelControl.initialize(_textureList);
 
+
+	_wheelControl.setMarbleCurrent(MarbleGenerator::initializeMarbleImage(MarbleGenerator::makeMarble(), _textureList));
+
+
 	_started = true;
 }
 void InGameScene::update()
@@ -37,6 +41,7 @@ void InGameScene::render()
 {
 	_backGround.draw();
 	_wheelControl.render();
+	_marbleControl.render();
 }
 
 void InGameScene::releaseAll()
