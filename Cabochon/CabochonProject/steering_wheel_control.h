@@ -6,7 +6,7 @@
 #include "marble.h"
 #include "control.h"
 //#include "timer.h"
-
+#include "texture_list.h"
 /*
 	2016. 1. 13
 	Impl 과 Interface로 분리할지 고민중
@@ -18,6 +18,7 @@ namespace controls
 	using mathematics::scalar;
 	using components::marble_ptr;
 	using components::SteeringWheel;
+	using frameworks::TextureList;
 
 	/*
 		2016. 1. 13
@@ -53,6 +54,8 @@ namespace controls
 		SteeringWheelControl(const SteeringWheelControl& rhs)=delete;
 		virtual ~SteeringWheelControl();
 		SteeringWheelControl& operator=(const SteeringWheelControl& rhs)=delete;
+
+		void initialize(TextureList& texture);
 
 		scalar getDegree() const;
 		marble_ptr& getMarbleCurrent();

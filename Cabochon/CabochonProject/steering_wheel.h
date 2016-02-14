@@ -4,6 +4,7 @@
 #include "components.h"
 #include "object.h"
 #include "angle.h"
+#include "texture_list.h"
 #include <array>
 
 /*
@@ -14,6 +15,7 @@ namespace components
 {
 	using components::SteeringWheel;
 	using mathematics::Angle;
+	using frameworks::TextureList;
 
 	class SteeringWheel
 		:public Object
@@ -33,7 +35,7 @@ namespace components
 		virtual ~SteeringWheel();
 		SteeringWheel& operator=(const SteeringWheel& rhs);
 
-		void initialize();
+		void initialize(TextureList& textureList);
 
 		Angle getAngle() const;
 

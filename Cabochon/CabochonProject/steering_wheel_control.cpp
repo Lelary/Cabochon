@@ -6,6 +6,7 @@ using controls::SteeringWheelControl;
 using mathematics::scalar;
 using components::marble_ptr;
 using components::SteeringWheel;
+using frameworks::TextureList;
 
 SteeringWheelControl::SteeringWheelControl()
 {
@@ -24,6 +25,10 @@ SteeringWheelControl::~SteeringWheelControl()
 	*/
 }
 
+void SteeringWheelControl::initialize(TextureList& textureList)
+{
+	_steeringWheel.initialize(textureList);
+}
 scalar SteeringWheelControl::getDegree() const
 {
 	return _steeringWheel.getAngle().getDegree() - 90;
@@ -78,6 +83,7 @@ void SteeringWheelControl::rotateRight()
 
 void SteeringWheelControl::render()
 {
+	_steeringWheel.draw();
 
 }
 void SteeringWheelControl::update()

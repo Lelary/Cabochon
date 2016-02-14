@@ -7,7 +7,6 @@ using frameworks::MainScene;
 using frameworks::InGameScene;
 
 Cabochon::Cabochon() 
-	:_textureList(*graphics)
 {
 	_currentScene = nullptr;
 }
@@ -39,6 +38,7 @@ void Cabochon::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
+	_textureList.setGraphics(*graphics);
 	_textureList.loadTextures();
 
 	changeScene(SceneName::MainScene);		

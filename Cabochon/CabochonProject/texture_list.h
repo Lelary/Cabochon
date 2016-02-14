@@ -16,17 +16,19 @@ namespace frameworks
 		enum TextureName { None = -1, StartButton = 0, ExitButton, Marbles, SteeringWheel, BackGroundCity, BackGroundMountain, Num };
 
 	private:
-		Graphics& _graphics;
+		Graphics* _graphics;
 		std::string _textureFiles[TextureName::Num];
 		std::array<TextureManager, Num> _textures;
 
 	public:
-		TextureList(Graphics& graphics);
+		TextureList();
 		virtual ~TextureList();
 
 		void loadTextures();
 
 		Graphics* getGraphics();
+		void setGraphics(Graphics& graphics);
+
 		TextureManager* getTexture(TextureName num);
 		void onLostDevice();
 		void onResetDevice();

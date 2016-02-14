@@ -2,8 +2,8 @@
 #include "texture_list.h"
 using frameworks::TextureList;
 
-TextureList::TextureList(Graphics& graphics)
-	:_graphics(graphics)
+TextureList::TextureList()
+	:_graphics(nullptr)
 {
 	_textureFiles[StartButton] = "images\\start_button.png";
 	_textureFiles[ExitButton] = "images\\exit_button.png";
@@ -20,13 +20,20 @@ TextureList::~TextureList()
 }
 Graphics* TextureList::getGraphics()
 {
-	return &_graphics;
+	return _graphics;
 }
 
+void TextureList::setGraphics(Graphics& graphics)
+{
+	_graphics = &graphics;
+}
 void TextureList::loadTextures()
 {
+	if (_graphics == nullptr)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture."));
+
 	for (int i = 0; i < Num; i++)
-		if (!_textures[i].initialize(&_graphics, _textureFiles[i].c_str()))
+		if (!_textures[i].initialize(_graphics, _textureFiles[i].c_str()))
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Texture "+std::to_string(i)));
 
 	for (int i = 0; i < Num; i++)

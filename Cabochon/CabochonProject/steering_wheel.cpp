@@ -2,6 +2,7 @@
 #include "steering_wheel.h"
 using components::SteeringWheel;
 using mathematics::Angle;
+using frameworks::TextureList;
 
 SteeringWheel::SteeringWheel()
 {
@@ -35,8 +36,37 @@ SteeringWheel::~SteeringWheel()
 	*/
 }
 
-void SteeringWheel::initialize()
+void SteeringWheel::initialize(TextureList& textureList)
 {
+	// 0, 1, 2 순서로 그려짐.
+	_images[0].initialize(textureList.getGraphics(), 512, 256, 1, textureList.getTexture(TextureList::TextureName::SteeringWheel));
+	_images[0].setFrames(1, 1);
+	_images[0].setCurrentFrame(1);
+	_images[0].setLoop(false);
+	_images[0].setX(getPosition()._x);
+	_images[0].setY(getPosition()._y);
+	_images[0].setScale(0.5);
+
+
+
+
+	_images[1].initialize(textureList.getGraphics(), 256, 256, 2, textureList.getTexture(TextureList::TextureName::SteeringWheel));
+	_images[1].setFrames(0, 0);
+	_images[1].setCurrentFrame(0);
+	_images[1].setLoop(false);
+	_images[1].setX(getPosition()._x);
+	_images[1].setY(getPosition()._y+100);
+	_images[1].setScale(0.5);
+
+	_images[2].initialize(textureList.getGraphics(), 256, 256, 2, textureList.getTexture(TextureList::TextureName::SteeringWheel));
+	_images[2].setFrames(1, 1);
+	_images[2].setCurrentFrame(1);
+	_images[2].setLoop(false);
+	_images[2].setX(getPosition()._x);
+	_images[2].setY(getPosition()._y+200);
+	_images[2].setScale(0.5);
+
+
 }
 
 SteeringWheel& SteeringWheel::operator=(const SteeringWheel& rhs)
@@ -75,4 +105,10 @@ void SteeringWheel::rotateLeft(unsigned int angle)
 void SteeringWheel::rotateRight(unsigned int angle)
 {
 	setAngle(_angle + static_cast<scalar>(angle));
+}
+void SteeringWheel::draw()
+{
+	_images[0].draw();
+	_images[1].draw();
+	_images[2].draw();
 }
