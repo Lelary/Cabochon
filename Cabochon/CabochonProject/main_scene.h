@@ -14,10 +14,10 @@ namespace frameworks
 
 		TextDX _text;
 	public:
-		MainScene();
+		MainScene(Graphics& graphics, Input& input, TextureList& textureList);
 		virtual ~MainScene();
 
-		virtual void start(Graphics* graphics, Input* input, TextureList* textureList);
+		virtual void start();
 		virtual void update();
 		virtual void lateUpdate();
 		virtual void render();

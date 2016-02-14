@@ -13,8 +13,6 @@ namespace frameworks
 	class TextureList
 	{
 	public:
-		//enum TextureName { None = -1, Buttons = 0, Marbles, SteeringWheel, Num };
-
 		enum TextureName { None = -1, StartButton = 0, ExitButton, Marbles, SteeringWheel, BackGroundCity, BackGroundMountain, Num };
 
 	private:

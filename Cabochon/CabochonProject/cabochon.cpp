@@ -96,10 +96,10 @@ void Cabochon::changeScene(frameworks::SceneName newSceneName)
 		delete _currentScene;
 
 	if (newSceneName == SceneName::MainScene)
-		_currentScene = new MainScene();
+		_currentScene = new MainScene(*graphics, *input, textureList);
 	else if (newSceneName == SceneName::InGameScene)
-		_currentScene = new InGameScene();
+		_currentScene = new InGameScene(*graphics, *input, textureList);
 
-	_currentScene->start(graphics, input, &textureList);
+	_currentScene->start();
 	
 }

@@ -31,14 +31,14 @@ namespace frameworks
 		//start 함수가 실행 되었었으면 true;
 		bool _started;
 		SceneName _nextScene;
-		Graphics* _graphics;
-		Input* _input;
-		TextureList* _textureList;
+		Graphics& _graphics;
+		Input& _input;
+		TextureList& _textureList;
 	public:
-		Scene();
+		Scene(Graphics& graphics, Input& input, TextureList& textureList);
 		virtual ~Scene();
 
-		virtual void start(Graphics* graphics, Input* input, TextureList* textureList);
+		virtual void start();
 		virtual void update() = 0;
 		virtual void lateUpdate() = 0;
 		virtual void render() = 0;

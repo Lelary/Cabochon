@@ -8,13 +8,13 @@ namespace frameworks
 		:public Scene
 	{
 	private:
-		std::array<Image, 8> _marbles;
+		Image _backGround;
 
 	public:
-		InGameScene();
+		InGameScene(Graphics& graphics, Input& input, TextureList& textureList);
 		virtual ~InGameScene();
 
-		virtual void start(Graphics* graphics, Input* input, TextureList* textureList);
+		virtual void start();
 		virtual void update();
 		virtual void lateUpdate();
 		virtual void render();

@@ -4,21 +4,23 @@
 using frameworks::InGameScene;
 using frameworks::TextureList;
 
-InGameScene::InGameScene()
-	:Scene()
+InGameScene::InGameScene(Graphics& graphics, Input& input, TextureList& textureList)
+	:Scene(graphics, input, textureList)
 {
-
+	
 }
 InGameScene::~InGameScene()
 {
 	releaseAll();
 }
-void InGameScene::start(Graphics* graphics, Input* input, TextureList* textureList)
+void InGameScene::start()
 {
 	if (_started)
 		return;
 
-	Scene::start(graphics, input, textureList);
+	Scene::start();
+
+	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
 
 	_started = true;
 }
@@ -32,8 +34,7 @@ void InGameScene::lateUpdate()
 }
 void InGameScene::render()
 {
-	for (int i = 0; i < _marbles.size(); i++)
-		_marbles[i].draw();
+	_backGround.draw();
 }
 
 void InGameScene::releaseAll()
