@@ -9,6 +9,7 @@ SteeringWheel::SteeringWheel()
 	2016. 1. 15
 	nothing to do.
 	*/
+	
 }
 SteeringWheel::SteeringWheel(const Angle& angle)
 	:_angle(angle)
@@ -33,6 +34,11 @@ SteeringWheel::~SteeringWheel()
 	nothing to do.
 	*/
 }
+
+void SteeringWheel::initialize()
+{
+}
+
 SteeringWheel& SteeringWheel::operator=(const SteeringWheel& rhs)
 {
 	if (&rhs == this)

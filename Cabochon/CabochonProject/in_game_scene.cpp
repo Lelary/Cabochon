@@ -35,6 +35,7 @@ void InGameScene::lateUpdate()
 void InGameScene::render()
 {
 	_backGround.draw();
+	_wheelControl.render();
 }
 
 void InGameScene::releaseAll()

@@ -7,6 +7,7 @@ using frameworks::MainScene;
 using frameworks::InGameScene;
 
 Cabochon::Cabochon() 
+	:_textureList(*graphics)
 {
 	_currentScene = nullptr;
 }
@@ -38,7 +39,7 @@ void Cabochon::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
-	textureList.loadTextures(graphics);
+	_textureList.loadTextures();
 
 	changeScene(SceneName::MainScene);		
 	
@@ -70,7 +71,7 @@ void Cabochon::releaseAll()
 	if (_currentScene != nullptr)
 		_currentScene->releaseAll();
 
-	textureList.onLostDevice();
+	_textureList.onLostDevice();
 	Game::releaseAll();
 	return;
 }
@@ -79,7 +80,7 @@ void Cabochon::resetAll()
 	// releaseAll()°ú ¿ª¼ø.
 
 	Game::resetAll();
-	textureList.onResetDevice();
+	_textureList.onResetDevice();
 
 	if(_currentScene!=nullptr)
 		_currentScene->resetAll();
@@ -96,9 +97,9 @@ void Cabochon::changeScene(frameworks::SceneName newSceneName)
 		delete _currentScene;
 
 	if (newSceneName == SceneName::MainScene)
-		_currentScene = new MainScene(*graphics, *input, textureList);
+		_currentScene = new MainScene(*graphics, *input, _textureList);
 	else if (newSceneName == SceneName::InGameScene)
-		_currentScene = new InGameScene(*graphics, *input, textureList);
+		_currentScene = new InGameScene(*graphics, *input, _textureList);
 
 	_currentScene->start();
 	

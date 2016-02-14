@@ -1,14 +1,19 @@
 // 2016. 2. 3.
 
 #include "scene.h"
+#include "steering_wheel_control.h"
 
 namespace frameworks
 {
+	using controls::SteeringWheelControl;
+
 	class InGameScene
 		:public Scene
 	{
 	private:
 		Image _backGround;
+
+		SteeringWheelControl _wheelControl;
 
 	public:
 		InGameScene(Graphics& graphics, Input& input, TextureList& textureList);

@@ -4,6 +4,7 @@
 #include "components.h"
 #include "object.h"
 #include "angle.h"
+#include <array>
 
 /*
 	2016. 1. 16
@@ -19,6 +20,10 @@ namespace components
 	{
 	private:
 		Angle _angle;
+
+		static const int numImages = 3;
+		std::array<Image, numImages> _images;
+
 		void setAngle(Angle angle);
 
 	public:
@@ -28,11 +33,15 @@ namespace components
 		virtual ~SteeringWheel();
 		SteeringWheel& operator=(const SteeringWheel& rhs);
 
+		void initialize();
+
 		Angle getAngle() const;
 
 		void setOrigin();
 		void rotateLeft(unsigned int angle);
 		void rotateRight(unsigned int angle);
+
+		void draw();
 	};
 }
 #endif //_STEERING_WHEEL_H

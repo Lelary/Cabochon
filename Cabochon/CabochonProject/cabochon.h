@@ -16,7 +16,7 @@ private:
 	frameworks::Scene* _currentScene;
 	void changeScene(frameworks::SceneName newSceneName);
 
-	frameworks::TextureList textureList;
+	frameworks::TextureList _textureList;
 
 	//TextureManager startButtonTexture;
 
