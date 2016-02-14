@@ -37,7 +37,7 @@ public:
 		Pre :	g = Graphics 를 가리키는 포인터.
 				width = 이미지의 픽셀 단위 폭 (0=텍스처 전체의 폭을 사용).
 				height = 이미지의 픽셀 단위 높이 0=텍스처 전체의 높이를 사용).
-				ncols = 텍스처의 행 수(0은 1과 같다).
+				ncols = 텍스처의 열 수(0은 1과 같다).
 				textureM = TextureManager를 가리키는 포인터.		
 	*/
 	bool initialize(Graphics* g, int width, int height, int ncols, TextureManager* textureM);
