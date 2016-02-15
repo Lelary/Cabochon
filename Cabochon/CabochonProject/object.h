@@ -5,8 +5,8 @@
 #include "mathematics.h"
 #include "vector2.h"
 #include "dx9_game_engine\image.h"
+#include "texture_list.h"
 #include <vector>
-#include <utility>
 /*
 	2016. 1. 5
 	class Object
@@ -38,7 +38,12 @@ namespace components
 {
 	using mathematics::scalar;
 	using mathematics::Position;
-
+	using frameworks::TextureList;
+	struct Layer
+	{
+		Image image;
+		Position distance;
+	};
 	class Object
 	{
 	private:
@@ -48,7 +53,7 @@ namespace components
 	protected:
 		bool _layersLoaded;
 		// 각 레이어는 Image와 distance(Object의 중심점으로부터의)를 갖는다.
-		std::vector<std::pair<Image, Position>> _layers;
+		std::vector<Layer> _layers;
 
 	public:
 		Object();
@@ -82,7 +87,8 @@ namespace components
 		// Sprite 관련.
 
 		bool isLayersLoaded();
-		virtual void loadLayers() = 0;
+		void adjustLayersPosition();
+		virtual void loadLayers(TextureList& textureList) = 0;
 
 		virtual void draw(COLOR_ARGB color = graphicsNS::WHITE)=0;
 		virtual void draw(SpriteData sd, COLOR_ARGB color)=0;

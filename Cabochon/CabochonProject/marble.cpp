@@ -51,40 +51,44 @@ Marble& Marble::operator=(const Marble& rhs)
 	_gridPosition = rhs._gridPosition;
 	return *this;
 }
-void Marble::initializeImages(TextureList& textureList)
+void Marble::loadLayers(TextureList& textureList)
 {
 	int x, y;
 	x = 0;
 	y = 0;
-	_images[0].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_images[0].setFrames(0, 0);
-	_images[0].setCurrentFrame(0);
-	_images[0].setLoop(false);
-	_images[0].setX(0);
-	_images[0].setY(0);
+	_layers[0].image.initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_layers[0].image.setFrames(0, 0);
+	_layers[0].image.setCurrentFrame(0);
+	_layers[0].image.setLoop(false);
+	_layers[0].distance = { 0, 0 };
 
-	_images[1].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_images[1].setFrames(8, 15);
-	_images[1].setCurrentFrame(8);
-	_images[1].setFrameDelay(1);
-	_images[1].setLoop(true);
-	_images[0].setX(0);
-	_images[0].setY(0);
+	_layers[1].image.initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_layers[1].image.setFrames(8, 15);
+	_layers[1].image.setCurrentFrame(8);
+	_layers[1].image.setFrameDelay(1);
+	_layers[1].image.setLoop(true);
+	_layers[1].distance = { 0, 0 };
 
 
-	_images[2].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_images[2].setFrames(16, 16);
-	_images[2].setCurrentFrame(16);
-	_images[2].setLoop(false);
-	_images[0].setX(0);
-	_images[0].setY(0);
+	_layers[2].image.initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_layers[2].image.setFrames(16, 16);
+	_layers[2].image.setCurrentFrame(16);
+	_layers[2].image.setLoop(false);
+	_layers[2].distance = { 0, 0 };
+
+	adjustLayersPosition();
 }
 
 void Marble::draw()
 {
-	_images[0].draw(graphicsNS::ORANGE);
-	_images[1].draw();
-	_images[2].draw();
+	_layers[0].image.draw(graphicsNS::ORANGE);
+	_layers[1].image.draw();
+	_layers[2].image.draw();
+}
+
+void Marble::update()
+{
+
 }
 
 bool Marble::circularHitTest(const Marble& anotherMarble) const

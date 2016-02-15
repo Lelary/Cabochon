@@ -73,12 +73,7 @@ void Object::setPosition(const Position& position)
 	_position = position;
 	
 	//vector 를 iterate 하며 상대 위치 갱신.
-	for (auto& layer : _layers)
-	{
-		// Position of Object + distance(Object, Layer)
-		layer.first.setX(_position._x + layer.second._x);
-		layer.first.setY(_position._y + layer.second._y);
-	}
+	adjustLayersPosition();
 }
 
 // the position of Left Top 
@@ -86,37 +81,22 @@ void Object::setPosition(scalar x, scalar y)
 {
 	_position = { x, y };
 	//vector 를 iterate 하며 상대 위치 갱신.
-	for (auto& layer : _layers)
-	{
-		// Position of Object + distance(Object, Layer)
-		layer.first.setX(_position._x + layer.second._x);
-		layer.first.setY(_position._y + layer.second._y);
-	}
+	adjustLayersPosition();
 }
 
 // the position of middle, changes position property.
 void Object::setCentralPosition(const Position& position)
 {
-	_position = convertOrigin(position, Origin::CENTER, _width, _height);
+	_position = convertOrigin(position, Origin::LEFT_TOP, _width, _height);
 	//vector 를 iterate 하며 상대 위치 갱신.
-	for (auto& layer : _layers)
-	{
-		// Position of Object + distance(Object, Layer)
-		layer.first.setX(_position._x + layer.second._x);
-		layer.first.setY(_position._y + layer.second._y);
-	}
+	adjustLayersPosition();
 }
 // the position of middle, changes position property.
 void Object::setCentralPosition(scalar x, scalar y)
 {
-	_position = convertOrigin({ x, y }, Origin::CENTER, _width, _height);
+	_position = convertOrigin({ x, y }, Origin::LEFT_TOP, _width, _height);
 	//vector 를 iterate 하며 상대 위치 갱신.
-	for (auto& layer : _layers)
-	{
-		// Position of Object + distance(Object, Layer)
-		layer.first.setX(_position._x + layer.second._x);
-		layer.first.setY(_position._y + layer.second._y);
-	}
+	adjustLayersPosition();
 }
 
 void Object::setWidth(scalar width)
@@ -131,4 +111,12 @@ void Object::setHeight(scalar height)
 bool Object::isLayersLoaded()
 {
 	return _layersLoaded;
+}
+void Object::adjustLayersPosition()
+{
+	for (Layer& layer : _layers)
+	{
+		layer.image.setX(_position._x + layer.distance._x);
+		layer.image.setY(_position._y + layer.distance._y);
+	}
 }

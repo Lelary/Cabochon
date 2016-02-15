@@ -35,8 +35,6 @@ namespace components
 		static const int noPosition = -1;
 	private:
 		IntPosition _gridPosition;
-		static const int numImages = 3;
-		std::array<Image, numImages> _images;
 
 	public:
 		Marble();
@@ -45,8 +43,9 @@ namespace components
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
 
-		void initializeImages(TextureList& textureList);
+		void loadLayers(TextureList& textureList);
 		void draw();
+		void update();
 
 		bool circularHitTest(const Marble& anotherMarble) const;
 		static bool circularHitTest(const Marble& marble1, const Marble& marble2);

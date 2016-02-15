@@ -22,10 +22,6 @@ namespace components
 	{
 	private:
 		Angle _angle;
-
-		static const int numImages = 3;
-		std::array<Image, numImages> _images;
-
 		void setAngle(Angle angle);
 
 	public:
@@ -34,16 +30,16 @@ namespace components
 		SteeringWheel(const SteeringWheel& rhs);
 		virtual ~SteeringWheel();
 		SteeringWheel& operator=(const SteeringWheel& rhs);
-
-		void initialize(TextureList& textureList);
-
+		
 		Angle getAngle() const;
 
 		void setOrigin();
 		void rotateLeft(unsigned int angle);
 		void rotateRight(unsigned int angle);
 
+		void loadLayers(TextureList& textureList);
 		void draw();
+		void update();
 	};
 }
 #endif //_STEERING_WHEEL_H
