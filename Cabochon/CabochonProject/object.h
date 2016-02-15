@@ -6,6 +6,7 @@
 #include "vector2.h"
 #include "dx9_game_engine\image.h"
 #include "texture_list.h"
+#include "layer.h"
 #include <vector>
 /*
 	2016. 1. 5
@@ -41,11 +42,6 @@ namespace components
 	using frameworks::TextureList;
 	using mathematics::Origin;
 
-	struct Layer
-	{
-		Image image;
-		Position distance;
-	};
 	class Object
 	{
 	private:
@@ -54,7 +50,7 @@ namespace components
 
 	protected:
 		bool _layersLoaded;
-		// 각 레이어는 Image와 distance(Object의 중심점으로부터의)를 갖는다.
+		// 각 레이어는 Image를 상속받고 distance(Object의 중심점으로부터의)를 갖는다.
 		std::vector<Layer> _layers;
 
 	public:

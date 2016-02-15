@@ -162,6 +162,9 @@
     <ClInclude Include="dx9_game_engine\text_dx.h">
       <Filter>헤더 파일\dx9_game_engine</Filter>
     </ClInclude>
+    <ClInclude Include="layer.h">
+      <Filter>헤더 파일\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -235,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="dx9_game_engine\console.cpp">
       <Filter>소스 파일\dx9_game_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="layer.cpp">
+      <Filter>소스 파일\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 namespace components
 {
 //클래스 선언====================================
-	struct Layer;
+	class Layer;
 	class Object;
 	class Marble;
 	class ShootedMarble;

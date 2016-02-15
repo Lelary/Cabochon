@@ -134,7 +134,6 @@ void Object::adjustLayersPosition()
 {
 	for (Layer& layer : _layers)
 	{
-		layer.image.setX(_position._x + layer.distance._x);
-		layer.image.setY(_position._y + layer.distance._y);
+		layer.adjustPosition(_position);
 	}
 }
