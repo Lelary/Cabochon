@@ -4,6 +4,8 @@
 //forward declaration of classes
 namespace mathematics
 {
+	enum class Origin{LEFT_TOP, CENTER};
+
 	//vector2
 	template < typename T >
 	struct Vector2;
@@ -20,7 +22,8 @@ namespace mathematics
 	using Position = Vector2 < scalar >;
 	using Velocity = Vector2 < scalar >;
 	using IntPosition = Vector2 < int > ;
-	
+
+	Position convertOrigin(const Position& oldPosition, Origin newOrigin, scalar width, scalar height);
 }
 
 #endif	

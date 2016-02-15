@@ -2,6 +2,8 @@
 using components::Object;
 using mathematics::scalar;
 using mathematics::Position;
+using mathematics::convertOrigin;
+using mathematics::Origin;
 
 Object::Object()
 	:_position({ 0, 0 }), _width(0), _height(0), _layersLoaded(false)
@@ -54,7 +56,7 @@ Position Object::getPosition() const
 // the position of middle
 Position Object::getCentralPosition() const
 {
-	return{ _position._x + _width / 2.0f, _position._y + _height / 2.0f };
+	return convertOrigin(_position, Origin::CENTER, _width, _height);
 }
 scalar Object::getWidth() const
 {
@@ -71,9 +73,12 @@ void Object::setPosition(const Position& position)
 	_position = position;
 	
 	//vector 를 iterate 하며 상대 위치 갱신.
-
-	//_image.setX(position._x);
-	//_image.setY(position._y);
+	for (auto& layer : _layers)
+	{
+		// Position of Object + distance(Object, Layer)
+		layer.first.setX(_position._x + layer.second._x);
+		layer.first.setY(_position._y + layer.second._y);
+	}
 }
 
 // the position of Left Top 
@@ -81,25 +86,37 @@ void Object::setPosition(scalar x, scalar y)
 {
 	_position = { x, y };
 	//vector 를 iterate 하며 상대 위치 갱신.
-	//_image.setX(x);
-	//_image.setY(y);
+	for (auto& layer : _layers)
+	{
+		// Position of Object + distance(Object, Layer)
+		layer.first.setX(_position._x + layer.second._x);
+		layer.first.setY(_position._y + layer.second._y);
+	}
 }
 
 // the position of middle, changes position property.
 void Object::setCentralPosition(const Position& position)
 {
-	_position = { position._x - _width / 2.0f, position._y - _height / 2.0f };
+	_position = convertOrigin(position, Origin::CENTER, _width, _height);
 	//vector 를 iterate 하며 상대 위치 갱신.
-	//_image.setX(_position._x);
-	//_image.setY(_position._y);
+	for (auto& layer : _layers)
+	{
+		// Position of Object + distance(Object, Layer)
+		layer.first.setX(_position._x + layer.second._x);
+		layer.first.setY(_position._y + layer.second._y);
+	}
 }
 // the position of middle, changes position property.
 void Object::setCentralPosition(scalar x, scalar y)
 {
-	_position = { x - _width / 2.0f, y - _height / 2.0f };
+	_position = convertOrigin({ x, y }, Origin::CENTER, _width, _height);
 	//vector 를 iterate 하며 상대 위치 갱신.
-	//_image.setX(_position._x);
-	//_image.setY(_position._y);
+	for (auto& layer : _layers)
+	{
+		// Position of Object + distance(Object, Layer)
+		layer.first.setX(_position._x + layer.second._x);
+		layer.first.setY(_position._y + layer.second._y);
+	}
 }
 
 void Object::setWidth(scalar width)
