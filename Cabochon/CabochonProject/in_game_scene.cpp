@@ -21,10 +21,10 @@ void InGameScene::start()
 	Scene::start();
 
 	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
-	_wheelControl.initialize(_textureList);
+	_wheelControl.loadTextures(_textureList);
 
 
-	_wheelControl.setMarbleCurrent(MarbleGenerator::initializeMarbleImage(MarbleGenerator::makeMarble(), _textureList));
+	_wheelControl.setMarbleCurrent(MarbleGenerator::loadTexture(MarbleGenerator::makeMarble(), _textureList));
 
 
 	_started = true;

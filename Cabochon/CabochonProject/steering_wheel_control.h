@@ -55,7 +55,7 @@ namespace controls
 		virtual ~SteeringWheelControl();
 		SteeringWheelControl& operator=(const SteeringWheelControl& rhs)=delete;
 
-		void initialize(TextureList& texture);
+		void loadTextures(TextureList& texture);
 
 		scalar getDegree() const;
 		marble_ptr& getMarbleCurrent();

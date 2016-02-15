@@ -25,7 +25,7 @@ SteeringWheelControl::~SteeringWheelControl()
 	*/
 }
 
-void SteeringWheelControl::initialize(TextureList& textureList)
+void SteeringWheelControl::loadTextures(TextureList& textureList)
 {
 	_steeringWheel.loadLayers(textureList);
 }

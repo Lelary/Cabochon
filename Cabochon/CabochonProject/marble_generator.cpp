@@ -7,7 +7,7 @@ marble_ptr MarbleGenerator::makeMarble()
 {
 	return std::make_unique<Marble>();
 }
-marble_ptr MarbleGenerator::initializeMarbleImage(marble_ptr marble, TextureList& textureList)
+marble_ptr MarbleGenerator::loadTexture(marble_ptr marble, TextureList& textureList)
 {
 	marble->loadLayers(textureList);
 	return marble;
