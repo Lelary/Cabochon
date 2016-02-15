@@ -39,7 +39,7 @@ namespace components
 
 		void loadLayers(TextureList& textureList);
 		void draw();
-		void update();
+		void update(scalar frameTime);
 	};
 }
 #endif //_STEERING_WHEEL_H

@@ -2,7 +2,6 @@
 using components::Object;
 using mathematics::scalar;
 using mathematics::Position;
-using mathematics::convertOrigin;
 using mathematics::Origin;
 
 Object::Object()
@@ -106,6 +105,25 @@ void Object::setWidth(scalar width)
 void Object::setHeight(scalar height)
 {
 	_height = height;
+}
+
+Position Object::convertOrigin(const Position& oldPosition, Origin newOrigin, scalar width, scalar height)
+{
+	Position newPosition;
+
+	switch (newOrigin)
+	{
+	case Origin::LEFT_TOP:
+		newPosition._x = oldPosition._x - width / 2.0f;
+		newPosition._y = oldPosition._y - height / 2.0f;
+		break;
+
+	case Origin::CENTER:
+		newPosition._x = oldPosition._x + width / 2.0f;
+		newPosition._y = oldPosition._y + height / 2.0f;
+		break;
+	}
+	return newPosition;
 }
 
 bool Object::isLayersLoaded()

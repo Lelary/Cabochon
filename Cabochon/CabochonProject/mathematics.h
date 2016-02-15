@@ -23,7 +23,6 @@ namespace mathematics
 	using Velocity = Vector2 < scalar >;
 	using IntPosition = Vector2 < int > ;
 
-	Position convertOrigin(const Position& oldPosition, Origin newOrigin, scalar width, scalar height);
 }
 
 #endif	

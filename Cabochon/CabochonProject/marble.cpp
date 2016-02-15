@@ -3,6 +3,7 @@
 #include "texture_list.h"
 #include "dx9_game_engine\graphics.h"
 using components::Marble;
+using mathematics::scalar;
 using mathematics::IntPosition;
 using temporary::maxX;
 using temporary::maxY;
@@ -53,15 +54,14 @@ Marble& Marble::operator=(const Marble& rhs)
 }
 void Marble::loadLayers(TextureList& textureList)
 {
-	int x, y;
-	x = 0;
-	y = 0;
+	_layers.push_back(Layer());
 	_layers[0].image.initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
 	_layers[0].image.setFrames(0, 0);
 	_layers[0].image.setCurrentFrame(0);
 	_layers[0].image.setLoop(false);
 	_layers[0].distance = { 0, 0 };
 
+	_layers.push_back(Layer());
 	_layers[1].image.initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
 	_layers[1].image.setFrames(8, 15);
 	_layers[1].image.setCurrentFrame(8);
@@ -70,6 +70,7 @@ void Marble::loadLayers(TextureList& textureList)
 	_layers[1].distance = { 0, 0 };
 
 
+	_layers.push_back(Layer());
 	_layers[2].image.initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
 	_layers[2].image.setFrames(16, 16);
 	_layers[2].image.setCurrentFrame(16);
@@ -86,7 +87,7 @@ void Marble::draw()
 	_layers[2].image.draw();
 }
 
-void Marble::update()
+void Marble::update(scalar frameTime)
 {
 
 }

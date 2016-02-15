@@ -45,7 +45,7 @@ namespace components
 
 		void loadLayers(TextureList& textureList);
 		void draw();
-		void update();
+		void update(scalar frameTime);
 
 		bool circularHitTest(const Marble& anotherMarble) const;
 		static bool circularHitTest(const Marble& marble1, const Marble& marble2);

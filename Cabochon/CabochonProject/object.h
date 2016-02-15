@@ -39,6 +39,8 @@ namespace components
 	using mathematics::scalar;
 	using mathematics::Position;
 	using frameworks::TextureList;
+	using mathematics::Origin;
+
 	struct Layer
 	{
 		Image image;
@@ -83,15 +85,15 @@ namespace components
 		void setWidth(scalar width);
 		void setHeight(scalar height);
 
+
+		static Position convertOrigin(const Position& oldPosition, Origin newOrigin, scalar width, scalar height);
 		//---------------------------------------------------
 		// Sprite ฐüทร.
 
 		bool isLayersLoaded();
 		void adjustLayersPosition();
 		virtual void loadLayers(TextureList& textureList) = 0;
-
-		virtual void draw(COLOR_ARGB color = graphicsNS::WHITE)=0;
-		virtual void draw(SpriteData sd, COLOR_ARGB color)=0;
+		virtual void draw()=0;
 		//-----------------------------------------------------
 		virtual void update(scalar frameTime)=0;
 		/*

@@ -9,7 +9,7 @@ marble_ptr MarbleGenerator::makeMarble()
 }
 marble_ptr MarbleGenerator::initializeMarbleImage(marble_ptr marble, TextureList& textureList)
 {
-	marble->initializeImages(textureList);
+	marble->loadLayers(textureList);
 	return marble;
 }
 

@@ -2,6 +2,7 @@
 #include "steering_wheel.h"
 using components::SteeringWheel;
 using mathematics::Angle;
+using mathematics::scalar;
 using frameworks::TextureList;
 
 SteeringWheel::SteeringWheel()
@@ -76,6 +77,7 @@ void SteeringWheel::rotateRight(unsigned int angle)
 void SteeringWheel::loadLayers(TextureList& textureList)
 {
 	// 0, 1, 2 순서로 그려짐.
+	_layers.push_back(Layer());
 	_layers[0].image.initialize(textureList.getGraphics(), 512, 256, 1, textureList.getTexture(TextureList::TextureName::SteeringWheel));
 	_layers[0].image.setFrames(1, 1);
 	_layers[0].image.setCurrentFrame(1);
@@ -83,6 +85,7 @@ void SteeringWheel::loadLayers(TextureList& textureList)
 	_layers[0].distance = { 70, 400 };
 	_layers[0].image.setScale(0.3);
 
+	_layers.push_back(Layer());
 	_layers[1].image.initialize(textureList.getGraphics(), 256, 256, 2, textureList.getTexture(TextureList::TextureName::SteeringWheel));
 	_layers[1].image.setFrames(0, 0);
 	_layers[1].image.setCurrentFrame(0);
@@ -90,6 +93,7 @@ void SteeringWheel::loadLayers(TextureList& textureList)
 	_layers[1].distance = { 100, 360 };
 	_layers[1].image.setScale(0.4);
 
+	_layers.push_back(Layer());
 	_layers[2].image.initialize(textureList.getGraphics(), 256, 256, 2, textureList.getTexture(TextureList::TextureName::SteeringWheel));
 	_layers[2].image.setFrames(1, 1);
 	_layers[2].image.setCurrentFrame(1);
@@ -102,11 +106,11 @@ void SteeringWheel::loadLayers(TextureList& textureList)
 
 void SteeringWheel::draw()
 {
-	_layers[0].draw();
-	_layers[1].draw();
-	_layers[2].draw();
+	_layers[0].image.draw();
+	_layers[1].image.draw();
+	_layers[2].image.draw();
 }
-void SteeringWheel::update()
+void SteeringWheel::update(scalar frameTime)
 {
 
 }

@@ -27,7 +27,7 @@ SteeringWheelControl::~SteeringWheelControl()
 
 void SteeringWheelControl::initialize(TextureList& textureList)
 {
-	_steeringWheel.initialize(textureList);
+	_steeringWheel.loadLayers(textureList);
 }
 scalar SteeringWheelControl::getDegree() const
 {
