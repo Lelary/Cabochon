@@ -5,7 +5,8 @@
 #include "mathematics.h"
 #include "vector2.h"
 #include "dx9_game_engine\image.h"
-
+#include <vector>
+#include <utility>
 /*
 	2016. 1. 5
 	class Object
@@ -43,8 +44,11 @@ namespace components
 	private:
 		Position _position;
 		scalar _width, _height;
-		Image _image;
-		TextureManager _texture;
+
+	protected:
+		bool _layersLoaded;
+		// 각 레이어는 Image와 distance(Object의 중심점으로부터의)를 갖는다.
+		std::vector<std::pair<Image, Position>> _layers;
 
 	public:
 		Object();
@@ -77,18 +81,13 @@ namespace components
 		//---------------------------------------------------
 		// Sprite 관련.
 
-		Image getImage() const;
-		TextureManager getTexture() const;
-		scalar getScale();
+		bool isLayersLoaded();
+		virtual void loadLayers() = 0;
 
-		void setImage(const Image& image);
-		void setTexture(const TextureManager& textureManager);
-		void setScale(scalar scale);
-
-		virtual void draw(COLOR_ARGB color = graphicsNS::WHITE);
-		virtual void draw(SpriteData sd, COLOR_ARGB color);
+		virtual void draw(COLOR_ARGB color = graphicsNS::WHITE)=0;
+		virtual void draw(SpriteData sd, COLOR_ARGB color)=0;
 		//-----------------------------------------------------
-		virtual void update(scalar frameTime);
+		virtual void update(scalar frameTime)=0;
 		/*
 			2016. 1. 22.
 			충돌관련함수를 어디에 작성할지 고민.중.
