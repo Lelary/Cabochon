@@ -197,10 +197,21 @@ void MarbleControl::removeMarble(const IntPosition& gridPosition)
 
 void MarbleControl::render()
 {
+	/*
 	for (int i = 0; i < maxX; i++)
 		for (int j = 0; j < maxY; j++)
 			if (_marbles[i][j] != nullptr)
 				_marbles[i][j]->draw();
+	*/
+
+	for (auto& marbleRow : _marbles)
+	{
+		for (marble_ptr& marble : marbleRow)
+		{
+			if (marble != nullptr)
+				marble->draw();
+		}
+	}
 
 	if (_shootedMarble != nullptr)
 		_shootedMarble->getMarble()->draw();
