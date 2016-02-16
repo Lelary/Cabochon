@@ -8,6 +8,7 @@ using mathematics::IntPosition;
 using temporary::maxX;
 using temporary::maxY;
 using frameworks::TextureList;
+using components::Layer;
 
 Marble::Marble()
 	:_gridPosition({ noPosition, noPosition })
@@ -55,35 +56,34 @@ Marble& Marble::operator=(const Marble& rhs)
 void Marble::loadLayers(TextureList& textureList)
 {
 	_layers.push_back(Layer());
-	_layers[0].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_layers[0].setFrames(0, 0);
-	_layers[0].setCurrentFrame(0);
-	_layers[0].setLoop(false);
-	_layers[0].setDistance(getPosition(), { 0, 0 });
+	_layers.back().initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_layers.back().setFrames(0, 0);
+	_layers.back().setCurrentFrame(0);
+	_layers.back().setLoop(false);
+	_layers.back().setDistance(getPosition(), { 0, 0 });
 
 	_layers.push_back(Layer());
-	_layers[1].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_layers[1].setFrames(8, 15);
-	_layers[1].setCurrentFrame(8);
-	_layers[1].setFrameDelay(1);
-	_layers[1].setLoop(true);
-	_layers[1].setDistance(getPosition(), { 0, 0 });
+	_layers.back().initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_layers.back().setFrames(8, 15);
+	_layers.back().setCurrentFrame(8);
+	_layers.back().setFrameDelay(1);
+	_layers.back().setLoop(true);
+	_layers.back().setDistance(getPosition(), { 0, 0 });
 
 	_layers.push_back(Layer());
-	_layers[2].initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_layers[2].setFrames(16, 16);
-	_layers[2].setCurrentFrame(16);
-	_layers[2].setLoop(false);
-	_layers[2].setDistance(getPosition(), { 0, 0 });
+	_layers.back().initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
+	_layers.back().setFrames(16, 16);
+	_layers.back().setCurrentFrame(16);
+	_layers.back().setLoop(false);
+	_layers.back().setDistance(getPosition(), { 0, 0 });
 
 	adjustLayersPosition();
 }
 
 void Marble::draw()
 {
-	_layers[0].draw(graphicsNS::ORANGE);
-	_layers[1].draw();
-	_layers[2].draw();
+	for (Layer layer : _layers)
+		layer.draw();
 }
 
 void Marble::update(float frameTime)

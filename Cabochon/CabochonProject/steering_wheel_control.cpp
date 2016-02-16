@@ -15,6 +15,9 @@ SteeringWheelControl::SteeringWheelControl()
 	기본값으로 초기화 된다.
 	_steeringWheel(0), _marbleCurrent(nullptr), _marbleNext(nullptr)
 	*/
+	_steeringWheel.setPosition(100, 100);
+	_steeringWheel.setWidth(100);
+	_steeringWheel.setHeight(100);
 }
 SteeringWheelControl::~SteeringWheelControl()
 {

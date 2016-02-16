@@ -49,7 +49,7 @@ void Cabochon::initialize(HWND hwnd)
 void Cabochon::update()
 {
 	if (_currentScene != nullptr)
-		_currentScene->update();
+		_currentScene->update(frameTime);
 	if (_currentScene->getNextScene() != SceneName::Null)
 		changeScene(_currentScene->getNextScene());
 }

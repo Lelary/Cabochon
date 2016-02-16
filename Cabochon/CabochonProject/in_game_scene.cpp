@@ -29,11 +29,11 @@ void InGameScene::start()
 
 	_started = true;
 }
-void InGameScene::update()
+void InGameScene::update(float frameTime)
 {
-	_wheelControl.update();
+	_wheelControl.update(frameTime);
 }
-void InGameScene::lateUpdate()
+void InGameScene::lateUpdate(float frameTime)
 {
 
 }
