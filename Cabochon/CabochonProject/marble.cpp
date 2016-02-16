@@ -59,42 +59,38 @@ void Marble::loadLayers(TextureList& textureList)
 	int row = 0;
 	int rows = 7;
 	int cols = 8;		
-	
 
 	for (row = 0; row < rows; row++)
 	{
 		_layers.push_back(Layer());
 		_layers.back().initialize(textureList.getGraphics(), width, height, cols, textureList.getTexture(TextureList::TextureName::Marbles));
 		_layers.back().setFrames(row*cols, row*cols + cols - 1);
-		_layers.back().setCurrentFrame(row*cols+3);
+		_layers.back().setCurrentFrame(row*cols);
 		_layers.back().setFrameDelay(0.1);
 		_layers.back().setLoop(true);
 		_layers.back().setScaleFromWidth(1.0f, getWidth());
 		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 		_layers.back().setVisible(false);
 	}
-	_layers.at(1).setVisible(true);
+	_layers.at(0).setVisible(true);
 
 	adjustLayersPosition();
 }
 void Marble::rotate(scalar degree)
 {
 	for (Layer& layer : _layers)
-		layer.setDegrees(degree);
+		layer.setDegrees(layer.getDegrees()+degree);
 }
 void Marble::draw()
 {
-	for (Layer& layer : _layers)
+	for (Layer layer : _layers)
 		layer.draw();
 }
 
 void Marble::update(float frameTime)
 {
 	for (Layer& layer : _layers)
-	{
 		layer.update(frameTime);
-	}
-
 }
 
 bool Marble::circularHitTest(const Marble& anotherMarble) const

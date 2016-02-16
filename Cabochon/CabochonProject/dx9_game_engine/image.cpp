@@ -129,8 +129,8 @@ void Image::update(float frameTime)
 					currentFrame = endFrame;
 					animComplete = true;
 				}
-				setRect();
 			}
+			setRect();
 		}
 	}
 }
@@ -142,6 +142,7 @@ void Image::setCurrentFrame(int c)
 	{
 		currentFrame = c;
 		animComplete = false;
+		animTimer = 0;
 		setRect(); // spriteData.rect ¼³Á¤.
 	}
 }
