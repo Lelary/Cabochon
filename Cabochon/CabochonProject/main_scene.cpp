@@ -40,14 +40,14 @@ void MainScene::start()
 
 	_started = true;
 }
-void MainScene::update()
+void MainScene::update(float frameTime)
 {
 	if (_input.isKeyDown(ENTER_KEY))
 	{
 		_nextScene = SceneName::InGameScene;
 	}
 }
-void MainScene::lateUpdate()
+void MainScene::lateUpdate(float frameTime)
 {
 	
 }

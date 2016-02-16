@@ -31,7 +31,7 @@ void InGameScene::start()
 }
 void InGameScene::update()
 {
-
+	_wheelControl.update();
 }
 void InGameScene::lateUpdate()
 {

@@ -91,7 +91,7 @@ namespace components
 		virtual void loadLayers(TextureList& textureList) = 0;
 		virtual void draw()=0;
 		//-----------------------------------------------------
-		virtual void update(scalar frameTime)=0;
+		virtual void update(float frameTime)=0;
 		/*
 			2016. 1. 22.
 			충돌관련함수를 어디에 작성할지 고민.중.

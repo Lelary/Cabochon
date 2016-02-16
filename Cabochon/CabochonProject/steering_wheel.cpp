@@ -110,7 +110,7 @@ void SteeringWheel::draw()
 	_layers[1].draw();
 	_layers[2].draw();
 }
-void SteeringWheel::update(scalar frameTime)
+void SteeringWheel::update(float frameTime)
 {
 
 }

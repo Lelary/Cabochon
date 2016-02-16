@@ -86,7 +86,7 @@ void Marble::draw()
 	_layers[2].draw();
 }
 
-void Marble::update(scalar frameTime)
+void Marble::update(float frameTime)
 {
 
 }

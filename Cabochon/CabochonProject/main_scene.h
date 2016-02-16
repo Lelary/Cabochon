@@ -20,8 +20,8 @@ namespace frameworks
 		virtual ~MainScene();
 
 		virtual void start();
-		virtual void update();
-		virtual void lateUpdate();
+		virtual void update(float frameTime);
+		virtual void lateUpdate(float frameTime);
 		virtual void render();
 
 		virtual void releaseAll();

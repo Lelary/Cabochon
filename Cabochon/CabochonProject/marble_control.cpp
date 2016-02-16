@@ -216,7 +216,7 @@ void MarbleControl::render()
 	if (_shootedMarble != nullptr)
 		_shootedMarble->getMarble()->draw();
 }
-void MarbleControl::update()
+void MarbleControl::update(float frameTime)
 {
 
 }

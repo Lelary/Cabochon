@@ -37,7 +37,7 @@ namespace controls
 		// pure virtual function
 		// nothing to do.
 		virtual void render();
-		virtual void update();
+		virtual void update(float frameTime);
 	};
 
 

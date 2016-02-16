@@ -90,7 +90,8 @@ void SteeringWheelControl::render()
 		_marbleNext->draw();
 
 }
-void SteeringWheelControl::update()
+void SteeringWheelControl::update(float frameTime)
 {
-
+	_marbleCurrent->setPosition(_marbleCurrent->getPosition()._x + 1.0f,
+		_marbleCurrent->getPosition()._y);
 }

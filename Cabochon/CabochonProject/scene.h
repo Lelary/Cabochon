@@ -39,8 +39,8 @@ namespace frameworks
 		virtual ~Scene();
 
 		virtual void start();
-		virtual void update() = 0;
-		virtual void lateUpdate() = 0;
+		virtual void update(float frameTime) = 0;
+		virtual void lateUpdate(float frameTime) = 0;
 		virtual void render() = 0;
 
 		virtual void releaseAll() = 0;

@@ -10,7 +10,7 @@ namespace controls
 
 	public:
 		virtual void render() = 0;
-		virtual void update() = 0;
+		virtual void update(float frameTime) = 0;
 	};
 }
 #endif // _CONTROL_H

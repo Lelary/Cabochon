@@ -18,7 +18,7 @@ void MarbleGenerator::render()
 {
 	// nothing to do.
 }
-void MarbleGenerator::update()
+void MarbleGenerator::update(float frameTime)
 {
 	// nothing to do.
 }
