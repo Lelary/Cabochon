@@ -27,6 +27,8 @@ namespace components
 	using components::marble_ptr;
 	using mathematics::IntPosition;
 	using frameworks::TextureList;
+	
+	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Transparent, Num};
 
 	class Marble
 		:public Object
@@ -37,6 +39,7 @@ namespace components
 		static const int noPosition = -1;
 	private:
 		IntPosition _gridPosition;
+		MarbleColor _color;
 
 	public:
 		Marble();
@@ -46,6 +49,8 @@ namespace components
 		Marble& operator=(const Marble& rhs);
 
 		void loadLayers(TextureList& textureList);
+		MarbleColor getColor();
+		MarbleColor setColor(MarbleColor color);
 		void rotate(scalar degree);
 		void draw();
 		void update(float frameTime);

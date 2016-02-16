@@ -17,7 +17,7 @@ SteeringWheelControl::SteeringWheelControl()
 	*/
 	_steeringWheel.setWidth(100);
 	_steeringWheel.setHeight(100);
-	_steeringWheel.setCentralPosition(GAME_WIDTH/2.0f, 5*GAME_HEIGHT/6);
+	_steeringWheel.setCentralPosition(GAME_WIDTH/2.0f, 7*GAME_HEIGHT/8);
 }
 SteeringWheelControl::~SteeringWheelControl()
 {

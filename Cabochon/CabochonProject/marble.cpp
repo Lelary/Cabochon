@@ -9,6 +9,7 @@ using temporary::maxX;
 using temporary::maxY;
 using frameworks::TextureList;
 using components::Layer;
+using components::MarbleColor;
 
 Marble::Marble()
 	:_gridPosition({ noPosition, noPosition })
@@ -72,9 +73,21 @@ void Marble::loadLayers(TextureList& textureList)
 		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 		_layers.back().setVisible(false);
 	}
-	_layers.at(0).setVisible(true);
-
+	// 초기화 안한상태.
+	_layers.at((int)MarbleColor::Transparent).setVisible(true);
+	_color = MarbleColor::Transparent;
 	adjustLayersPosition();
+}
+
+MarbleColor Marble::getColor()
+{
+	return _color;
+}
+MarbleColor Marble::setColor(MarbleColor color)
+{
+	_layers.at((int)_color).setVisible(false);
+	_color = color;
+	_layers.at((int)_color).setVisible(true);
 }
 void Marble::rotate(scalar degree)
 {
