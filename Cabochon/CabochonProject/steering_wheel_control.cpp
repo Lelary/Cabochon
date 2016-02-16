@@ -34,7 +34,7 @@ void SteeringWheelControl::loadTextures(TextureList& textureList)
 }
 scalar SteeringWheelControl::getDegree() const
 {
-	return _steeringWheel.getAngle().getDegree() - 90;
+	return _steeringWheel.getAngle().getDegree();
 }
 
 
@@ -50,6 +50,7 @@ marble_ptr& SteeringWheelControl::getMarbleNext()
 void SteeringWheelControl::setMarbleCurrent(marble_ptr& marble)
 {
 	_marbleCurrent = std::move(marble);
+	_marbleCurrent->setCentralPosition(_steeringWheel.getCentralPosition());
 }
 void SteeringWheelControl::setMarbleNext(marble_ptr& marble)
 {
@@ -60,27 +61,18 @@ void SteeringWheelControl::setOrigin()
 {
 	_steeringWheel.setOrigin();
 }
-void SteeringWheelControl::rotateLeft()
+void SteeringWheelControl::rotateLeft(float frameTime)
 {
-	/*
-	2017. 1. 17
-	키입력 추가 후 수정
-	*/
-	int i = angularVelocity;
-	while (i-- > 0 && getDegree() > -1*absMaxDegree)
-		_steeringWheel.rotateLeft(angularVelocity);
+	scalar i = angularVelocity;
+	while (i-- > 0 && (getDegree() > -1*maxDegree))
+		_steeringWheel.rotateLeft(angularVelocity*frameTime);
 
 }
-void SteeringWheelControl::rotateRight()
+void SteeringWheelControl::rotateRight(float frameTime)
 {
-
-	/*
-	2017. 1. 17
-	키입력 추가 후 수정
-	*/
-	int i = angularVelocity;
-	while (i-- > 0 && getDegree() < absMaxDegree)
-		_steeringWheel.rotateRight(angularVelocity);
+	scalar i = angularVelocity;
+	while (i-- > 0 && getDegree() < maxDegree)
+		_steeringWheel.rotateRight(angularVelocity*frameTime);
 }
 
 
@@ -95,6 +87,9 @@ void SteeringWheelControl::render()
 }
 void SteeringWheelControl::update(float frameTime)
 {
-	_marbleCurrent->setPosition(_marbleCurrent->getPosition()._x + 1.0f,
-		_marbleCurrent->getPosition()._y);
+
+
+	//장난.
+	//_marbleCurrent->setPosition(_marbleCurrent->getPosition()._x + 1.0f,
+	//	_marbleCurrent->getPosition()._y);
 }

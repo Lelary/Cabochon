@@ -40,14 +40,8 @@ namespace controls
 		//MarbleGenerator marbleGenerator;
 		//Timer timer;
 
-		/*
-			2016. 1. 17
-			버튼 입력 한번에 회전할 임의의 각도
-			deltaTime 적용 필요한지 체크해야함
-			(키입력 추가 후에)
-		*/
-		const int angularVelocity = 3;
-		const int absMaxDegree = 81;
+		const scalar angularVelocity = 10;
+		const scalar maxDegree = 70;
 
 	public:
 		SteeringWheelControl();
@@ -65,8 +59,8 @@ namespace controls
 		void setMarbleNext(marble_ptr& marble);
 
 		void setOrigin();
-		void rotateLeft();
-		void rotateRight();
+		void rotateLeft(float frameTime);
+		void rotateRight(float frameTime);
 		
 		// pure virtual function
 		virtual void render();

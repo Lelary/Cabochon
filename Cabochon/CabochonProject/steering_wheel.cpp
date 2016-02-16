@@ -52,13 +52,6 @@ Angle SteeringWheel::getAngle() const
 }
 void SteeringWheel::setAngle(Angle angle)
 {
-	/*
-	2016. 1. 15
-	추가적인 각도 예외 처리?
-
-	2016. 1. 16
-	SteeringWheelControl에서 하자
-	*/
 	_angle = angle;
 }
 
@@ -66,15 +59,17 @@ void SteeringWheel::setOrigin()
 {
 	setAngle(0);
 }
-void SteeringWheel::rotateLeft(unsigned int angle)
+void SteeringWheel::rotateLeft(float degree)
 {
-	setAngle(_angle - static_cast<scalar>(angle));
-	_layers.at(1).setDegrees(_angle.getDegree());
+	unsigned int wheelLayer = 1;
+	setAngle(_angle - degree);
+	_layers.at(wheelLayer).setDegrees(_angle.getDegree());
 }
-void SteeringWheel::rotateRight(unsigned int angle)
+void SteeringWheel::rotateRight(float degree)
 {
-	setAngle(_angle + static_cast<scalar>(angle));
-	_layers.at(1).setDegrees(_angle.getDegree());
+	unsigned int wheelLayer = 1;
+	setAngle(_angle + degree);
+	_layers.at(wheelLayer).setDegrees(_angle.getDegree());
 }
 
 void SteeringWheel::loadLayers(TextureList& textureList)

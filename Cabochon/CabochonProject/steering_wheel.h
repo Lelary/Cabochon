@@ -34,8 +34,8 @@ namespace components
 		Angle getAngle() const;
 
 		void setOrigin();
-		void rotateLeft(unsigned int angle);
-		void rotateRight(unsigned int angle);
+		void rotateLeft(scalar degree);
+		void rotateRight(scalar degree);
 
 		void loadLayers(TextureList& textureList);
 		void draw();

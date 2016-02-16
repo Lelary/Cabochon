@@ -23,13 +23,6 @@ namespace mathematics
 
 		scalar getDegree() const;
 		void setDegree(scalar degree);
-
-		/*
-			2016. 1. 11
-			operator overloading ÇÊ¼ö
-			+ -
-			0 <= degree < 360
-			*/
 	};
 }
 

@@ -32,6 +32,19 @@ void InGameScene::start()
 void InGameScene::update(float frameTime)
 {
 	_wheelControl.update(frameTime);
+
+	if (_input.isKeyDown(VK_LEFT)&&_input.isKeyDown(VK_RIGHT))
+	{
+		// 아무것도안함
+	}
+	else if (_input.isKeyDown(VK_LEFT))
+	{
+		_wheelControl.rotateLeft(frameTime);
+	}
+	else if (_input.isKeyDown(VK_RIGHT))
+	{
+		_wheelControl.rotateRight(frameTime);
+	}
 }
 void InGameScene::lateUpdate(float frameTime)
 {
