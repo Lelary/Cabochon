@@ -32,6 +32,8 @@ namespace components
 		:public Object
 	{
 	public:
+		static const int marbleWidth = 50;
+		static const int marbleHeight = 50;
 		static const int noPosition = -1;
 	private:
 		IntPosition _gridPosition;
@@ -44,6 +46,7 @@ namespace components
 		Marble& operator=(const Marble& rhs);
 
 		void loadLayers(TextureList& textureList);
+		void rotate(scalar degree);
 		void draw();
 		void update(float frameTime);
 

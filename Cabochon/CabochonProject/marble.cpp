@@ -13,24 +13,22 @@ using components::Layer;
 Marble::Marble()
 	:_gridPosition({ noPosition, noPosition })
 {
-	/*
-	2016. 1. 15
-	nothing to do.
-	*/
+	setWidth(marbleWidth);
+	setHeight(marbleHeight);
 }
 
 Marble::Marble(const IntPosition& gridPosition)
 	: _gridPosition(gridPosition)
-{ 
-	/*
-	2016. 1. 15
-	nothing to do.
-	*/
+{
+	setWidth(marbleWidth);
+	setHeight(marbleHeight);
 }
 
 Marble::Marble(const Marble& rhs)
 	:Object(rhs), _gridPosition(rhs._gridPosition)
 {
+	setWidth(marbleWidth);
+	setHeight(marbleHeight);
 	/*
 	2016. 1. 15
 	현재 자기 대입 처리 필요 없음
@@ -55,39 +53,47 @@ Marble& Marble::operator=(const Marble& rhs)
 }
 void Marble::loadLayers(TextureList& textureList)
 {
-	_layers.push_back(Layer());
-	_layers.back().initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_layers.back().setFrames(0, 0);
-	_layers.back().setCurrentFrame(0);
-	_layers.back().setLoop(false);
-	_layers.back().setDistance(getPosition(), { 0, 0 });
+	// 0 ~ 7
+	int width = 128;
+	int height = 128;
+	int row = 0;
+	int rows = 7;
+	int cols = 8;		
+	
 
-	_layers.push_back(Layer());
-	_layers.back().initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_layers.back().setFrames(8, 15);
-	_layers.back().setCurrentFrame(8);
-	_layers.back().setFrameDelay(1);
-	_layers.back().setLoop(true);
-	_layers.back().setDistance(getPosition(), { 0, 0 });
-
-	_layers.push_back(Layer());
-	_layers.back().initialize(textureList.getGraphics(), 128, 128, 8, textureList.getTexture(TextureList::TextureName::Marbles));
-	_layers.back().setFrames(16, 16);
-	_layers.back().setCurrentFrame(16);
-	_layers.back().setLoop(false);
-	_layers.back().setDistance(getPosition(), { 0, 0 });
+	for (row = 0; row < rows; row++)
+	{
+		_layers.push_back(Layer());
+		_layers.back().initialize(textureList.getGraphics(), width, height, cols, textureList.getTexture(TextureList::TextureName::Marbles));
+		_layers.back().setFrames(row*cols, row*cols + cols - 1);
+		_layers.back().setCurrentFrame(row*cols+3);
+		_layers.back().setFrameDelay(0.1);
+		_layers.back().setLoop(true);
+		_layers.back().setScaleFromWidth(1.0f, getWidth());
+		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
+		_layers.back().setVisible(false);
+	}
+	_layers.at(1).setVisible(true);
 
 	adjustLayersPosition();
 }
-
+void Marble::rotate(scalar degree)
+{
+	for (Layer& layer : _layers)
+		layer.setDegrees(degree);
+}
 void Marble::draw()
 {
-	for (Layer layer : _layers)
+	for (Layer& layer : _layers)
 		layer.draw();
 }
 
 void Marble::update(float frameTime)
 {
+	for (Layer& layer : _layers)
+	{
+		layer.update(frameTime);
+	}
 
 }
 

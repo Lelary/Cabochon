@@ -15,9 +15,9 @@ SteeringWheelControl::SteeringWheelControl()
 	기본값으로 초기화 된다.
 	_steeringWheel(0), _marbleCurrent(nullptr), _marbleNext(nullptr)
 	*/
-	_steeringWheel.setPosition(100, 100);
 	_steeringWheel.setWidth(100);
 	_steeringWheel.setHeight(100);
+	_steeringWheel.setCentralPosition(GAME_WIDTH/2.0f, 5*GAME_HEIGHT/6);
 }
 SteeringWheelControl::~SteeringWheelControl()
 {
@@ -63,16 +63,24 @@ void SteeringWheelControl::setOrigin()
 }
 void SteeringWheelControl::rotateLeft(float frameTime)
 {
-	scalar i = angularVelocity;
-	while (i-- > 0 && (getDegree() > -1*maxDegree))
-		_steeringWheel.rotateLeft(angularVelocity*frameTime);
+	scalar i = _angularVelocity;
+	while (i-- > 0 && (getDegree() > -1*_maxDegree))
+	{
+		_steeringWheel.rotateLeft(_angularVelocity*frameTime);
+		if (_marbleCurrent != nullptr)
+			_marbleCurrent->rotate(-1*_angularVelocity*frameTime);
+	}
 
 }
 void SteeringWheelControl::rotateRight(float frameTime)
 {
-	scalar i = angularVelocity;
-	while (i-- > 0 && getDegree() < maxDegree)
-		_steeringWheel.rotateRight(angularVelocity*frameTime);
+	scalar i = _angularVelocity;
+	while (i-- > 0 && getDegree() < _maxDegree)
+	{
+		_steeringWheel.rotateRight(_angularVelocity*frameTime);
+		if (_marbleCurrent != nullptr)
+			_marbleCurrent->rotate(+1 * _angularVelocity*frameTime);
+	}
 }
 
 
@@ -87,6 +95,14 @@ void SteeringWheelControl::render()
 }
 void SteeringWheelControl::update(float frameTime)
 {
+	_steeringWheel.update(frameTime);
+
+	if (_marbleCurrent != nullptr)
+		_marbleCurrent->update(frameTime);
+	if (_marbleNext != nullptr)
+		_marbleNext->update(frameTime);
+
+
 
 
 	//장난.

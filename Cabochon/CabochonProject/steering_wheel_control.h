@@ -40,8 +40,8 @@ namespace controls
 		//MarbleGenerator marbleGenerator;
 		//Timer timer;
 
-		const scalar angularVelocity = 10;
-		const scalar maxDegree = 70;
+		const scalar _angularVelocity = 10;
+		const scalar _maxDegree = 70;
 
 	public:
 		SteeringWheelControl();
