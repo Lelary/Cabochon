@@ -9,7 +9,6 @@ namespace components
 	class Marble;
 	class ShootedMarble;
 	class SteeringWheel;
-	class MarbleBoard;
 	class CeilingBlock;
 /*
 	2016. 1. 10

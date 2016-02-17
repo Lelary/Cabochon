@@ -90,6 +90,24 @@ void Marble::rotate(scalar degree)
 	for (Layer& layer : _layers)
 		layer.setDegrees(layer.getDegrees()+degree);
 }
+
+void Marble::setGridPosition(IntPosition gridPosition)
+{
+	_gridPosition = gridPosition;
+}
+IntPosition Marble::getGridPosition() const
+{
+	return _gridPosition;
+}
+scalar Marble::getMarbleWidth()
+{
+	return marbleWidth;
+}
+scalar Marble::getMarbleHeight()
+{
+	return marbleWidth;
+}
+
 void Marble::draw()
 {
 	for (Layer layer : _layers)

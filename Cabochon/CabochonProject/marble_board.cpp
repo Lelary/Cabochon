@@ -1,13 +1,16 @@
 // 2016. 2. 17.
 #include "marble_board.h"
+#include "vector2.h"
 
 using components::MarbleColor;
-using components::MarbleBoard;
+using controls::MarbleBoard;
 using controls::BoardState;
-using controls::MarbleGenerator;
+using controls::MarbleGenerator; 
+using mathematics::Position;
+using mathematics::scalar;
 
 MarbleBoard::MarbleBoard()
-	:_boardState(BoardState::Ready)
+	:_boardState(BoardState::Build), _dragged(false)
 {
 }
 MarbleBoard::~MarbleBoard()
@@ -110,6 +113,7 @@ BoardState MarbleBoard::dragDown()
 	// Row Zero 가 삭제되면 자동으로 한칸씩 내려온다.
 	// ( 다른 함수에서. )
 	removeRowZero();
+	_dragged = true;
 
 	if (gameOver())
 		return _boardState = BoardState::GameOver;
@@ -131,39 +135,99 @@ void MarbleBoard::makeRandomBoard()
 {
 	if (_boardState != BoardState::Build)
 		return;
-
+	
 	_marbles.clear();
+	bool even = true;
 	int row = MarbleGenerator::getRandomNumber(4, 20);
 	// temporary Row in stack.
 	for (int i = 0; i < row; i++)
 	{
 		MarbleRow marbleRow;
-		for (marble_ptr& marble : marbleRow)
-			marble = MarbleGenerator::makeRandomMarble();
+		if (even==true)
+			for (int i = 0; i < maxX; i++)
+				marbleRow[i] = MarbleGenerator::makeRandomMarble();
+		else
+			for (int i = 0; i < maxX-1; i++)
+				marbleRow[i] = MarbleGenerator::makeRandomMarble();
+
 		_marbles.push_front(std::move(marbleRow));
+		even = !even;
 	}
 
 	row = MarbleGenerator::getRandomNumber(4, 6);
 	for (int i = 0; i < row; i++)
 	{
 		MarbleRow marbleRow;
-		for (marble_ptr& marble : marbleRow)
-			marble = MarbleGenerator::makeMarble(MarbleColor::None);
+		if (even == true)
+			for (int i = 0; i < maxX; i++)
+				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+		else
+			for (int i = 0; i < maxX - 1; i++)
+				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+
 		_marbles.push_front(std::move(marbleRow));
+		even = !even;
 	}
 
 	if (getHeight() < 10)
 	{
-		row = 10 - getHeight();
-		for (int i = 0; i < row; i++)
-		{
-			MarbleRow marbleRow;
-			for (marble_ptr& marble : marbleRow)
-				marble = MarbleGenerator::makeMarble(MarbleColor::None);
-			_marbles.push_front(std::move(marbleRow));
-		}
-	}
+		MarbleRow marbleRow;
+		if (even == true)
+			for (int i = 0; i < maxX; i++)
+				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+		else
+			for (int i = 0; i < maxX - 1; i++)
+				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
 
+		_marbles.push_front(std::move(marbleRow));
+		even = !even;
+	}
+	
+	// marble 들의 
+	// marble의 y위치(intposition, position 모두)를
+	// 셋업해줘야함.
+	updateMarblePositions();
 
 	_boardState = BoardState::Ready;
+}
+void MarbleBoard::updateMarblePositions()
+{
+	//모든 Marble의 Position, IntPosition Update;
+	int width = Marble::getMarbleWidth();
+	int height = Marble::getMarbleHeight();
+	scalar line = height * 10;
+	scalar x = 0;
+	scalar y = line;//line의 위치.
+	Position offset;
+
+	// int position은 자신의 index,
+	// position은 offset + index*width, offset+index*height
+	for (int i = 0; i<_marbles.size();i++){
+		for (int j = 0; j < _marbles[i].size(); j++){
+			if (_marbles[i][j] != nullptr){
+				_marbles[i][j]->setGridPosition({ i, j });
+				_marbles[i][j]->setPosition(x + i*width, y + j*height);
+			}
+		}
+	}
+	
+	_dragged = false;
+}
+
+void MarbleBoard::render()
+{
+	//marbles draw
+	//0~10번 Row만 그림.
+	for (int i = 0; i < 10; i++)
+		for (int j = 0; j < maxX; j++)
+			if (_marbles[i][j]!=nullptr)
+				_marbles[i][j]->draw();
+}
+void MarbleBoard::update(float frameTime)
+{
+	// 줄내림이 발생했을 때, 
+	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
+	if (_dragged)
+		updateMarblePositions();
+	_dragged = false;
 }

@@ -51,6 +51,12 @@ namespace components
 		void loadLayers(TextureList& textureList);
 		MarbleColor getColor();
 		MarbleColor setColor(MarbleColor color);
+
+		void setGridPosition(IntPosition gridPosition);
+		IntPosition getGridPosition() const;
+		static scalar getMarbleWidth();
+		static scalar getMarbleHeight();
+
 		void rotate(scalar degree);
 		void draw();
 		void update(float frameTime);

@@ -20,6 +20,7 @@ namespace controls
 	*/
 	const unsigned int maxX = 8;
 
+	using components::MarbleColor;
 	using MarbleRow = std::array < components::marble_ptr, maxX > ;
 	using MarbleRows = std::deque <MarbleRow> ;
 
@@ -29,14 +30,23 @@ namespace controls
 		: public Control
 	{
 	private:
-		const char* levelFile = "data\\level_data.txt";
-		const int maxLevel = 3;
+		/*		
+		// 2016. 2. 17.
+		// TODO.-------------------------------------------------------------
+		// level 은 Positive 일 경우 load 한 맵,
+		// Zero 일경우 끝이 없는 무한 맵
+		// Negative 일 경우 랜덤맵을 생성. (level 값은 abs()를 통해 얻음)
+		//-------------------------------------------------------------------
+		*/
+		//const char* levelFile = "data\\level_data.txt";
+		//const int maxLevel = 3;
 		
-		int _level;
+		//int _level;
 		BoardState _boardState;
 		MarbleRows _marbles;
+		bool _dragged;
 		std::array<int, (int)MarbleColor::Num> _colorCount;
-
+		
 	public:
 		MarbleBoard();
 		~MarbleBoard();
@@ -80,6 +90,11 @@ namespace controls
 		//void buildBoard();
 
 		void makeRandomBoard();
+		void updateMarblePositions();
+
+		//pure virtual functions
+		virtual void render();
+		virtual void update(float frameTime);
 
 	};
 

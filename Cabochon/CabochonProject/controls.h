@@ -42,6 +42,7 @@ namespace controls
 	*/
 	struct MarbleColorBitField;
 	union MarbleColorOn;
+	class MarbleBoard;
 	class MarbleGenerator;
 
 

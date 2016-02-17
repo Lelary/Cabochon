@@ -7,6 +7,7 @@
 #include "grid.h"
 #include "control.h"
 #include "shooted_marble.h"
+#include "marble_board.h"
 #include <array>
 #include <vector>
 
@@ -17,7 +18,7 @@ namespace controls
 	using components::marble_ptr;
 	using components::ShootedMarble;
 	using components::Grid;
-	using temporary::marble_array;
+	using controls::MarbleRows;
 	using mathematics::IntPosition;
 
 /*
