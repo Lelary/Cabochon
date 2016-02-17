@@ -14,7 +14,8 @@ namespace controls
 	using components::marble_ptr;
 	using components::Marble;
 	using frameworks::TextureList;
-	
+	using components::MarbleColor;
+
 	struct MarbleColorBitField
 	{
 		unsigned char None : 1;
@@ -49,7 +50,6 @@ namespace controls
 		2. ¸Ê »ý¼º
 		*/
 		static int getRandomNumber(int min, int max);
-		static marble_ptr makeMarble();
 		static marble_ptr makeMarble(MarbleColor color=MarbleColor::None);
 		static marble_ptr makeRandomMarble();
 		static marble_ptr makeRandomMarble(MarbleColorOn colorRange);

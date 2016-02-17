@@ -9,7 +9,7 @@ using frameworks::TextureList;
 using components::Layer;
 using components::MarbleColor;
 
-Marble::Marble(const IntPosition& gridPosition = {noPosition, noPosition}, MarbleColor color = MarbleColor::None)
+Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
 	: _gridPosition(gridPosition), _color(color)
 {
 	setWidth(marbleWidth);

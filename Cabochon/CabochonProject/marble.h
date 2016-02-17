@@ -2,6 +2,7 @@
 #define _MARBLE_H
 #include "object.h"
 #include "texture_list.h"
+#include "cabochon_constants.h"
 /*
 	2016. 1. 5
 	class Marble

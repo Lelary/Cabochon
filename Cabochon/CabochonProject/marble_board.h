@@ -19,6 +19,7 @@ namespace controls
 	해당 행이 even인 경우 8이며, odd 일 경우 8-1=7 이다.
 	maxY는 차후 변경 가능
 	*/
+	using mathematics::scalar;
 	using components::MarbleColor;
 	using MarbleRow = std::array < components::marble_ptr, cabochon_constants::MAX_X > ;
 	using MarbleRows = std::deque <MarbleRow> ;

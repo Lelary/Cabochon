@@ -9,6 +9,7 @@ using controls::RowType;
 using controls::MarbleGenerator; 
 using mathematics::Position;
 using mathematics::scalar;
+using components::marble_ptr;
 using cabochon_constants::MAX_X;
 using cabochon_constants::MIN_Y;
 using cabochon_constants::MARBLE_WIDTH;
@@ -18,6 +19,7 @@ using cabochon_constants::LINE;
 MarbleBoard::MarbleBoard()
 	:_boardState(BoardState::Build), _dragged(false)
 {
+	//_marbles.push_front(move(MarbleRow()));
 }
 MarbleBoard::~MarbleBoard()
 {
@@ -79,7 +81,7 @@ int MarbleBoard::getHeight() const
 
 int MarbleBoard::getFloor() const
 {
-	for (int row = 0; row < _marbles.size(); row++)
+	for (int row = 0; row < (int)_marbles.size(); row++)
 		for (const marble_ptr& marble : _marbles[row])
 			if (marble != nullptr)
 				return row;				// _marbles의 인덱스.
@@ -142,6 +144,8 @@ BoardState MarbleBoard::dragDown()
 }
 void MarbleBoard::makeRandomBoard()
 {
+	/*
+	
 	if (_boardState != BoardState::Build)
 		return;
 	
@@ -151,44 +155,41 @@ void MarbleBoard::makeRandomBoard()
 	// temporary Row in stack.
 	for (int i = 0; i < row; i++)
 	{
-		MarbleRow marbleRow;
+		_marbles.push_front(MarbleRow());
 		if (even==true)
 			for (int i = 0; i < MAX_X; i++)
-				marbleRow[i] = MarbleGenerator::makeRandomMarble();
+				_marbles.front().at(i) = std::move(MarbleGenerator::makeRandomMarble());
 		else
 			for (int i = 0; i < MAX_X-1; i++)
-				marbleRow[i] = MarbleGenerator::makeRandomMarble();
-
-		_marbles.push_front(std::move(marbleRow));
+				_marbles.front().at(i) = std::move(MarbleGenerator::makeRandomMarble());
 		even = !even;
 	}
 
 	row = MarbleGenerator::getRandomNumber(4, 6);
 	for (int i = 0; i < row; i++)
 	{
-		MarbleRow marbleRow;
+		_marbles.push_front(MarbleRow());
 		if (even == true)
 			for (int i = 0; i < MAX_X; i++)
-				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
 		else
 			for (int i = 0; i < MAX_X - 1; i++)
-				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
 
-		_marbles.push_front(std::move(marbleRow));
 		even = !even;
 	}
 
-	if (getHeight() < 10)
+	// if (getHeight()<10) 생략.
+	while (getHeight() >= 10)
 	{
-		MarbleRow marbleRow;
+		_marbles.push_front(MarbleRow());
 		if (even == true)
 			for (int i = 0; i < MAX_X; i++)
-				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
 		else
 			for (int i = 0; i < MAX_X - 1; i++)
-				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
+				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
 
-		_marbles.push_front(std::move(marbleRow));
 		even = !even;
 	}
 	
@@ -198,18 +199,18 @@ void MarbleBoard::makeRandomBoard()
 	updateMarblePositions();
 
 	_boardState = BoardState::Ready;
+	*/
 }
 void MarbleBoard::updateMarblePositions()
 {
 	//모든 Marble의 Position, IntPosition Update;
 	scalar x = 0;
 	scalar y = LINE;//LINE의 위치.
-	Position offset;
 	bool even = (getRowType(0)==RowType::Odd)?false:true;
 	// int position은 자신의 index,
 	// position은 offset + index*width, offset+index*height
-	for (int i = 0; i<_marbles.size();i++){
-		for (int j = 0; j < _marbles[i].size(); j++){
+	for (int i = 0; i<(int)_marbles.size(); i++){
+		for (int j = 0; j < (int)_marbles[i].size(); j++){
 			if (_marbles[i][j] != nullptr){
 				_marbles[i][j]->setGridPosition({ i, j });
 				if (even)
@@ -226,13 +227,13 @@ void MarbleBoard::updateMarblePositions()
 int MarbleBoard::positionToIndexX(scalar x, RowType rowType) const
 {
 	if (getRowType(x) == RowType::Odd)
-		return floorf(x - (MARBLE_WIDTH/2.0f) / MARBLE_WIDTH);
+		return static_cast<int>(floorf(x - (MARBLE_WIDTH/2.0f) / MARBLE_WIDTH));
 	else
-		return floorf(x / MARBLE_WIDTH);
+		return static_cast<int>(floorf(x / MARBLE_WIDTH));
 }
 int MarbleBoard::positionToIndexY(scalar y) const
 {
-	return ceilf((LINE - y) / MARBLE_HEIGHT);
+	return static_cast<int>(ceilf((LINE - y) / MARBLE_HEIGHT));
 }
 RowType MarbleBoard::getRowType(scalar y) const
 {

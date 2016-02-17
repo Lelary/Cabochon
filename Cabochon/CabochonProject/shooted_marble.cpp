@@ -1,11 +1,15 @@
 // 2016. 1. 17
 #include "shooted_marble.h"
+#include "cabochon_constants.h"
 using components::ShootedMarble;
-using components::Grid;
+using controls::Grid;
 using components::marble_ptr;
 using mathematics::scalar;
 using mathematics::Velocity;
 using mathematics::Angle;
+
+using cabochon_constants::LEFT_WALL;
+using cabochon_constants::RIGHT_WALL;
 
 ShootedMarble::ShootedMarble()
 {
@@ -37,14 +41,14 @@ void ShootedMarble::move()
 		_marble->setPosition(_marble->getPosition()._x + _velocity._x, _marble->getPosition()._y + _velocity._y);
 
 		// �¿캮
-		if (_marble->getPosition()._x <  Grid::getLeftWall()
+		if (_marble->getPosition()._x <  LEFT_WALL
 			||
-			_marble->getPosition()._x > Grid::getRightWall()
+			_marble->getPosition()._x > RIGHT_WALL
 			)
 			_velocity._x *= -1;
 		
 
-		if (_marble->getPosition()._y > Grid::getCeiling())
+		if (_marble->getPosition()._y > board.getCeiling())
 			return;		
 	}
 }

@@ -20,8 +20,8 @@ protected:
 	int startFrame;
 	int endFrame;
 	int currentFrame;
-	double frameDelay;
-	double animTimer;
+	float frameDelay;
+	float animTimer;
 
 	HRESULT hr;
 	bool loop;

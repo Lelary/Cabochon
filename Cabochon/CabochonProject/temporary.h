@@ -9,7 +9,7 @@
 
 	차후에 알맞은 위치로 구문들을 옮기고 이 파일은 삭제
 namespace temporary
-{
+
 	using mathematics::scalar;
 
 	//-> constants 관련 헤더파일로
@@ -32,7 +32,5 @@ namespace temporary
 	//static const unsigned int ceiling = 10;
 	//static const unsigned int floor = ceiling + boardHeight;
 
-}
-*/
 
 #endif _TEMPORARY_H

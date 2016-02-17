@@ -40,7 +40,7 @@ bool Grid::isInGrid(const MarbleBoard& board, scalar x, scalar y, int gx, int gy
 	if (isInGrid(board, x, y) == false)
 		return false;
 
-	gridPosition = getGridPosition(x, y);
+	gridPosition = getGridPosition(board, x, y);
 	
 	// 기대한 위치 gx, gy 와 실제 gridPosition이 일치하는지 검사
 	if (gridPosition._x == gx
@@ -61,7 +61,7 @@ bool Grid::isInGridSub(const MarbleBoard& board, scalar x, scalar y, Quadrant q)
 		return false;
 
 	// 기대한 값과 일치함
-	if (q == getQuadrant(x, y))
+	if (q == getQuadrant(board, x, y))
 		return true;
 	else
 		return false;
@@ -76,7 +76,7 @@ bool Grid::isInGridSub(const MarbleBoard& board, scalar x, scalar y, int gx, int
 		return false;
 
 	// 기대한 값과 일치함
-	if (q == getQuadrant(x, y))
+	if (q == getQuadrant(board, x, y))
 		return true;
 	else
 		return false;

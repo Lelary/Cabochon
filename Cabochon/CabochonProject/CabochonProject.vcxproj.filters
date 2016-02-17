@@ -84,9 +84,6 @@
     <ClInclude Include="template_dynamic_singleton.h">
       <Filter>헤더 파일\pattern</Filter>
     </ClInclude>
-    <ClInclude Include="marble_control.h">
-      <Filter>헤더 파일\controls</Filter>
-    </ClInclude>
     <ClInclude Include="temporary.h">
       <Filter>헤더 파일\etc</Filter>
     </ClInclude>
@@ -174,6 +171,9 @@
     <ClInclude Include="grid.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
+    <ClInclude Include="marble_control.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -190,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="grid.cpp">
       <Filter>소스 파일\components</Filter>
-    </ClCompile>
-    <ClCompile Include="marble_control.cpp">
-      <Filter>소스 파일\controls</Filter>
     </ClCompile>
     <ClCompile Include="steering_wheel_control.cpp">
       <Filter>소스 파일\controls</Filter>
@@ -252,6 +249,9 @@
       <Filter>소스 파일\components</Filter>
     </ClCompile>
     <ClCompile Include="marble_board.cpp">
+      <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="marble_control.cpp">
       <Filter>소스 파일\controls</Filter>
     </ClCompile>
   </ItemGroup>

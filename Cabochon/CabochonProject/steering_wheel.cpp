@@ -80,7 +80,7 @@ void SteeringWheel::loadLayers(TextureList& textureList)
 	_layers.back().setFrames(1, 1);
 	_layers.back().setCurrentFrame(1);
 	_layers.back().setLoop(false);
-	_layers.back().setScaleFromWidth(1.2, getWidth());
+	_layers.back().setScaleFromWidth(1.2f, getWidth());
 	_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 
 	_layers.push_back(Layer());

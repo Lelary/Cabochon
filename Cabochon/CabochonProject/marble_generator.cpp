@@ -1,6 +1,7 @@
 #include "marble_generator.h"
 using components::marble_ptr;
 using components::MarbleColor;
+using controls::MarbleColorOn;
 using controls::MarbleGenerator;
 using frameworks::TextureList;
 
@@ -9,9 +10,10 @@ int MarbleGenerator::getRandomNumber(int min, int max)
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
 	std::uniform_int_distribution<>  dist(min, max);
-	
+
+	return dist(gen);
 }
-marble_ptr MarbleGenerator::makeMarble(MarbleColor color=MarbleColor::None)
+marble_ptr MarbleGenerator::makeMarble(MarbleColor color)
 {
 	return std::make_unique<Marble>(color);
 }

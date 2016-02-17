@@ -17,7 +17,7 @@ namespace mathematics
 	*/
 	class Angle;
 
-	typedef float scalar;	
+	typedef float scalar;
 
 	using Position = Vector2 < scalar >;
 	using Velocity = Vector2 < scalar >;

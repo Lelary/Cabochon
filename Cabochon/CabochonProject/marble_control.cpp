@@ -6,10 +6,7 @@ using controls::MarbleControl;
 using components::Marble;
 using components::marble_ptr;
 using components::ShootedMarble;
-using components::Grid;
-using temporary::marble_array;
-using temporary::maxX;
-using temporary::maxY;
+using controls::Grid;
 using mathematics::IntPosition;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 

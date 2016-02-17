@@ -17,7 +17,8 @@ namespace controls
 	using components::Marble;
 	using components::marble_ptr;
 	using components::ShootedMarble;
-	using components::Grid;
+	using controls::Grid;
+	using controls::MarbleBoard;
 	using controls::MarbleRows;
 	using mathematics::IntPosition;
 
@@ -38,9 +39,7 @@ namespace controls
 	{
 	private:
 		//marble_ptr 에 대한 2차원 배열
-		//MarbleBoard 로 대체.
-		//marble_array _marbles;
-
+		MarbleBoard _marbleBoard;
 		using shooted_ptr = std::unique_ptr < ShootedMarble >;
 		// steeringWheelControl 로 부터 소유권이 이전될 것.
 		shooted_ptr _shootedMarble;
