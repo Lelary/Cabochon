@@ -2,7 +2,6 @@
 #define _OBJECTS_H
 
 #include "components.h"
-#include "mathematics.h"
 #include "vector2.h"
 #include "dx9_game_engine\image.h"
 #include "texture_list.h"

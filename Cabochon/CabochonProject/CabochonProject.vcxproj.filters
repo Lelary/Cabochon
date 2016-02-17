@@ -90,9 +90,6 @@
     <ClInclude Include="temporary.h">
       <Filter>헤더 파일\etc</Filter>
     </ClInclude>
-    <ClInclude Include="grid.h">
-      <Filter>헤더 파일\components</Filter>
-    </ClInclude>
     <ClInclude Include="mathematics.h">
       <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>
@@ -169,6 +166,12 @@
       <Filter>헤더 파일\components</Filter>
     </ClInclude>
     <ClInclude Include="marble_board.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="cabochon_constants.h">
+      <Filter>헤더 파일\namespaces</Filter>
+    </ClInclude>
+    <ClInclude Include="grid.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
   </ItemGroup>

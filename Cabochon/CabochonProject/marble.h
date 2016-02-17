@@ -34,8 +34,8 @@ namespace components
 		:public Object
 	{
 	public:
-		static const int marbleWidth = 50;
-		static const int marbleHeight = 50;
+		static const int marbleWidth = cabochon_constants::MARBLE_WIDTH;
+		static const int marbleHeight = cabochon_constants::MARBLE_HEIGHT;
 		static const int noPosition = -1;
 	private:
 		IntPosition _gridPosition;
@@ -54,8 +54,6 @@ namespace components
 
 		void setGridPosition(IntPosition gridPosition);
 		IntPosition getGridPosition() const;
-		static scalar getMarbleWidth();
-		static scalar getMarbleHeight();
 
 		void rotate(scalar degree);
 		void draw();

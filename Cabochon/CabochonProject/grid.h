@@ -1,23 +1,17 @@
 #ifndef _GRID_H
 #define _GRID_H
 
-#include "components.h"
+#include "controls.h"
+#include "mathematics.h"
 #include "vector2.h"
-#include "temporary.h"
-
-namespace components
+#include "cabochon_constants.h"
+#include "marble_board.h"
+namespace controls
 {
 	using mathematics::scalar;
 	using mathematics::Position;
 	using mathematics::IntPosition;
-	using temporary::maxX;
-	using temporary::maxY;
-	using temporary::marbleRadius;
-	using temporary::boardWidth;
-	using temporary::boardHeight;
-	using temporary::blockWidth;
-	using temporary::blockHeight;
-
+	
 	/*
 		2016. 1. 10
 		Block -> Quadrant -> Grid
@@ -43,26 +37,17 @@ namespace components
 
 		cpp 파일에 함수 구현 1차 작성 완료
 	*/
+	using cabochon_constants::MAX_X;
+	using cabochon_constants::MIN_Y;
+	using cabochon_constants::MARBLE_WIDTH;
+	using cabochon_constants::MARBLE_HEIGHT;
+	
 	class Grid
 	{
 	public:
-		enum class RowType{ none = -1, even, odd };
 		enum class Quadrant{ none = -1, first = 1, second, third, fourth};
 	private:
-		// radius of marble.. 
-		static const int leftWall = 0;
-		static const int rightWall = boardWidth;
-		static const int ceiling = 0;
-		static const int floor = boardHeight;
-		// floor != boardHeight * maxY
 	public:
-		/*
-			2016. 1. 10
-			함수명들은 다시 생각해봐야함
-
-			2016. 1. 13
-			지금 함수명이 괜찮은 것 같다
-		*/
 		/*
 			2016. 1. 16
 			정적 멤버 상수, 정적 멤버 함수 만을 가지고 있으므로 객체 생성을 제한한다.
@@ -72,28 +57,21 @@ namespace components
 		Grid(const Grid& rhs) = delete;
 		~Grid() = delete;
 
-		static RowType getRowType(scalar y);
-		static RowType getRowType(int y);
+		static bool isInGrid(const MarbleBoard& board, scalar x, scalar y);
+		static bool isInGrid(const MarbleBoard& board, scalar x, scalar y, int gx, int gy);
+		static bool isInGrid(const MarbleBoard& board, Position centralPosition, IntPosition gridPosition);
 
-		static bool isInGrid(scalar x, scalar y);
-		static bool isInGrid(scalar x, scalar y, int gx, int gy);
-		static bool isInGrid(Position centralPosition, IntPosition gridPosition);
+		static bool isInGridSub(const MarbleBoard& board, scalar x, scalar y, Quadrant q);
+		static bool isInGridSub(const MarbleBoard& board, Position centralPosition, Quadrant q);
+		static bool isInGridSub(const MarbleBoard& board, scalar x, scalar y, int gx, int gy, Quadrant q);
+		static bool isInGridSub(const MarbleBoard& board, Position centralPosition, IntPosition gridPosition, Quadrant q);
 
-		static bool isInGridSub(scalar x, scalar y, Quadrant q);
-		static bool isInGridSub(Position centralPosition, Quadrant q);
-		static bool isInGridSub(scalar x, scalar y, int gx, int gy, Quadrant q);
-		static bool isInGridSub(Position centralPosition, IntPosition gridPosition, Quadrant q);
+		static Quadrant getQuadrant(const MarbleBoard& board, scalar x, scalar y);
+		static Quadrant getQuadrant(const MarbleBoard& board, Position centralPosition);
 
-		static Quadrant getQuadrant(scalar x, scalar y);
-		static Quadrant getQuadrant(Position centralPosition);
+		static IntPosition getGridPosition(const MarbleBoard& board, scalar x, scalar y);
+		static IntPosition getGridPosition(const MarbleBoard& board, Position centralPosition);
 
-		static IntPosition getGridPosition(scalar x, scalar y);
-		static IntPosition getGridPosition(Position centralPosition);
-
-		static int getLeftWall();
-		static int getRightWall();
-		static int getCeiling();
-		static int getFloor();
 	};
 }
 #endif

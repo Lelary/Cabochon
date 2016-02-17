@@ -5,9 +5,15 @@
 using components::MarbleColor;
 using controls::MarbleBoard;
 using controls::BoardState;
+using controls::RowType;
 using controls::MarbleGenerator; 
 using mathematics::Position;
 using mathematics::scalar;
+using cabochon_constants::MAX_X;
+using cabochon_constants::MIN_Y;
+using cabochon_constants::MARBLE_WIDTH;
+using cabochon_constants::MARBLE_HEIGHT;
+using cabochon_constants::LINE;
 
 MarbleBoard::MarbleBoard()
 	:_boardState(BoardState::Build), _dragged(false)
@@ -17,7 +23,7 @@ MarbleBoard::~MarbleBoard()
 {
 }
 
-MarbleColor MarbleBoard::existMarble(int x, int y)
+MarbleColor MarbleBoard::existMarble(int x, int y) const
 {
 	if (_marbles[x][y] != nullptr)
 		return _marbles[x][y]->getColor();
@@ -50,14 +56,14 @@ void MarbleBoard::removeRowZero()
 	_marbles.pop_front();
 }
 
-int MarbleBoard::getMarbleCount(MarbleColor c)
+int MarbleBoard::getMarbleCount(MarbleColor c) const
 {
 	if (c == MarbleColor::None || c == MarbleColor::Num)
 		throw("getMarbleCount() : Invalid MarbleColor Parameter.");
 
 	return _colorCount[(int)c];
 }
-int MarbleBoard::getMarbleCount()
+int MarbleBoard::getMarbleCount() const
 {
 	int sum = 0;
 	for (int i : _colorCount)
@@ -66,12 +72,12 @@ int MarbleBoard::getMarbleCount()
 	}
 	return sum;
 }
-int MarbleBoard::getHeight()
+int MarbleBoard::getHeight() const
 {
 	return _marbles.size();
 }
 
-int MarbleBoard::getFloor()
+int MarbleBoard::getFloor() const
 {
 	for (int row = 0; row < _marbles.size(); row++)
 		for (const marble_ptr& marble : _marbles[row])
@@ -81,7 +87,10 @@ int MarbleBoard::getFloor()
 	// 모두 nullptr일 경우. 이 상황은 게임이 클리어된상태임. 
 	return getHeight();
 }
-
+scalar MarbleBoard::getCeilingPosition() const
+{
+	return -1 * getHeight()*MARBLE_HEIGHT + LINE;
+}
 bool MarbleBoard::gameOver()
 {
 	// 혹은 getFloor()==0
@@ -144,10 +153,10 @@ void MarbleBoard::makeRandomBoard()
 	{
 		MarbleRow marbleRow;
 		if (even==true)
-			for (int i = 0; i < maxX; i++)
+			for (int i = 0; i < MAX_X; i++)
 				marbleRow[i] = MarbleGenerator::makeRandomMarble();
 		else
-			for (int i = 0; i < maxX-1; i++)
+			for (int i = 0; i < MAX_X-1; i++)
 				marbleRow[i] = MarbleGenerator::makeRandomMarble();
 
 		_marbles.push_front(std::move(marbleRow));
@@ -159,10 +168,10 @@ void MarbleBoard::makeRandomBoard()
 	{
 		MarbleRow marbleRow;
 		if (even == true)
-			for (int i = 0; i < maxX; i++)
+			for (int i = 0; i < MAX_X; i++)
 				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
 		else
-			for (int i = 0; i < maxX - 1; i++)
+			for (int i = 0; i < MAX_X - 1; i++)
 				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
 
 		_marbles.push_front(std::move(marbleRow));
@@ -173,10 +182,10 @@ void MarbleBoard::makeRandomBoard()
 	{
 		MarbleRow marbleRow;
 		if (even == true)
-			for (int i = 0; i < maxX; i++)
+			for (int i = 0; i < MAX_X; i++)
 				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
 		else
-			for (int i = 0; i < maxX - 1; i++)
+			for (int i = 0; i < MAX_X - 1; i++)
 				marbleRow[i] = MarbleGenerator::makeMarble(MarbleColor::None);
 
 		_marbles.push_front(std::move(marbleRow));
@@ -193,33 +202,79 @@ void MarbleBoard::makeRandomBoard()
 void MarbleBoard::updateMarblePositions()
 {
 	//모든 Marble의 Position, IntPosition Update;
-	int width = Marble::getMarbleWidth();
-	int height = Marble::getMarbleHeight();
-	scalar line = height * 10;
 	scalar x = 0;
-	scalar y = line;//line의 위치.
+	scalar y = LINE;//LINE의 위치.
 	Position offset;
-
+	bool even = (getRowType(0)==RowType::Odd)?false:true;
 	// int position은 자신의 index,
 	// position은 offset + index*width, offset+index*height
 	for (int i = 0; i<_marbles.size();i++){
 		for (int j = 0; j < _marbles[i].size(); j++){
 			if (_marbles[i][j] != nullptr){
 				_marbles[i][j]->setGridPosition({ i, j });
-				_marbles[i][j]->setPosition(x + i*width, y + j*height);
+				if (even)
+					_marbles[i][j]->setPosition(x + i*MARBLE_WIDTH, y + j*MARBLE_HEIGHT);
+				else
+					_marbles[i][j]->setPosition(x + i*MARBLE_WIDTH + (MARBLE_WIDTH/2.0f), y + j*MARBLE_HEIGHT);
 			}
 		}
+		even = !even;
 	}
 	
 	_dragged = false;
 }
+int MarbleBoard::positionToIndexX(scalar x, RowType rowType) const
+{
+	if (getRowType(x) == RowType::Odd)
+		return floorf(x - (MARBLE_WIDTH/2.0f) / MARBLE_WIDTH);
+	else
+		return floorf(x / MARBLE_WIDTH);
+}
+int MarbleBoard::positionToIndexY(scalar y) const
+{
+	return ceilf((LINE - y) / MARBLE_HEIGHT);
+}
+RowType MarbleBoard::getRowType(scalar y) const
+{
+	return getRowType(positionToIndexY(y));
+}
+RowType MarbleBoard::getRowType(int y) const
+{
+	//grid 안에 없거나 Board가 Build 되어있지않음.
+	if (y < 0 || y >= getHeight() || getHeight()<1)
+		return RowType::None;
+	//grid의 기준점
+	else if (y == 0){
+		if (_marbles[0][MAX_X-1] != nullptr)
+			return RowType::Even;
+		else
+			return RowType::Odd;
+	}
+	else {
+		if (getRowType(0) == RowType::Even){
+			if (y % 2 == 0)
+				return RowType::Even;
+			else
+				return RowType::Odd;
+		}
+		else if (getRowType(0) == RowType::Odd){
+			if (y % 2 == 0)
+				return RowType::Odd;
+			else
+				return RowType::Even;
+		}
+		else
+			return RowType::None;
+	}
+}
+
 
 void MarbleBoard::render()
 {
 	//marbles draw
 	//0~10번 Row만 그림.
 	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < maxX; j++)
+		for (int j = 0; j < MAX_X; j++)
 			if (_marbles[i][j]!=nullptr)
 				_marbles[i][j]->draw();
 }

@@ -99,14 +99,6 @@ IntPosition Marble::getGridPosition() const
 {
 	return _gridPosition;
 }
-scalar Marble::getMarbleWidth()
-{
-	return marbleWidth;
-}
-scalar Marble::getMarbleHeight()
-{
-	return marbleWidth;
-}
 
 void Marble::draw()
 {

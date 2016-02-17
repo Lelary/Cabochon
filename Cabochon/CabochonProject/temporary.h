@@ -1,8 +1,5 @@
 #ifndef _TEMPORARY_H
 #define _TEMPORARY_H
-#include <array>
-#include "components.h"
-#include "mathematics.h"
 /*
 	2016. 1. 10
 	당장 필요한 constant 변수, typedef 구문인데
@@ -11,15 +8,15 @@
 	사용
 
 	차후에 알맞은 위치로 구문들을 옮기고 이 파일은 삭제
-*/
-
 namespace temporary
 {
 	using mathematics::scalar;
+
 	//-> constants 관련 헤더파일로
 	//static const unsigned int radius = 3;
 
 
+	*/
 	/*
 	2016. 1. 21.
 	constants
@@ -36,5 +33,6 @@ namespace temporary
 	//static const unsigned int floor = ceiling + boardHeight;
 
 }
+*/
 
 #endif _TEMPORARY_H

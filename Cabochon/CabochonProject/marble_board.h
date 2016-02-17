@@ -2,6 +2,7 @@
 #ifndef _MARBLE_BOARD_H
 #define _MARBLE_BOARD_H
 
+#include "cabochon_constants.h"
 #include "control.h"
 #include "marble.h"
 #include "object.h"
@@ -18,12 +19,11 @@ namespace controls
 	해당 행이 even인 경우 8이며, odd 일 경우 8-1=7 이다.
 	maxY는 차후 변경 가능
 	*/
-	const unsigned int maxX = 8;
-
 	using components::MarbleColor;
-	using MarbleRow = std::array < components::marble_ptr, maxX > ;
+	using MarbleRow = std::array < components::marble_ptr, cabochon_constants::MAX_X > ;
 	using MarbleRows = std::deque <MarbleRow> ;
 
+	enum class RowType{ None = -1, Even, Odd };
 	enum class BoardState{Build, Ready, Play, GameOver, GameClear};
 
 	class MarbleBoard
@@ -54,7 +54,7 @@ namespace controls
 		//marble_ptr getMarble();
 
 		// Marble 이 있을 경우 MarbleColor 반환, 없을 경우엔 MarbleColor::None 반환.
-		MarbleColor existMarble(int x, int y);
+		MarbleColor existMarble(int x, int y) const;
 
 		bool addMarble(int x, int y, marble_ptr marble);
 
@@ -64,9 +64,9 @@ namespace controls
 		// RowZero는 Line 아래에 있는 Row.
 		void removeRowZero();
 
-		int getMarbleCount(MarbleColor c);
-		int getMarbleCount();
-		int getHeight();
+		int getMarbleCount(MarbleColor c) const;
+		int getMarbleCount() const;
+		int getHeight() const;
 
 		/*
 		// 이 함수로 알 수 있는 것.
@@ -76,7 +76,9 @@ namespace controls
 		// 10초과일 경우 화면에 보이는 것이 없으므로 내려줘야함.	// 다른 함수에서.
 		// 탐색할 필요가 없게 하는 것이 좋음.
 		*/
-		int getFloor();
+		int getFloor() const;
+
+		scalar getCeilingPosition() const;
 
 		// 마지막 줄에 Marble이 하나라도 있으면 true.
 		bool gameOver();
@@ -91,6 +93,12 @@ namespace controls
 
 		void makeRandomBoard();
 		void updateMarblePositions();
+
+		// 0<=x<50 -> 10
+		int positionToIndexX(scalar x, RowType rowType) const;
+		int positionToIndexY(scalar y)const ;
+		RowType getRowType(scalar y) const;
+		RowType getRowType(int y) const; 
 
 		//pure virtual functions
 		virtual void render();

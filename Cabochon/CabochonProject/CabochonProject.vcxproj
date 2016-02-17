@@ -74,6 +74,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="angle.h" />
+    <ClInclude Include="cabochon_constants.h" />
     <ClInclude Include="ceiling_block.h" />
     <ClInclude Include="marble_board.h" />
     <ClInclude Include="cabochon.h" />
