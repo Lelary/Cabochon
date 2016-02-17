@@ -43,7 +43,9 @@ namespace components
 
 	public:
 		Marble();
+		Marble(MarbleColor color);
 		Marble(const IntPosition& gridPosition);
+		Marble(const IntPosition& gridPosition, MarbleColor color);
 		Marble(const Marble& rhs);
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);

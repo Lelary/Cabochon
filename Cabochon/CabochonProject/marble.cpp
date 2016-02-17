@@ -17,9 +17,22 @@ Marble::Marble()
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
 }
+Marble::Marble(MarbleColor color)
+	: _gridPosition({ noPosition, noPosition }), _color(color)
+{
+	setWidth(marbleWidth);
+	setHeight(marbleHeight);
+}
 
 Marble::Marble(const IntPosition& gridPosition)
 	: _gridPosition(gridPosition)
+{
+	setWidth(marbleWidth);
+	setHeight(marbleHeight);
+}
+
+Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
+	: _gridPosition(gridPosition), _color(color)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);

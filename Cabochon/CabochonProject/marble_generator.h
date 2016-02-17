@@ -32,6 +32,7 @@ namespace controls
 		2. ¸Ê »ý¼º
 		*/
 		static marble_ptr makeMarble();
+		static marble_ptr makeMarble(MarbleColor color);
 		static marble_ptr loadTexture(marble_ptr marble, TextureList& textureList);
 		
 		// pure virtual function
