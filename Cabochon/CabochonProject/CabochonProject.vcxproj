@@ -131,6 +131,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_scene.cpp" />
     <ClCompile Include="marble.cpp" />
+    <ClCompile Include="marble_board.cpp" />
     <ClCompile Include="marble_control.cpp" />
     <ClCompile Include="marble_generator.cpp" />
     <ClCompile Include="object.cpp" />
