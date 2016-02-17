@@ -3,7 +3,8 @@
 
 using components::MarbleColor;
 using components::MarbleBoard;
-using components::BoardState;
+using controls::BoardState;
+using controls::MarbleGenerator;
 
 MarbleBoard::MarbleBoard()
 	:_boardState(BoardState::Ready)
@@ -125,4 +126,44 @@ BoardState MarbleBoard::dragDown()
 			_marbles.pop_front();
 	}
 	return _boardState = BoardState::Play;
+}
+void MarbleBoard::makeRandomBoard()
+{
+	if (_boardState != BoardState::Build)
+		return;
+
+	_marbles.clear();
+	int row = MarbleGenerator::getRandomNumber(4, 20);
+	// temporary Row in stack.
+	for (int i = 0; i < row; i++)
+	{
+		MarbleRow marbleRow;
+		for (marble_ptr& marble : marbleRow)
+			marble = MarbleGenerator::makeRandomMarble();
+		_marbles.push_front(std::move(marbleRow));
+	}
+
+	row = MarbleGenerator::getRandomNumber(4, 6);
+	for (int i = 0; i < row; i++)
+	{
+		MarbleRow marbleRow;
+		for (marble_ptr& marble : marbleRow)
+			marble = MarbleGenerator::makeMarble(MarbleColor::None);
+		_marbles.push_front(std::move(marbleRow));
+	}
+
+	if (getHeight() < 10)
+	{
+		row = 10 - getHeight();
+		for (int i = 0; i < row; i++)
+		{
+			MarbleRow marbleRow;
+			for (marble_ptr& marble : marbleRow)
+				marble = MarbleGenerator::makeMarble(MarbleColor::None);
+			_marbles.push_front(std::move(marbleRow));
+		}
+	}
+
+
+	_boardState = BoardState::Ready;
 }

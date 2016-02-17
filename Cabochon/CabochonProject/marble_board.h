@@ -2,14 +2,14 @@
 #ifndef _MARBLE_BOARD_H
 #define _MARBLE_BOARD_H
 
-#include "components.h"
+#include "control.h"
 #include "marble.h"
 #include "object.h"
+#include "marble_generator.h"
 #include <deque>
 #include <array>
-namespace components
+namespace controls
 {
-
 	/*
 	2016. 1. 16
 	구슬 판의 최대 크기 = 구슬이 가질수 있는 최대위치 +1
@@ -23,10 +23,10 @@ namespace components
 	using MarbleRow = std::array < components::marble_ptr, maxX > ;
 	using MarbleRows = std::deque <MarbleRow> ;
 
-	enum class BoardState{Ready, Play, GameOver, GameClear};
+	enum class BoardState{Build, Ready, Play, GameOver, GameClear};
 
 	class MarbleBoard
-		: public Object
+		: public Control
 	{
 	private:
 		const char* levelFile = "data\\level_data.txt";
@@ -76,9 +76,10 @@ namespace components
 
 		BoardState dragDown();
 
-		void loadBoard(File* file);
-		void buildBoard();
+		//void loadBoard(File* file);
+		//void buildBoard();
 
+		void makeRandomBoard();
 
 	};
 
