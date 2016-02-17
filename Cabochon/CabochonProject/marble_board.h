@@ -23,12 +23,13 @@ namespace components
 	using MarbleRow = std::array < components::marble_ptr, maxX > ;
 	using MarbleRows = std::deque <MarbleRow> ;
 
+	enum class BoardState{Ready, Play, GameOver, GameClear};
+
 	class MarbleBoard
 		: public Object
 	{
 	private:
-		const int maxX = components::maxX;
-		//int maxY;
+		BoardState _boardState;
 
 		MarbleRows _marbles;
 		std::array<int, (int)MarbleColor::Num> _colorCount;
@@ -119,7 +120,10 @@ namespace components
 			// 혹은 getFloor()==0
 			for (const marble_ptr& marble : _marbles.front())
 				if (marble != nullptr)
+				{
+					_boardState = BoardState::GameOver;
 					return true;
+				}
 			return false;
 		}
 
@@ -130,13 +134,14 @@ namespace components
 			// 방법 2 :  if(getFloor()==getHeight())
 			
 			if (getMarbleCount() == 0)
+			{
+				_boardState = BoardState::GameClear;
 				return true;
+			}
 			return false;
 		}
 
-		// enum class state 추가.
-		// 게임오버 되면 false
-		bool dragDown()
+		BoardState dragDown()
 		{
 			// remove Row Zero;
 			// Row Zero 가 삭제되면 자동으로 한칸씩 내려온다.
@@ -144,11 +149,11 @@ namespace components
 			removeRowZero();
 
 			if (gameOver())
-				return false;
+				return _boardState = BoardState::GameOver;
 
 			if (gameClear())
-				// ? 할게없다.
-				;
+				return _boardState = BoardState::GameClear;
+				
 			// 화면 밖에만 Marble 이 존재. 
 			// 화면에 보일 때 까지 더 끌어내림.
 			int toDrag = getFloor() - 10;
@@ -157,7 +162,7 @@ namespace components
 				for (int i = 0; i < toDrag; i++)
 					_marbles.pop_front();
 			}
-
+			return _boardState = BoardState::Play;
 		}
 
 		void loadBoard(File* file);
