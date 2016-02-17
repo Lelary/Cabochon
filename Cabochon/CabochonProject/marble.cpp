@@ -5,41 +5,24 @@
 using components::Marble;
 using mathematics::scalar;
 using mathematics::IntPosition;
-using temporary::maxX;
-using temporary::maxY;
 using frameworks::TextureList;
 using components::Layer;
 using components::MarbleColor;
 
-Marble::Marble()
-	:_gridPosition({ noPosition, noPosition })
-{
-	setWidth(marbleWidth);
-	setHeight(marbleHeight);
-}
-Marble::Marble(MarbleColor color)
-	: _gridPosition({ noPosition, noPosition }), _color(color)
-{
-	setWidth(marbleWidth);
-	setHeight(marbleHeight);
-}
-
-Marble::Marble(const IntPosition& gridPosition)
-	: _gridPosition(gridPosition)
-{
-	setWidth(marbleWidth);
-	setHeight(marbleHeight);
-}
-
-Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
+Marble::Marble(const IntPosition& gridPosition = {noPosition, noPosition}, MarbleColor color = MarbleColor::None)
 	: _gridPosition(gridPosition), _color(color)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
 }
 
+Marble::Marble(MarbleColor color)
+	: Marble({ noPosition, noPosition }, color)
+{
+}
+
 Marble::Marble(const Marble& rhs)
-	:Object(rhs), _gridPosition(rhs._gridPosition)
+	:Object(rhs), _gridPosition(rhs._gridPosition), _color(rhs._color)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
