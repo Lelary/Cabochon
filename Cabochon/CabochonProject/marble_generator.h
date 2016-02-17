@@ -33,7 +33,7 @@ namespace controls
 		*/
 		static marble_ptr makeMarble();
 		static marble_ptr loadTexture(marble_ptr marble, TextureList& textureList);
-
+		
 		// pure virtual function
 		// nothing to do.
 		virtual void render();

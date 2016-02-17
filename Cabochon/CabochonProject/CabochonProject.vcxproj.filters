@@ -165,6 +165,12 @@
     <ClInclude Include="layer.h">
       <Filter>헤더 파일\components</Filter>
     </ClInclude>
+    <ClInclude Include="marble_board.h">
+      <Filter>헤더 파일\components</Filter>
+    </ClInclude>
+    <ClInclude Include="ceiling_block.h">
+      <Filter>헤더 파일\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

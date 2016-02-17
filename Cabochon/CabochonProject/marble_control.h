@@ -37,7 +37,8 @@ namespace controls
 	{
 	private:
 		//marble_ptr 에 대한 2차원 배열
-		marble_array _marbles;
+		//MarbleBoard 로 대체.
+		//marble_array _marbles;
 
 		using shooted_ptr = std::unique_ptr < ShootedMarble >;
 		// steeringWheelControl 로 부터 소유권이 이전될 것.

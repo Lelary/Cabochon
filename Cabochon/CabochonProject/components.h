@@ -9,8 +9,8 @@ namespace components
 	class Marble;
 	class ShootedMarble;
 	class SteeringWheel;
-	//class Board;
-	//class BackGround;	
+	class MarbleBoard;
+	class CeilingBlock;
 /*
 	2016. 1. 10
 	controls ? components ?

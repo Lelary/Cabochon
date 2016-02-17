@@ -33,6 +33,7 @@ namespace frameworks
 
 		virtual void releaseAll();
 		virtual void resetAll();
+
 	};
 }
 #endif
