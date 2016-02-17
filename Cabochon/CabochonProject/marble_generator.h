@@ -7,19 +7,38 @@
 #include "control.h"
 #include "texture_list.h"
 #include <memory>
+#include <random>
+
 namespace controls
 {
 	using components::marble_ptr;
 	using components::Marble;
 	using frameworks::TextureList;
-	/*
-	2016. 1. 18.
-	색깔 관련 코드는 나중에 추가.
-	*/
+	
+	struct MarbleColorBitField
+	{
+		unsigned char None : 1;
+		unsigned char Red : 1;
+		unsigned char Orange : 1;
+		unsigned char Yellow : 1;
+		unsigned char Green : 1;
+		unsigned char Blue : 1;
+		unsigned char Purple : 1;
+		unsigned char Gray : 1;
+	};
+	union MarbleColorOn
+	{
+		MarbleColorBitField bitData;
+		unsigned char data;
+	};
+
 	class MarbleGenerator
 		:public Control
 	{
 	private:
+		// 프로그램 생성시 만든 것 하나만 있음.
+		//static std::mt19937 gen(std::random_device);
+		static std::mt19937 gen;
 	public:
 		MarbleGenerator()=delete;
 		MarbleGenerator(const MarbleGenerator& rhs)=delete;
@@ -31,8 +50,11 @@ namespace controls
 		1. 구슬 쏠때,
 		2. 맵 생성
 		*/
+		static int getRandomNumber();
 		static marble_ptr makeMarble();
-		static marble_ptr makeMarble(MarbleColor color);
+		static marble_ptr makeMarble(MarbleColor color=MarbleColor::None);
+		static marble_ptr makeRandomMarble();
+		static marble_ptr makeRandomMarble(MarbleColorOn colorRange);
 		static marble_ptr loadTexture(marble_ptr marble, TextureList& textureList);
 		
 		// pure virtual function

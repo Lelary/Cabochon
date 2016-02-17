@@ -40,8 +40,10 @@ namespace controls
 
 		Generator 라고 할지 Factory 라고 할지 결정해야함
 	*/
+	struct MarbleColorBitField;
+	union MarbleColorOn;
 	class MarbleGenerator;
-	
+
 
 
 	// 나중에 구현

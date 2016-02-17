@@ -6,6 +6,7 @@ using components::MarbleBoard;
 using components::BoardState;
 
 MarbleBoard::MarbleBoard()
+	:_boardState(BoardState::Ready)
 {
 }
 MarbleBoard::~MarbleBoard()
