@@ -61,7 +61,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 		testSet.push_back({ marblePosition._x - 1, marblePosition._y + 1 });
 		break;
 	default:
-		throw("Error in MarbleControl : getTestSet()!");
+		throw(GameError(gameErrorNS::FATAL_ERROR,"Error in MarbleControl : getTestSet()!"));
 		break;
 	}
 

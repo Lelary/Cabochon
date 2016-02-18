@@ -37,24 +37,27 @@ const marble_ptr& MarbleBoard::getMarble(int x, int y) const
 
 MarbleColor MarbleBoard::existMarble(IntPosition gridPosition) const
 {
-	existMarble(gridPosition._x, gridPosition._y);
+	return existMarble(gridPosition._x, gridPosition._y);
 }
 MarbleColor MarbleBoard::existMarble(int x, int y) const
 {
 	if (_marbles[x][y] != nullptr)
 		return _marbles[x][y]->getColor();
 	else
-		throw("Error in MarbleBoard : existMarble()!");
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : existMarble()!"));
 }
 
 bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
 {
-	addMarble(gridPosition._x, gridPosition._y, color);
+	return addMarble(gridPosition._x, gridPosition._y, color);
 }
 // 실제 메모리를 이동 하는 것이 아니라, None에서 다른 컬러로 변경함.
 bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
 {
-	if (_marbles[x][y] != nullptr)
+	if (_marbles[x][y] == nullptr)
+		throw(GameError(gameErrorNS::FATAL_ERROR ,"Error in MarbleBoard : addMarble()"));
+
+	if (_marbles[x][y]->getColor() != MarbleColor::None)
 		return false;
 
 	_colorCount[(int)color]++;
@@ -81,7 +84,7 @@ void MarbleBoard::removeRowZero()
 int MarbleBoard::getMarbleCount(MarbleColor c) const
 {
 	if (c == MarbleColor::None || c == MarbleColor::Num)
-		throw("getMarbleCount() : Invalid MarbleColor Parameter.");
+		throw(GameError(gameErrorNS::FATAL_ERROR, "getMarbleCount() : Invalid MarbleColor Parameter."));
 
 	return _colorCount[(int)c];
 }
@@ -305,10 +308,11 @@ void MarbleBoard::render()
 {
 	//marbles draw
 	//0~10번 Row만 그림.
-	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < MAX_X; j++)
-			if (_marbles[i][j]!=nullptr)
-				_marbles[i][j]->draw();
+	if (_boardState!=BoardState::Build)
+		for (int i = 0; i < MIN_Y; i++)
+			for (int j = 0; j < _marbles[i].size(); j++)
+				if (_marbles[i][j]!=nullptr)
+					_marbles[i][j]->draw();
 }
 void MarbleBoard::update(float frameTime)
 {

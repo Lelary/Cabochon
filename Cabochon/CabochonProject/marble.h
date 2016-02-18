@@ -29,7 +29,7 @@ namespace components
 	using mathematics::IntPosition;
 	using frameworks::TextureList;
 	
-	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Transparent, Num};
+	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Num};
 
 	class Marble
 		:public Object

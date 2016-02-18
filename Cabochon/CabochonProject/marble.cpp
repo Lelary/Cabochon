@@ -50,17 +50,15 @@ Marble& Marble::operator=(const Marble& rhs)
 }
 void Marble::loadLayers(TextureList& textureList)
 {
-	// 0 ~ 7
-	int width = 128;
-	int height = 128;
-	int row = 0;
-	int rows = 7;
+	int marbleTextureWidth = 128;
+	int marbleTextureHeight = 128;
+	int rows = (int)MarbleColor::Num;
 	int cols = 8;		
 
-	for (row = 0; row < rows; row++)
+	for (int row = 0; row < rows; row++)
 	{
 		_layers.push_back(Layer());
-		_layers.back().initialize(textureList.getGraphics(), width, height, cols, textureList.getTexture(TextureList::TextureName::Marbles));
+		_layers.back().initialize(textureList.getGraphics(), marbleTextureWidth, marbleTextureHeight, cols, textureList.getTexture(TextureList::TextureName::Marbles));
 		_layers.back().setFrames(row*cols, row*cols + cols - 1);
 		_layers.back().setCurrentFrame(row*cols);
 		_layers.back().setFrameDelay(0.1);
@@ -69,9 +67,8 @@ void Marble::loadLayers(TextureList& textureList)
 		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 		_layers.back().setVisible(false);
 	}
-	// 초기화 안한상태.
-	_layers.at((int)MarbleColor::Transparent).setVisible(true);
-	_color = MarbleColor::Transparent;
+	
+	setColor(_color);
 	adjustLayersPosition();
 }
 
@@ -86,6 +83,7 @@ MarbleColor Marble::setColor(MarbleColor color)
 	_color = color;
 	if (_color != MarbleColor::None)
 		_layers.at((int)_color).setVisible(true);
+	return _color;
 }
 void Marble::rotate(scalar degree)
 {
