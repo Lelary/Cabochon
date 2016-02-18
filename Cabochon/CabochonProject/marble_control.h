@@ -50,9 +50,6 @@ namespace controls
 		virtual ~MarbleControl();
 		MarbleControl& operator=(const MarbleControl& rhs) = delete;
 
-		//현재 높이
-		int getCurrentHeight() const;
-
 		//Shooted Marble
 		shooted_ptr& getShootedMarble();
 		void setShootedMarble(shooted_ptr& shootedMarble);
@@ -66,11 +63,6 @@ namespace controls
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
 		void attach(shooted_ptr& shootedMarble, const IntPosition& marblePosition);
 		void attach(shooted_ptr& shootedMarble);
-
-		// build map
-		bool existMarble(const IntPosition& gridPosition) const;
-		void addMarble(marble_ptr& marble, const IntPosition& gridPosition);
-		void removeMarble(const IntPosition& gridPosition);
 
 		//pure virtual functions
 		virtual void render();

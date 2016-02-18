@@ -4,6 +4,7 @@
 #include "marble.h"
 #include "grid.h"
 #include "angle.h"
+#include "marble_board.h"
 
 /*
 2016. 1. 17
@@ -14,12 +15,16 @@ Marble에 속도 벡터와 움직임를 추가하기 위해 필요하다.
 
 wrapper가 간단하다.
 wrapper로 작성.
+
+2016. 2. 19.
+알파버전 완성후 상속관계로 바꾸는게 좋을 것 같다.
 */
 
 namespace components
 {
 	using mathematics::Velocity;
 	using mathematics::Angle;
+	using controls::MarbleBoard;
 
 	class ShootedMarble
 	{
@@ -44,7 +49,7 @@ namespace components
 		(하지않더라도 무관)
 
 		*/
-		void move();
+		void move(const MarbleBoard& board, scalar frameTime);
 
 		marble_ptr& getMarble();
 		Velocity getVelocity() const;

@@ -15,6 +15,7 @@ using cabochon_constants::MIN_Y;
 using cabochon_constants::MARBLE_WIDTH;
 using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::LINE;
+using mathematics::IntPosition;
 
 MarbleBoard::MarbleBoard()
 	:_boardState(BoardState::Build), _dragged(false)
@@ -25,32 +26,51 @@ MarbleBoard::~MarbleBoard()
 {
 }
 
+const marble_ptr& MarbleBoard::getMarble(IntPosition gridPosition) const
+{
+	return getMarble(gridPosition._x, gridPosition._y);
+}
+const marble_ptr& MarbleBoard::getMarble(int x, int y) const
+{
+	return _marbles[x][y];
+}
+
+MarbleColor MarbleBoard::existMarble(IntPosition gridPosition) const
+{
+	existMarble(gridPosition._x, gridPosition._y);
+}
 MarbleColor MarbleBoard::existMarble(int x, int y) const
 {
 	if (_marbles[x][y] != nullptr)
 		return _marbles[x][y]->getColor();
 	else
-		return MarbleColor::None;
+		throw("Error in MarbleBoard : existMarble()!");
 }
 
-bool MarbleBoard::addMarble(int x, int y, marble_ptr marble)
+bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
+{
+	addMarble(gridPosition._x, gridPosition._y, color);
+}
+// 실제 메모리를 이동 하는 것이 아니라, None에서 다른 컬러로 변경함.
+bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
 {
 	if (_marbles[x][y] != nullptr)
 		return false;
 
-	_marbles[x][y] = std::move(marble);
-	_colorCount[(int)marble->getColor()]++;
+	_colorCount[(int)color]++;
+	_marbles[x][y]->setColor(color);
 	return true;
 }
 
+// 실제 메모리를 해제 하는 것이 아니라, None으로 컬러를 바꿈.
 bool MarbleBoard::removeMarble(int x, int y)
 {
-	if (_marbles[x][y] != nullptr)
+	if (_marbles[x][y] == nullptr)
 		return false;
 
-	//메모리 해제 전에 해야함.
 	_colorCount[(int)_marbles[x][y]->getColor()]--;
-	_marbles[x][y].reset();
+	_marbles[x][y]->setColor(MarbleColor::None);
+	return true;
 }
 
 void MarbleBoard::removeRowZero()
@@ -144,8 +164,6 @@ BoardState MarbleBoard::dragDown()
 }
 void MarbleBoard::makeRandomBoard()
 {
-	/*
-	
 	if (_boardState != BoardState::Build)
 		return;
 	
@@ -155,41 +173,54 @@ void MarbleBoard::makeRandomBoard()
 	// temporary Row in stack.
 	for (int i = 0; i < row; i++)
 	{
-		_marbles.push_front(MarbleRow());
-		if (even==true)
+		if (even == true)
+		{
+			_marbles.push_front(MarbleRow(MAX_X));
 			for (int i = 0; i < MAX_X; i++)
-				_marbles.front().at(i) = std::move(MarbleGenerator::makeRandomMarble());
+				_marbles.front().push_back(MarbleGenerator::makeRandomMarble());
+		}
 		else
-			for (int i = 0; i < MAX_X-1; i++)
-				_marbles.front().at(i) = std::move(MarbleGenerator::makeRandomMarble());
+		{
+			_marbles.push_front(MarbleRow(MAX_X-1));
+			for (int i = 0; i < MAX_X - 1; i++)
+				_marbles.front().push_back(MarbleGenerator::makeRandomMarble());
+		}
 		even = !even;
 	}
 
 	row = MarbleGenerator::getRandomNumber(4, 6);
 	for (int i = 0; i < row; i++)
 	{
-		_marbles.push_front(MarbleRow());
 		if (even == true)
+		{
+			_marbles.push_front(MarbleRow(MAX_X));
 			for (int i = 0; i < MAX_X; i++)
-				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
+				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
+		}
 		else
+		{
+			_marbles.push_front(MarbleRow(MAX_X - 1));
 			for (int i = 0; i < MAX_X - 1; i++)
-				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
-
+				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
+		}
 		even = !even;
 	}
 
 	// if (getHeight()<10) 생략.
 	while (getHeight() >= 10)
 	{
-		_marbles.push_front(MarbleRow());
 		if (even == true)
+		{
+			_marbles.push_front(MarbleRow(MAX_X));
 			for (int i = 0; i < MAX_X; i++)
-				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
+				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
+		}
 		else
+		{
+			_marbles.push_front(MarbleRow(MAX_X - 1));
 			for (int i = 0; i < MAX_X - 1; i++)
-				_marbles.front().at(i) = std::move(MarbleGenerator::makeMarble(MarbleColor::None));
-
+				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
+		}
 		even = !even;
 	}
 	
@@ -199,7 +230,7 @@ void MarbleBoard::makeRandomBoard()
 	updateMarblePositions();
 
 	_boardState = BoardState::Ready;
-	*/
+
 }
 void MarbleBoard::updateMarblePositions()
 {

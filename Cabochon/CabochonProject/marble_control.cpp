@@ -7,6 +7,7 @@ using components::Marble;
 using components::marble_ptr;
 using components::ShootedMarble;
 using controls::Grid;
+using controls::RowType;
 using mathematics::IntPosition;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 
@@ -22,24 +23,6 @@ MarbleControl::~MarbleControl()
 	Nothing to do yet.
 	*/
 }
-
-//현재 높이
-int MarbleControl::getCurrentHeight() const
-{
-	// index 를 반환하기 위해 raw for statement 사용.
-	for (int row = _marbles.size() - 1; row >= 0; row--)
-	{
-		for (auto& marblePtr : _marbles[row])
-		{
-			if (marblePtr != nullptr)
-				return row + 1;
-		}
-	}
-	
-	//marble이 한개도 없음
-	return 0;
-}
-
 //Shooted Marble
 shooted_ptr& MarbleControl::getShootedMarble()
 {
@@ -52,7 +35,7 @@ void MarbleControl::setShootedMarble(shooted_ptr& shootedMarble)
 //Attach 가능성이 있는 Grid 위치 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMarble) const
 {
-	IntPosition marblePosition = Grid::getGridPosition(shootedMarble->getMarble()->getCentralPosition());
+	IntPosition marblePosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getMarble()->getCentralPosition());
 	return getTestSet(marblePosition);
 }
 //Attach 가능성이 있는 Grid 위치 반환.
@@ -68,20 +51,17 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	testSet.push_back({ marblePosition._x, marblePosition._y - 1 });
 	testSet.push_back({ marblePosition._x, marblePosition._y + 1 });
 
-	switch (Grid::getRowType(marblePosition._y))
+	switch (_marbleBoard.getRowType(marblePosition._y))
 	{
-	case Grid::RowType::even:
+	case RowType::Even:
 		testSet.push_back({ marblePosition._x - 1, marblePosition._y - 1 });
 		break;
 
-	case Grid::RowType::odd:
+	case RowType::Odd:
 		testSet.push_back({ marblePosition._x - 1, marblePosition._y + 1 });
 		break;
 	default:
-		/*
-			2016. 1. 22.
-			exception 추가해야함.
-		*/
+		throw("Error in MarbleControl : getTestSet()!");
 		break;
 	}
 
@@ -95,11 +75,11 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 		testSet.begin(),
 		testSet.end(),
 		[&](const IntPosition& position) -> bool {
-			if (position._x < 0 || position._x >= maxX)
+			if (position._x < 0 || position._x >= MAX_X)
 				return true;
-			if (position._y < 0 || position._y >= maxY)
+			if (position._y < 0 || position._y >= _marbleBoard.getHeight())
 				return true;
-			if (position._y >= maxY - 1 && Grid::getRowType(position._y) == Grid::RowType::odd)
+			if (position._y >= _marbleBoard.getHeight() - 1 && _marbleBoard.getRowType(position._y) == RowType::Odd)
 				return true;		
 			return false;
 		}),
@@ -119,8 +99,8 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	3. isAttachable(const shooted_ptr& shootedMarble)const 호출.
 	*/
 
-	if (Grid::isInGrid(shootedMarble->getMarble()->getCentralPosition(), gridPosition))
-		if (existMarble(gridPosition) == false)
+	if (Grid::isInGrid(_marbleBoard, shootedMarble->getMarble()->getCentralPosition(), gridPosition))
+		if (_marbleBoard.existMarble(gridPosition) == MarbleColor::None)
 			return isAttachable(shootedMarble);
 
 	return false;
@@ -131,16 +111,16 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	2016. 1. 22.
 	shootedMarble의 인접 위치의 Marble에 대해 붙을 가능성이 있는지 검사.
 
-	1. nullptr 검사. (marble이 붙고자 하는 위치(현재위치)에 이미 존재하는 marble이 있는지 검사)
+	1. MarbleColor::None 검사. (marble이 붙고자 하는 위치(현재위치)에 이미 존재하는 marble이 있는지 검사)
 	2. testSet을 얻음.
-	3. nullptr 검사. (testSet (인접 marble 위치) 중 marble이 없는 위치는 다음 검사 제외.)
+	3. MarbleColor::None 검사.. (testSet (인접 marble 위치) 중 marble이 없는 위치는 다음 검사 제외.)
 	4. 반지름 검사. (원형충돌검사)
 	*/
 
 
-	//1. nullptr 검사.
-	IntPosition gridPosition = Grid::getGridPosition(shootedMarble->getMarble()->getCentralPosition());
-	if (existMarble(gridPosition)==true)
+	//1. MarbleColor::None 검사.
+	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getMarble()->getCentralPosition());
+	if (_marbleBoard.existMarble(gridPosition)!=MarbleColor::None)
 		return false;
 
 	//2. testSet을 얻음.
@@ -148,10 +128,10 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	for (auto testPosition : testSet)
 	{
 		//3. nullptr 검사
-		if (existMarble(testPosition)==true)
+		if (_marbleBoard.existMarble(gridPosition) != MarbleColor::None)
 		{
 			// 4. 반지름 검사. (원형 충돌 검사)
-			if (shootedMarble->getMarble()->circularHitTest(*_marbles[testPosition._x][testPosition._y]))
+			if (shootedMarble->getMarble()->circularHitTest(*_marbleBoard.getMarble(testPosition._x, testPosition._y).get()))
 			{
 				return true;
 			}
@@ -159,61 +139,28 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	}
 	return false;
 }
+//shootedMarble은 color값만 넘겨주고, reset()된다.
 void MarbleControl::attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition)
 {
 	if (isAttachable(shootedMarble, gridPosition))
-		addMarble(shootedMarble->getMarble(), gridPosition);
-		
+		_marbleBoard.addMarble(gridPosition, shootedMarble->getMarble()->getColor());
+
+	shootedMarble.reset();		
 }
 void MarbleControl::attach(shooted_ptr& shootedMarble)
 {
-	if (isAttachable(shootedMarble))
-	{
-		IntPosition gridPosition = Grid::getGridPosition(shootedMarble->getMarble()->getCentralPosition());
-		addMarble(shootedMarble->getMarble(), gridPosition);
-	}
+	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getMarble()->getCentralPosition());
+	attach(shootedMarble, gridPosition);
 }
-
-// build map
-bool MarbleControl::existMarble(const IntPosition& gridPosition) const
-{
-	if (_marbles[gridPosition._x][gridPosition._y] == nullptr)
-		return false;
-	return true;
-}
-void MarbleControl::addMarble(marble_ptr& marble, const IntPosition& gridPosition)
-{
-	if (existMarble(gridPosition)==false)
-		_marbles[gridPosition._x][gridPosition._y] = std::move(marble);
-}
-void MarbleControl::removeMarble(const IntPosition& gridPosition)
-{
-
-}
-
 
 void MarbleControl::render()
 {
-	/*
-	for (int i = 0; i < maxX; i++)
-		for (int j = 0; j < maxY; j++)
-			if (_marbles[i][j] != nullptr)
-				_marbles[i][j]->draw();
-	*/
-
-	for (auto& marbleRow : _marbles)
-	{
-		for (marble_ptr& marble : marbleRow)
-		{
-			if (marble != nullptr)
-				marble->draw();
-		}
-	}
+	_marbleBoard.render();
 
 	if (_shootedMarble != nullptr)
 		_shootedMarble->getMarble()->draw();
 }
 void MarbleControl::update(float frameTime)
 {
-
+	_marbleBoard.update(frameTime);
 }

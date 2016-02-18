@@ -3,6 +3,7 @@
 #include "cabochon_constants.h"
 using components::ShootedMarble;
 using controls::Grid;
+using controls::MarbleBoard;
 using components::marble_ptr;
 using mathematics::scalar;
 using mathematics::Velocity;
@@ -34,23 +35,21 @@ ShootedMarble::~ShootedMarble()
 	*/
 }
 
-void ShootedMarble::move()
+void ShootedMarble::move(const MarbleBoard& board, float frameTIme)
 {
-	while (true)
-	{
-		_marble->setPosition(_marble->getPosition()._x + _velocity._x, _marble->getPosition()._y + _velocity._y);
+	_marble->setPosition(_marble->getPosition()._x + _velocity._x*frameTIme, _marble->getPosition()._y + _velocity._y*frameTIme);
 
-		// �¿캮
-		if (_marble->getPosition()._x <  LEFT_WALL
-			||
-			_marble->getPosition()._x > RIGHT_WALL
-			)
-			_velocity._x *= -1;
+	// �¿캮
+	if (_marble->getPosition()._x <  LEFT_WALL
+		||
+		_marble->getPosition()._x > RIGHT_WALL
+		)
+		_velocity._x *= -1;
 		
 
-		if (_marble->getPosition()._y > board.getCeiling())
-			return;		
-	}
+	if (_marble->getPosition()._y > board.getCeilingPosition())
+		_velocity._y *= -1;
+
 }
 
 marble_ptr& ShootedMarble::getMarble()

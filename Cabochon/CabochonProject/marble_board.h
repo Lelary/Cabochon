@@ -12,6 +12,11 @@
 namespace controls
 {
 	/*
+	2016. 2. 18.
+	MarbleRow 의 변경(array->vector)으로 인해 많은 메소드의 코드들이 더 짧아질수있으나(getRowType() 등),
+	다른 클래스(MarbleControl) 부터 수정 후, 차후에 업데이트.
+	*/
+	/*
 	2016. 1. 16
 	구슬 판의 최대 크기 = 구슬이 가질수 있는 최대위치 +1
 	구슬판의 마지막 행은 dead zone
@@ -20,8 +25,9 @@ namespace controls
 	maxY는 차후 변경 가능
 	*/
 	using mathematics::scalar;
+	using mathematics::IntPosition;
 	using components::MarbleColor;
-	using MarbleRow = std::array < components::marble_ptr, cabochon_constants::MAX_X > ;
+	using MarbleRow = std::vector < components::marble_ptr> ;
 	using MarbleRows = std::deque <MarbleRow> ;
 
 	enum class RowType{ None = -1, Even, Odd };
@@ -52,13 +58,17 @@ namespace controls
 		MarbleBoard();
 		~MarbleBoard();
 
-		//marble_ptr getMarble();
+		const marble_ptr& getMarble(IntPosition gridPosition)const;
+		const marble_ptr& getMarble(int x, int y)const;
 
 		// Marble 이 있을 경우 MarbleColor 반환, 없을 경우엔 MarbleColor::None 반환.
+		// 2016. 2. 18.
+		// Marble 이 없는 것을 ,  Marble 객체가 없는 nullptr로 표시할 것인지, Color만 None으로 표시하여 없는척을 할것인지 결정해야함.
+		// 후자를 선택하여 진행.
+		MarbleColor existMarble(IntPosition gridPosition) const;
 		MarbleColor existMarble(int x, int y) const;
-
-		bool addMarble(int x, int y, marble_ptr marble);
-
+		bool addMarble(IntPosition gridPosition, MarbleColor color);
+		bool addMarble(int x, int y, MarbleColor color);
 		bool removeMarble(int x, int y);
 
 		// marble의 존재 여부와 상관없이 0번 줄을 삭제한다.

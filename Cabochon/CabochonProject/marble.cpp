@@ -81,9 +81,11 @@ MarbleColor Marble::getColor()
 }
 MarbleColor Marble::setColor(MarbleColor color)
 {
-	_layers.at((int)_color).setVisible(false);
+	if (_color != MarbleColor::None)
+		_layers.at((int)_color).setVisible(false);
 	_color = color;
-	_layers.at((int)_color).setVisible(true);
+	if (_color != MarbleColor::None)
+		_layers.at((int)_color).setVisible(true);
 }
 void Marble::rotate(scalar degree)
 {
