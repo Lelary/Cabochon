@@ -10,6 +10,8 @@ using controls::Grid;
 using controls::RowType;
 using mathematics::IntPosition;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
+using controls::MarbleColorOn;
+using controls::MarbleBoard;
 
 MarbleControl::MarbleControl()
 {
@@ -28,9 +30,29 @@ shooted_ptr& MarbleControl::getShootedMarble()
 {
 	return _shootedMarble;
 }
-void MarbleControl::setShootedMarble(shooted_ptr& shootedMarble)
+void MarbleControl::setShootedMarble(marble_ptr& marble)
 {
-	_shootedMarble = std::move(shootedMarble);
+	_shootedMarble = std::make_unique<ShootedMarble>();
+	_shootedMarble->setMarble(marble);
+}
+
+MarbleColorOn MarbleControl::getExistColors() const
+{
+	MarbleColorOn colors;
+	for (int c = 0; c < (int)MarbleColor::Num; c++)
+	{
+		if (_marbleBoard.getMarbleCount((MarbleColor)c) > 0)
+			colors.data |= (true << c);
+	}
+	return colors;
+}
+MarbleBoard& MarbleControl::getMarbleBoard()
+{
+	return _marbleBoard;
+}
+const MarbleBoard& MarbleControl::getMarbleBoard() const
+{
+	return _marbleBoard;
 }
 //Attach 가능성이 있는 Grid 위치 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMarble) const

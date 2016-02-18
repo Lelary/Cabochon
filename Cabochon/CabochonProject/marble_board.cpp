@@ -101,7 +101,10 @@ int MarbleBoard::getHeight() const
 {
 	return _marbles.size();
 }
-
+BoardState MarbleBoard::getBoardState() const
+{
+	return _boardState;
+}
 int MarbleBoard::getFloor() const
 {
 	for (int row = 0; row < (int)_marbles.size(); row++)
@@ -210,7 +213,7 @@ void MarbleBoard::makeRandomBoard()
 	}
 
 	// if (getHeight()<10) »ý·«.
-	while (getHeight() >= 10)
+	while (getHeight() < 10)
 	{
 		if (even == true)
 		{

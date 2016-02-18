@@ -78,7 +78,7 @@ namespace controls
 		int getMarbleCount(MarbleColor c) const;
 		int getMarbleCount() const;
 		int getHeight() const;
-
+		BoardState getBoardState()const;
 		/*
 		// 이 함수로 알 수 있는 것.
 		// 반환값 :  현재 Marble 이 있는 첫번 째 줄.

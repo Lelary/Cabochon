@@ -19,7 +19,9 @@ namespace controls
 	using components::ShootedMarble;
 	using controls::Grid;
 	using controls::MarbleBoard;
+	using controls::BoardState;
 	using controls::MarbleRows;
+	using controls::MarbleColorOn;
 	using mathematics::IntPosition;
 
 /*
@@ -52,7 +54,11 @@ namespace controls
 
 		//Shooted Marble
 		shooted_ptr& getShootedMarble();
-		void setShootedMarble(shooted_ptr& shootedMarble);
+		void setShootedMarble(marble_ptr& marble);
+
+		MarbleColorOn getExistColors() const;
+		MarbleBoard& getMarbleBoard();
+		const MarbleBoard& getMarbleBoard() const;
 
 		//Attach 가능성이 있는 Grid 위치 반환. nullptr검사는 하지 않음.
 		std::vector<IntPosition> getTestSet(const shooted_ptr& shootedMarble) const;
