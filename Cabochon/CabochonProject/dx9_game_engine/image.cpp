@@ -142,7 +142,6 @@ void Image::setCurrentFrame(int c)
 	{
 		currentFrame = c;
 		animComplete = false;
-		animTimer = 0;
 		setRect(); // spriteData.rect ¼³Á¤.
 	}
 }

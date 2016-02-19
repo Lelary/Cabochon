@@ -29,6 +29,7 @@ namespace components
 	class ShootedMarble
 	{
 	private:
+		static const scalar defaultSpeed;
 		marble_ptr _marble;
 		Velocity _velocity;
 
@@ -50,13 +51,14 @@ namespace components
 
 		*/
 		void move(const MarbleBoard& board, scalar frameTime);
-
+		
+		static scalar getDefaultSpeed();
 		marble_ptr& getMarble();
 		Velocity getVelocity() const;
 		void setVelocity(Velocity velocity);
 		void setVelocity(scalar vx, scalar vy);
 		void setVelocity(scalar speed, Angle angle);
-		void setMarble(marble_ptr& marble);
+		void setMarble(marble_ptr marble);
 
 	};
 }

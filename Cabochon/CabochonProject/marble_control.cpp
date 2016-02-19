@@ -5,10 +5,12 @@
 using controls::MarbleControl;
 using components::Marble;
 using components::marble_ptr;
+using components::MarbleColor;
 using components::ShootedMarble;
 using controls::Grid;
 using controls::RowType;
 using mathematics::IntPosition;
+using mathematics::scalar;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 using controls::MarbleColorOn;
 using controls::MarbleBoard;
@@ -30,10 +32,12 @@ shooted_ptr& MarbleControl::getShootedMarble()
 {
 	return _shootedMarble;
 }
-void MarbleControl::setShootedMarble(marble_ptr& marble)
+void MarbleControl::setShootedMarble(MarbleColor color, scalar speed, mathematics::Angle degree)
 {
-	_shootedMarble = std::make_unique<ShootedMarble>();
-	_shootedMarble->setMarble(marble);
+	shooted_ptr shootedMarble=std::make_unique<ShootedMarble>();
+	shootedMarble->setMarble(MarbleGenerator::makeMarble(color));
+	shootedMarble->setVelocity(speed, degree);
+	_shootedMarble = std::move(shootedMarble);
 }
 
 MarbleColorOn MarbleControl::getExistColors() const

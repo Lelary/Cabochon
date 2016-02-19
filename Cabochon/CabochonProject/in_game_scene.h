@@ -21,6 +21,7 @@ namespace frameworks
 	private:
 		Image _backGround;
 		TextDX _text;
+		TextDX _text2;
 
 		SteeringWheelControl _wheelControl;
 		MarbleControl _marbleControl;

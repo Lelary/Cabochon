@@ -1,11 +1,13 @@
 //2016. 2. 4
 
 #include "in_game_scene.h"
+#include "marble_control.h"
 using frameworks::InGameScene;
 using frameworks::TextureList;
 using components::ShootedMarble;
 using controls::BoardState;
-using controls::MarbleColorOn;
+using controls::MarbleColorOn; 
+using mathematics::Angle;
 InGameScene::InGameScene(Graphics& graphics, Input& input, TextureList& textureList)
 	:Scene(graphics, input, textureList)
 {
@@ -25,16 +27,18 @@ void InGameScene::start()
 	
 	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
 	_text.initialize(&_graphics, 20, false, false, frameworks::default_settings::FONT);
+	_text2.initialize(&_graphics, 20, false, false, frameworks::default_settings::FONT);
 	_wheelControl.loadTextures(_textureList);
 
 	_marbleControl.getMarbleBoard().makeRandomBoard();
 	_marbleControl.getMarbleBoard().loadTextures(_textureList);
 
-	MarbleColorOn colorOn = _marbleControl.getExistColors();
-	colorOn.bitData.None = false;
-	_wheelControl.setMarbleNext(MarbleGenerator::makeRandomMarble(colorOn));
+	_wheelControl.getMarbleCurrent()->loadLayers(_textureList);
 	_wheelControl.getMarbleNext()->loadLayers(_textureList);
 
+	MarbleColorOn colorOn = _marbleControl.getExistColors();
+	colorOn.bitData.None = false;
+	_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));
 
 	_started = true;
 }
@@ -57,21 +61,31 @@ void InGameScene::update(float frameTime)
 	{
 		_wheelControl.rotateRight(frameTime);
 	}
-	else if (_input.isKeyDown(VK_SPACE))
+	else if (_input.wasKeyPressed(VK_SPACE))
 	{
+		// _nowShooting = true
+		// while Animation
+		// or now Flying... whatever
+
+
+		// MarbleCurrent -> ShootedMarble
 		if (_wheelControl.getMarbleCurrent() != nullptr)
-			_marbleControl.setShootedMarble(_wheelControl.getMarbleCurrent());
+		{
+			_marbleControl.setShootedMarble(
+				_wheelControl.getMarbleCurrent()->getColor(), 
+				ShootedMarble::getDefaultSpeed(), 
+				_wheelControl.getDegree());
+		}
+		// MarbleNext -> MarbleCurrent
 		if (_wheelControl.getMarbleNext() != nullptr)
 		{
-			_wheelControl.setMarbleCurrent(_wheelControl.getMarbleNext());
+			_wheelControl.setMarbleCurrent(_wheelControl.getMarbleNext()->getColor());
 
 		}
-		// ÀÎ¼ö·Î, Count.
+		// New Color -> MarbleNext
 		MarbleColorOn colorOn = _marbleControl.getExistColors();
 		colorOn.bitData.None = false;
-		_wheelControl.setMarbleNext(MarbleGenerator::makeRandomMarble(colorOn));
-		_wheelControl.getMarbleNext()->loadLayers(_textureList);
-		
+		_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));	
 	}
 }
 void InGameScene::lateUpdate(float frameTime)
@@ -105,6 +119,12 @@ void InGameScene::render()
 	_backGround.draw();
 	_wheelControl.render();
 	_marbleControl.render();
+	if (_wheelControl.getMarbleNext()!=nullptr)
+		_text2.print("Marble Next: "
+		+std::to_string((int)_wheelControl.getMarbleNext()->getColor())
+		+"\nMarble Current: "
+		+ std::to_string((int)_wheelControl.getMarbleCurrent()->getColor())
+		, 100, 200);
 
 	switch (getBoardState())
 	{

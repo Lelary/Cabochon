@@ -18,7 +18,8 @@ namespace controls
 	using mathematics::scalar;
 	using components::marble_ptr;
 	using components::SteeringWheel;
-	using frameworks::TextureList;
+	using frameworks::TextureList; 
+	using components::MarbleColor;
 
 	/*
 		2016. 1. 13
@@ -55,8 +56,8 @@ namespace controls
 		marble_ptr& getMarbleCurrent();
 		marble_ptr& getMarbleNext();
 		
-		void setMarbleCurrent(marble_ptr& marble);
-		void setMarbleNext(marble_ptr& marble);
+		void setMarbleCurrent(MarbleColor color);
+		void setMarbleNext(MarbleColor color);
 
 		void setOrigin();
 		void rotateLeft(float frameTime);

@@ -50,9 +50,15 @@ namespace controls
 		2. ¸Ê »ý¼º
 		*/
 		static int getRandomNumber(int min, int max);
+
+		static MarbleColor getRandomMarbleColor();
+		static MarbleColor getRandomMarbleColor(MarbleColorOn colorRange);
+
 		static marble_ptr makeMarble(MarbleColor color=MarbleColor::None);
 		static marble_ptr makeRandomMarble();
 		static marble_ptr makeRandomMarble(MarbleColorOn colorRange);
+
+
 		//static marble_ptr loadTexture(marble_ptr marble, TextureList& textureList);
 		
 	};

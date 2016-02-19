@@ -1,13 +1,14 @@
 //2016. 1. 16.
 
 #include "steering_wheel_control.h"
+#include "marble_generator.h"
 
 using controls::SteeringWheelControl;
 using mathematics::scalar;
 using components::marble_ptr;
 using components::SteeringWheel;
 using frameworks::TextureList;
-
+using components::MarbleColor;
 SteeringWheelControl::SteeringWheelControl()
 {
 	/*
@@ -18,6 +19,13 @@ SteeringWheelControl::SteeringWheelControl()
 	_steeringWheel.setWidth(100);
 	_steeringWheel.setHeight(100);
 	_steeringWheel.setCentralPosition(GAME_WIDTH/2.0f, 7*GAME_HEIGHT/8);
+
+	_marbleCurrent = MarbleGenerator::makeMarble();	
+	_marbleCurrent->setCentralPosition(_steeringWheel.getCentralPosition());
+	_marbleNext = MarbleGenerator::makeMarble();
+	_marbleNext->setCentralPosition(
+		_steeringWheel.getCentralPosition()._x - 120,
+		_steeringWheel.getCentralPosition()._y + 20);
 }
 SteeringWheelControl::~SteeringWheelControl()
 {
@@ -47,15 +55,15 @@ marble_ptr& SteeringWheelControl::getMarbleNext()
 	return _marbleNext;
 }
 
-void SteeringWheelControl::setMarbleCurrent(marble_ptr& marble)
+void SteeringWheelControl::setMarbleCurrent(MarbleColor color)
 {
-
-	_marbleCurrent = std::move(marble);
-	_marbleCurrent->setCentralPosition(_steeringWheel.getCentralPosition());
+	if (_marbleCurrent != nullptr)
+		_marbleCurrent->setColor(color);
 }
-void SteeringWheelControl::setMarbleNext(marble_ptr& marble)
+void SteeringWheelControl::setMarbleNext(MarbleColor color)
 {
-	_marbleNext = std::move(marble);
+	if (_marbleNext != nullptr)
+		_marbleNext->setColor(color);
 }
 
 void SteeringWheelControl::setOrigin()

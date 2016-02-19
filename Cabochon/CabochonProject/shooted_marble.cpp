@@ -12,6 +12,8 @@ using mathematics::Angle;
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
+const scalar ShootedMarble::defaultSpeed = 10;
+
 ShootedMarble::ShootedMarble()
 {
 	/*
@@ -51,6 +53,10 @@ void ShootedMarble::move(const MarbleBoard& board, float frameTIme)
 		_velocity._y *= -1;
 
 }
+scalar ShootedMarble::getDefaultSpeed()
+{
+	return defaultSpeed;
+}
 
 marble_ptr& ShootedMarble::getMarble()
 {
@@ -81,7 +87,7 @@ void ShootedMarble::setVelocity(scalar speed, Angle angle)
 	
 }
 
-void ShootedMarble::setMarble(marble_ptr& marble)
+void ShootedMarble::setMarble(marble_ptr marble)
 {
 	_marble = std::move(marble);
 }
