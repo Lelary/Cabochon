@@ -63,6 +63,7 @@ void Marble::loadLayers(TextureList& textureList)
 		_layers.back().setCurrentFrame(row*cols);
 		_layers.back().setFrameDelay(0.1);
 		_layers.back().setLoop(false);
+		_layers.back().setAnimationComplete(true);
 		_layers.back().setScaleFromWidth(1.0f, getWidth());
 		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 		_layers.back().setVisible(false);

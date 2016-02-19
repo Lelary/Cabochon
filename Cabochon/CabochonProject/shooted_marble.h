@@ -17,7 +17,7 @@ wrapper가 간단하다.
 wrapper로 작성.
 
 2016. 2. 19.
-알파버전 완성후 상속관계로 바꾸는게 좋을 것 같다.
+상속관계로 변경.
 */
 
 namespace components

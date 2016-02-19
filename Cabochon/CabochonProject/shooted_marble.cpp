@@ -13,7 +13,7 @@ using components::MarbleColor;
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
-const scalar ShootedMarble::defaultSpeed = 200;
+const scalar ShootedMarble::defaultSpeed = 300;
 
 ShootedMarble::ShootedMarble()
 	:Marble(), _velocity({0.0f,0.0f})

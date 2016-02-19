@@ -18,6 +18,7 @@ using controls::MarbleBoard;
 using frameworks::TextureList;
 
 MarbleControl::MarbleControl()
+	:_shooting(false)
 {
 
 }
@@ -28,6 +29,10 @@ MarbleControl::~MarbleControl()
 	2016. 1. 16.
 	Nothing to do yet.
 	*/
+}
+bool MarbleControl::isShooting() const
+{
+	return _shooting;
 }
 //Shooted Marble
 shooted_ptr& MarbleControl::getShootedMarble()
@@ -41,6 +46,7 @@ void MarbleControl::setShootedMarble(MarbleColor color, Position position, scala
 	shootedMarble->setVelocity(speed, degree);
 	_shootedMarble = std::move(shootedMarble);
 	_shootedMarble->loadLayers(textureList);
+	_shooting = true;
 }
 
 MarbleColorOn MarbleControl::getExistColors() const

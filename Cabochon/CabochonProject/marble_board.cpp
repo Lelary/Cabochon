@@ -42,6 +42,12 @@ MarbleColor MarbleBoard::existMarble(IntPosition gridPosition) const
 }
 MarbleColor MarbleBoard::existMarble(int x, int y) const
 {
+	if (x < 0 || x >= _marbles.size())
+		return MarbleColor::None;
+
+	if (y < 0 || y >= _marbles[x].size())
+		return MarbleColor::None;
+
 	if (_marbles[x][y] != nullptr)
 		return _marbles[x][y]->getColor();
 	else

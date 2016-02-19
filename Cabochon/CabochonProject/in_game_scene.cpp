@@ -51,7 +51,7 @@ void InGameScene::update(float frameTime)
 	_wheelControl.update(frameTime);
 	_marbleControl.update(frameTime);
 
-	if (_input.wasKeyPressed(VK_SPACE))
+	if (_input.wasKeyPressed(VK_SPACE) && ! _marbleControl.isShooting())
 	{
 		// _nowShooting = true
 		// while Animation
@@ -78,6 +78,8 @@ void InGameScene::update(float frameTime)
 		MarbleColorOn colorOn = _marbleControl.getExistColors();
 		colorOn.bitData.None = false;
 		_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));	
+		
+		//---------------------
 	}
 	else if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT))
 	{
@@ -115,6 +117,18 @@ void InGameScene::lateUpdate(float frameTime)
 	// 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
 	else if (getBoardState() == BoardState::GameOver)
 		_nextScene = SceneName::MainScene;
+
+	//attach, break
+	if (_marbleControl.isShooting())
+	{
+	//	_marbleControl.attach(_marbleControl.getShootedMarble());
+	}
+
+
+
+
+
+
 
 
 }

@@ -45,8 +45,10 @@ namespace controls
 		//marble_ptr 에 대한 2차원 배열
 		MarbleBoard _marbleBoard;
 		using shooted_ptr = std::unique_ptr < ShootedMarble >;
-		// steeringWheelControl 로 부터 소유권이 이전될 것.
+		// steeringWheelControl 로 부터 소유권이 이전될 것.-> 객체가 이동한것처럼 보이도록변경
 		shooted_ptr _shootedMarble;
+		bool _shooting;
+		
 
 	public:
 		MarbleControl();
@@ -55,6 +57,7 @@ namespace controls
 		MarbleControl& operator=(const MarbleControl& rhs) = delete;
 
 		//Shooted Marble
+		bool isShooting() const;
 		shooted_ptr& getShootedMarble();
 		void setShootedMarble(MarbleColor color, Position position, scalar speed, Angle degree, TextureList& textureList);
 
