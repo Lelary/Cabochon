@@ -59,13 +59,13 @@ void SteeringWheel::setOrigin()
 {
 	setAngle(0);
 }
-void SteeringWheel::rotateLeft(float degree)
+void SteeringWheel::rotateLeft(scalar degree)
 {
 	unsigned int wheelLayer = 1;
 	setAngle(_angle - degree);
 	_layers.at(wheelLayer).setDegrees(_angle.getDegree());
 }
-void SteeringWheel::rotateRight(float degree)
+void SteeringWheel::rotateRight(scalar degree)
 {
 	unsigned int wheelLayer = 1;
 	setAngle(_angle + degree);

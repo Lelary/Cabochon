@@ -8,26 +8,25 @@ using components::marble_ptr;
 using mathematics::scalar;
 using mathematics::Velocity;
 using mathematics::Angle;
+using components::MarbleColor;
 
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
-const scalar ShootedMarble::defaultSpeed = 10;
+const scalar ShootedMarble::defaultSpeed = 200;
 
 ShootedMarble::ShootedMarble()
+	:Marble(), _velocity({0.0f,0.0f})
 {
 	/*
 	2016. 1. 18.
 	nothing to do.
 	*/
 }
-ShootedMarble::ShootedMarble(marble_ptr& marble)
-	:_marble(std::move(marble))
+ShootedMarble::ShootedMarble(MarbleColor color)
+	:Marble(color), _velocity({ 0.0f, 0.0f })
 {
-	/*
-	2016. 1. 18.
-	nothing to do.
-	*/
+
 }
 ShootedMarble::~ShootedMarble()
 {
@@ -39,17 +38,17 @@ ShootedMarble::~ShootedMarble()
 
 void ShootedMarble::move(const MarbleBoard& board, float frameTIme)
 {
-	_marble->setPosition(_marble->getPosition()._x + _velocity._x*frameTIme, _marble->getPosition()._y + _velocity._y*frameTIme);
+	setPosition(getPosition()._x + _velocity._x*frameTIme, getPosition()._y + _velocity._y*frameTIme);
 
 	// 좌우벽
-	if (_marble->getPosition()._x <  LEFT_WALL
+	if (getCentralPosition()._x-getWidth()/2.0f <  LEFT_WALL
 		||
-		_marble->getPosition()._x > RIGHT_WALL
+		getCentralPosition()._x+getWidth()/2.0f > RIGHT_WALL
 		)
 		_velocity._x *= -1;
 		
 
-	if (_marble->getPosition()._y > board.getCeilingPosition())
+	if (getCentralPosition()._y-getHeight()/2.0f < board.getCeilingPosition())
 		_velocity._y *= -1;
 
 }
@@ -58,10 +57,6 @@ scalar ShootedMarble::getDefaultSpeed()
 	return defaultSpeed;
 }
 
-marble_ptr& ShootedMarble::getMarble()
-{
-	return _marble;
-}
 Velocity ShootedMarble::getVelocity() const
 {
 	return _velocity;
@@ -83,11 +78,6 @@ void ShootedMarble::setVelocity(scalar speed, Angle angle)
 
 	Steering Wheel Control 에서 올 정보. 이므로 윗쪽을 향하는 것이 0도
 	*/
-	_velocity = { speed*cosf(angle.getDegree()), speed*sinf(angle.getDegree()) };
+	_velocity = { speed*sinf(angle.getDegree()*PI / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
 	
-}
-
-void ShootedMarble::setMarble(marble_ptr marble)
-{
-	_marble = std::move(marble);
 }

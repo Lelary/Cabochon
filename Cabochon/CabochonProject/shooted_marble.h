@@ -27,15 +27,15 @@ namespace components
 	using controls::MarbleBoard;
 
 	class ShootedMarble
+		:public Marble
 	{
 	private:
 		static const scalar defaultSpeed;
-		marble_ptr _marble;
 		Velocity _velocity;
 
 	public:
 		ShootedMarble();
-		ShootedMarble(marble_ptr& marble);
+		ShootedMarble(MarbleColor color);
 		ShootedMarble(const ShootedMarble& rhs) = delete;
 		virtual ~ShootedMarble();
 		ShootedMarble& operator=(const ShootedMarble& rhs) = delete;
@@ -50,15 +50,13 @@ namespace components
 		(하지않더라도 무관)
 
 		*/
-		void move(const MarbleBoard& board, scalar frameTime);
+		void move(const MarbleBoard& board, float frameTime);
 		
 		static scalar getDefaultSpeed();
-		marble_ptr& getMarble();
 		Velocity getVelocity() const;
 		void setVelocity(Velocity velocity);
 		void setVelocity(scalar vx, scalar vy);
 		void setVelocity(scalar speed, Angle angle);
-		void setMarble(marble_ptr marble);
 
 	};
 }

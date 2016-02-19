@@ -22,7 +22,7 @@ Marble::Marble(MarbleColor color)
 }
 
 Marble::Marble(const Marble& rhs)
-	:Object(rhs), _gridPosition(rhs._gridPosition), _color(rhs._color)
+	: Object(rhs), _gridPosition(rhs._gridPosition), _color(rhs._color)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
@@ -67,7 +67,7 @@ void Marble::loadLayers(TextureList& textureList)
 		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 		_layers.back().setVisible(false);
 	}
-	
+	_layersLoaded = true;
 	setColor(_color);
 	adjustLayersPosition();
 }

@@ -39,6 +39,7 @@ void InGameScene::start()
 	MarbleColorOn colorOn = _marbleControl.getExistColors();
 	colorOn.bitData.None = false;
 	_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));
+	_wheelControl.setMarbleCurrent(MarbleGenerator::getRandomMarbleColor(colorOn));
 
 	_started = true;
 }
@@ -48,20 +49,9 @@ void InGameScene::update(float frameTime)
 		return;
 
 	_wheelControl.update(frameTime);
+	_marbleControl.update(frameTime);
 
-	if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT))
-	{
-		// 아무것도안함
-	}
-	else if (_input.isKeyDown(VK_LEFT))
-	{
-		_wheelControl.rotateLeft(frameTime);
-	}
-	else if (_input.isKeyDown(VK_RIGHT))
-	{
-		_wheelControl.rotateRight(frameTime);
-	}
-	else if (_input.wasKeyPressed(VK_SPACE))
+	if (_input.wasKeyPressed(VK_SPACE))
 	{
 		// _nowShooting = true
 		// while Animation
@@ -73,8 +63,10 @@ void InGameScene::update(float frameTime)
 		{
 			_marbleControl.setShootedMarble(
 				_wheelControl.getMarbleCurrent()->getColor(), 
+				_wheelControl.getMarbleCurrent()->getCentralPosition(),
 				ShootedMarble::getDefaultSpeed(), 
-				_wheelControl.getDegree());
+				_wheelControl.getDegree(),
+				_textureList);
 		}
 		// MarbleNext -> MarbleCurrent
 		if (_wheelControl.getMarbleNext() != nullptr)
@@ -86,6 +78,18 @@ void InGameScene::update(float frameTime)
 		MarbleColorOn colorOn = _marbleControl.getExistColors();
 		colorOn.bitData.None = false;
 		_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));	
+	}
+	else if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT))
+	{
+		// 아무것도안함
+	}
+	else if (_input.isKeyDown(VK_LEFT))
+	{
+		_wheelControl.rotateLeft(frameTime);
+	}
+	else if (_input.isKeyDown(VK_RIGHT))
+	{
+		_wheelControl.rotateRight(frameTime);
 	}
 }
 void InGameScene::lateUpdate(float frameTime)
@@ -119,11 +123,17 @@ void InGameScene::render()
 	_backGround.draw();
 	_wheelControl.render();
 	_marbleControl.render();
-	if (_wheelControl.getMarbleNext()!=nullptr)
-		_text2.print("Marble Next: "
-		+std::to_string((int)_wheelControl.getMarbleNext()->getColor())
-		+"\nMarble Current: "
-		+ std::to_string((int)_wheelControl.getMarbleCurrent()->getColor())
+	if (_marbleControl.getShootedMarble()!=nullptr)
+		_text2.print("\nx: "
+		+ std::to_string(_marbleControl.getShootedMarble()->getCentralPosition()._x)
+		+ "\ny: "
+		+ std::to_string(_marbleControl.getShootedMarble()->getCentralPosition()._y)
+		+ "\nVx: "
+		+ std::to_string(_marbleControl.getShootedMarble()->getVelocity()._x)
+		+ "\nVy: "
+		+ std::to_string(_marbleControl.getShootedMarble()->getVelocity()._y)
+		+ "\nDegree: "
+		+ std::to_string(_wheelControl.getDegree())
 		, 100, 200);
 
 	switch (getBoardState())

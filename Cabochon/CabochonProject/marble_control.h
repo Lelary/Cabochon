@@ -24,6 +24,7 @@ namespace controls
 	using controls::MarbleColorOn;
 	using mathematics::IntPosition;
 	using mathematics::Angle;
+	using frameworks::TextureList;
 
 /*
 	2016. 1. 18.
@@ -55,7 +56,7 @@ namespace controls
 
 		//Shooted Marble
 		shooted_ptr& getShootedMarble();
-		void setShootedMarble(MarbleColor color, scalar speed, Angle degree);
+		void setShootedMarble(MarbleColor color, Position position, scalar speed, Angle degree, TextureList& textureList);
 
 		MarbleColorOn getExistColors() const;
 		MarbleBoard& getMarbleBoard();

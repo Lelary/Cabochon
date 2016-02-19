@@ -9,11 +9,13 @@ using components::MarbleColor;
 using components::ShootedMarble;
 using controls::Grid;
 using controls::RowType;
+using mathematics::Position;
 using mathematics::IntPosition;
 using mathematics::scalar;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 using controls::MarbleColorOn;
 using controls::MarbleBoard;
+using frameworks::TextureList;
 
 MarbleControl::MarbleControl()
 {
@@ -32,12 +34,13 @@ shooted_ptr& MarbleControl::getShootedMarble()
 {
 	return _shootedMarble;
 }
-void MarbleControl::setShootedMarble(MarbleColor color, scalar speed, mathematics::Angle degree)
+void MarbleControl::setShootedMarble(MarbleColor color, Position position, scalar speed, mathematics::Angle degree, TextureList& textureList)
 {
-	shooted_ptr shootedMarble=std::make_unique<ShootedMarble>();
-	shootedMarble->setMarble(MarbleGenerator::makeMarble(color));
+	shooted_ptr shootedMarble=std::make_unique<ShootedMarble>(color);
+	shootedMarble->setCentralPosition(position);
 	shootedMarble->setVelocity(speed, degree);
 	_shootedMarble = std::move(shootedMarble);
+	_shootedMarble->loadLayers(textureList);
 }
 
 MarbleColorOn MarbleControl::getExistColors() const
@@ -61,7 +64,7 @@ const MarbleBoard& MarbleControl::getMarbleBoard() const
 //Attach 가능성이 있는 Grid 위치 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMarble) const
 {
-	IntPosition marblePosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getMarble()->getCentralPosition());
+	IntPosition marblePosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getCentralPosition());
 	return getTestSet(marblePosition);
 }
 //Attach 가능성이 있는 Grid 위치 반환.
@@ -125,7 +128,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	3. isAttachable(const shooted_ptr& shootedMarble)const 호출.
 	*/
 
-	if (Grid::isInGrid(_marbleBoard, shootedMarble->getMarble()->getCentralPosition(), gridPosition))
+	if (Grid::isInGrid(_marbleBoard, shootedMarble->getCentralPosition(), gridPosition))
 		if (_marbleBoard.existMarble(gridPosition) == MarbleColor::None)
 			return isAttachable(shootedMarble);
 
@@ -145,7 +148,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 
 
 	//1. MarbleColor::None 검사.
-	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getMarble()->getCentralPosition());
+	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getCentralPosition());
 	if (_marbleBoard.existMarble(gridPosition)!=MarbleColor::None)
 		return false;
 
@@ -157,7 +160,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 		if (_marbleBoard.existMarble(gridPosition) != MarbleColor::None)
 		{
 			// 4. 반지름 검사. (원형 충돌 검사)
-			if (shootedMarble->getMarble()->circularHitTest(*_marbleBoard.getMarble(testPosition._x, testPosition._y).get()))
+			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition._x, testPosition._y).get()))
 			{
 				return true;
 			}
@@ -169,13 +172,13 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 void MarbleControl::attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition)
 {
 	if (isAttachable(shootedMarble, gridPosition))
-		_marbleBoard.addMarble(gridPosition, shootedMarble->getMarble()->getColor());
+		_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
 
 	shootedMarble.reset();		
 }
 void MarbleControl::attach(shooted_ptr& shootedMarble)
 {
-	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getMarble()->getCentralPosition());
+	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getCentralPosition());
 	attach(shootedMarble, gridPosition);
 }
 
@@ -184,9 +187,13 @@ void MarbleControl::render()
 	_marbleBoard.render();
 
 	if (_shootedMarble != nullptr)
-		_shootedMarble->getMarble()->draw();
+	{
+		_shootedMarble->draw();
+	}
 }
 void MarbleControl::update(float frameTime)
 {
+	if (_shootedMarble != nullptr)
+		_shootedMarble->move(_marbleBoard, frameTime);
 	_marbleBoard.update(frameTime);
 }
