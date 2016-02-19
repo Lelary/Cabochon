@@ -16,11 +16,12 @@ using cabochon_constants::MARBLE_WIDTH;
 using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::LINE;
 using mathematics::IntPosition;
+using frameworks::TextureList;
+using controls::MarbleColorOn;
 
 MarbleBoard::MarbleBoard()
 	:_boardState(BoardState::Build), _dragged(false)
 {
-	//_marbles.push_front(move(MarbleRow()));
 }
 MarbleBoard::~MarbleBoard()
 {
@@ -75,7 +76,6 @@ bool MarbleBoard::removeMarble(int x, int y)
 	_marbles[x][y]->setColor(MarbleColor::None);
 	return true;
 }
-
 void MarbleBoard::removeRowZero()
 {
 	_marbles.pop_front();
@@ -100,6 +100,10 @@ int MarbleBoard::getMarbleCount() const
 int MarbleBoard::getHeight() const
 {
 	return _marbles.size();
+}
+void MarbleBoard::setBoardState(BoardState state)
+{
+	_boardState=state;
 }
 BoardState MarbleBoard::getBoardState() const
 {
@@ -180,17 +184,13 @@ void MarbleBoard::makeRandomBoard()
 	for (int i = 0; i < row; i++)
 	{
 		if (even == true)
-		{
 			_marbles.push_front(MarbleRow(MAX_X));
-			for (int i = 0; i < MAX_X; i++)
-				_marbles.front().push_back(MarbleGenerator::makeRandomMarble());
-		}
 		else
-		{
-			_marbles.push_front(MarbleRow(MAX_X-1));
-			for (int i = 0; i < MAX_X - 1; i++)
-				_marbles.front().push_back(MarbleGenerator::makeRandomMarble());
-		}
+			_marbles.push_front(MarbleRow(MAX_X - 1));
+
+		for (marble_ptr& marble : _marbles.front())
+			marble = makeRandomMarble();
+
 		even = !even;
 	}
 
@@ -198,17 +198,13 @@ void MarbleBoard::makeRandomBoard()
 	for (int i = 0; i < row; i++)
 	{
 		if (even == true)
-		{
 			_marbles.push_front(MarbleRow(MAX_X));
-			for (int i = 0; i < MAX_X; i++)
-				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
-		}
 		else
-		{
 			_marbles.push_front(MarbleRow(MAX_X - 1));
-			for (int i = 0; i < MAX_X - 1; i++)
-				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
-		}
+
+		for (marble_ptr& marble : _marbles.front())
+			marble = makeMarble(MarbleColor::None);
+
 		even = !even;
 	}
 
@@ -216,17 +212,13 @@ void MarbleBoard::makeRandomBoard()
 	while (getHeight() < 10)
 	{
 		if (even == true)
-		{
 			_marbles.push_front(MarbleRow(MAX_X));
-			for (int i = 0; i < MAX_X; i++)
-				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
-		}
 		else
-		{
 			_marbles.push_front(MarbleRow(MAX_X - 1));
-			for (int i = 0; i < MAX_X - 1; i++)
-				_marbles.front().push_back(MarbleGenerator::makeMarble(MarbleColor::None));
-		}
+
+		for (marble_ptr& marble : _marbles.front())
+			marble = makeMarble(MarbleColor::None);
+
 		even = !even;
 	}
 	
@@ -237,6 +229,27 @@ void MarbleBoard::makeRandomBoard()
 
 	_boardState = BoardState::Ready;
 
+}
+marble_ptr MarbleBoard::makeMarble(MarbleColor color)
+{
+	marble_ptr marble = MarbleGenerator::makeMarble(color);
+	if (marble->getColor() != MarbleColor::None)
+		_colorCount[(int)marble->getColor()]++;
+	return marble;
+}
+marble_ptr MarbleBoard::makeRandomMarble()
+{
+	marble_ptr marble = MarbleGenerator::makeRandomMarble();
+	if (marble->getColor() != MarbleColor::None)
+		_colorCount[(int)marble->getColor()]++;
+	return marble;
+}
+marble_ptr MarbleBoard::makeRandomMarble(MarbleColorOn colorRange)
+{
+	marble_ptr marble = MarbleGenerator::makeRandomMarble(colorRange);
+	if (marble->getColor() != MarbleColor::None)
+		_colorCount[(int)marble->getColor()]++;
+	return marble;
 }
 void MarbleBoard::updateMarblePositions()
 {
@@ -251,9 +264,9 @@ void MarbleBoard::updateMarblePositions()
 			if (_marbles[i][j] != nullptr){
 				_marbles[i][j]->setGridPosition({ i, j });
 				if (even)
-					_marbles[i][j]->setPosition(x + i*MARBLE_WIDTH, y + j*MARBLE_HEIGHT);
+					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH, y - i*MARBLE_HEIGHT);
 				else
-					_marbles[i][j]->setPosition(x + i*MARBLE_WIDTH + (MARBLE_WIDTH/2.0f), y + j*MARBLE_HEIGHT);
+					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH + (MARBLE_WIDTH/2.0f), y - i*MARBLE_HEIGHT);
 			}
 		}
 		even = !even;
@@ -278,6 +291,13 @@ RowType MarbleBoard::getRowType(scalar y) const
 }
 RowType MarbleBoard::getRowType(int y) const
 {
+	//2016. 2. 19.
+	//_marbles 의 1Dim이 vector로 변경되어서 가능.
+	if (_marbles.at(y).size() == MAX_X)
+		return RowType::Even;
+	else
+		return RowType::Odd;
+	/*
 	//grid 안에 없거나 Board가 Build 되어있지않음.
 	if (y < 0 || y >= getHeight() || getHeight()<1)
 		return RowType::None;
@@ -304,15 +324,27 @@ RowType MarbleBoard::getRowType(int y) const
 		else
 			return RowType::None;
 	}
+	*/
 }
 
 
+void MarbleBoard::loadTextures(TextureList& textureList)
+{
+	for (MarbleRow& marbleRow : _marbles)
+		for (marble_ptr& marble : marbleRow)
+			marble->loadLayers(textureList);
+}
 void MarbleBoard::render()
 {
+	//board 있으면 draw.
+	
+
 	//marbles draw
-	//0~10번 Row만 그림.
+	//0~10번 Row만 그림. 혹은 (ceiling이 내려왔거나 하는 이유로 _marbles.size()가 더작은 경우는 _marbles.size())
+	int minY = (MIN_Y < _marbles.size()) ? MIN_Y : _marbles.size();
+
 	if (_boardState!=BoardState::Build)
-		for (int i = 0; i < MIN_Y; i++)
+		for (int i = 0; i < minY; i++)
 			for (int j = 0; j < _marbles[i].size(); j++)
 				if (_marbles[i][j]!=nullptr)
 					_marbles[i][j]->draw();

@@ -34,9 +34,9 @@ marble_ptr MarbleGenerator::makeRandomMarble(MarbleColorOn colorRange)
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
 	int sum = 0;
-	//{}
-	for (int i = (int)MarbleColor::None + 1; i <= (int)MarbleColor::Gray + 1; i++){
-		if ((colorRange.data >> i) & 1)
+	//None¡¶ø‹.
+	for (int i = (int)MarbleColor::None + 1; i < (int)MarbleColor::Num; i++){
+		if ((colorRange.data >> i) & true)
 			sum++;
 	}
 
@@ -55,8 +55,10 @@ marble_ptr MarbleGenerator::makeRandomMarble(MarbleColorOn colorRange)
 
 	return std::make_unique<Marble>((MarbleColor)(i-1));
 }
+/*
 marble_ptr MarbleGenerator::loadTexture(marble_ptr marble, TextureList& textureList)
 {
 	marble->loadLayers(textureList);
 	return marble;
 }
+*/

@@ -49,6 +49,7 @@ marble_ptr& SteeringWheelControl::getMarbleNext()
 
 void SteeringWheelControl::setMarbleCurrent(marble_ptr& marble)
 {
+
 	_marbleCurrent = std::move(marble);
 	_marbleCurrent->setCentralPosition(_steeringWheel.getCentralPosition());
 }
@@ -102,10 +103,4 @@ void SteeringWheelControl::update(float frameTime)
 	if (_marbleNext != nullptr)
 		_marbleNext->update(frameTime);
 
-
-
-
-	//Àå³­.
-	//_marbleCurrent->setPosition(_marbleCurrent->getPosition()._x + 1.0f,
-	//	_marbleCurrent->getPosition()._y);
 }

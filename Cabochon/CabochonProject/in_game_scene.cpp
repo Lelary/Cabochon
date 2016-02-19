@@ -5,7 +5,7 @@ using frameworks::InGameScene;
 using frameworks::TextureList;
 using components::ShootedMarble;
 using controls::BoardState;
-
+using controls::MarbleColorOn;
 InGameScene::InGameScene(Graphics& graphics, Input& input, TextureList& textureList)
 	:Scene(graphics, input, textureList)
 {
@@ -27,8 +27,13 @@ void InGameScene::start()
 	_text.initialize(&_graphics, 20, false, false, frameworks::default_settings::FONT);
 	_wheelControl.loadTextures(_textureList);
 
+	_marbleControl.getMarbleBoard().makeRandomBoard();
+	_marbleControl.getMarbleBoard().loadTextures(_textureList);
 
-	_wheelControl.setMarbleCurrent(MarbleGenerator::loadTexture(MarbleGenerator::makeMarble(), _textureList));
+	MarbleColorOn colorOn = _marbleControl.getExistColors();
+	colorOn.bitData.None = false;
+	_wheelControl.setMarbleNext(MarbleGenerator::makeRandomMarble(colorOn));
+	_wheelControl.getMarbleNext()->loadLayers(_textureList);
 
 
 	_started = true;
@@ -54,12 +59,19 @@ void InGameScene::update(float frameTime)
 	}
 	else if (_input.isKeyDown(VK_SPACE))
 	{
-		_marbleControl.setShootedMarble(_wheelControl.getMarbleCurrent());
-		_wheelControl.setMarbleCurrent(_wheelControl.getMarbleNext());
+		if (_wheelControl.getMarbleCurrent() != nullptr)
+			_marbleControl.setShootedMarble(_wheelControl.getMarbleCurrent());
+		if (_wheelControl.getMarbleNext() != nullptr)
+		{
+			_wheelControl.setMarbleCurrent(_wheelControl.getMarbleNext());
+
+		}
 		// 인수로, Count.
-		_wheelControl.setMarbleNext(
-			MarbleGenerator::makeRandomMarble(_marbleControl.getExistColors()));
-		_wheelControl.setMarbleNext(MarbleGenerator::makeRandomMarble());
+		MarbleColorOn colorOn = _marbleControl.getExistColors();
+		colorOn.bitData.None = false;
+		_wheelControl.setMarbleNext(MarbleGenerator::makeRandomMarble(colorOn));
+		_wheelControl.getMarbleNext()->loadLayers(_textureList);
+		
 	}
 }
 void InGameScene::lateUpdate(float frameTime)
@@ -67,12 +79,15 @@ void InGameScene::lateUpdate(float frameTime)
 	// 로딩문구를 띄우는게 좋을 것 같다.
 	if (getBoardState() == BoardState::Build)
 	{
-		_marbleControl.getMarbleBoard().makeRandomBoard();
 		return;
 	}
 	else if (getBoardState() == BoardState::Ready)
 	{
-		//
+		//GameStart (set BoardState::Play)
+		if (_input.isKeyDown(VK_SPACE))
+		{
+			_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
+		}
 	}
 
 	// 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.

@@ -71,6 +71,10 @@ namespace controls
 		bool addMarble(int x, int y, MarbleColor color);
 		bool removeMarble(int x, int y);
 
+		marble_ptr makeMarble(MarbleColor color);
+		marble_ptr makeRandomMarble();
+		marble_ptr makeRandomMarble(MarbleColorOn colorRange);
+
 		// marble의 존재 여부와 상관없이 0번 줄을 삭제한다.
 		// RowZero는 Line 아래에 있는 Row.
 		void removeRowZero();
@@ -78,6 +82,7 @@ namespace controls
 		int getMarbleCount(MarbleColor c) const;
 		int getMarbleCount() const;
 		int getHeight() const;
+		void setBoardState(BoardState state);
 		BoardState getBoardState()const;
 		/*
 		// 이 함수로 알 수 있는 것.
@@ -111,6 +116,7 @@ namespace controls
 		RowType getRowType(scalar y) const;
 		RowType getRowType(int y) const; 
 
+		void loadTextures(TextureList& textureList);
 		//pure virtual functions
 		virtual void render();
 		virtual void update(float frameTime);
