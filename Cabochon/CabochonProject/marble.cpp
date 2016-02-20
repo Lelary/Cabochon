@@ -124,8 +124,8 @@ bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2)
 		Marble 객체는 Width = Height = 2*radius
 		현재는 radius 멤버변수가 없으므로 이를 이용한다.
 	*/
-	scalar radius1 = marble1.getWidth() / 2.0f;
-	scalar radius2 = marble2.getWidth() / 2.0f;
+	scalar radius1 = marble1.getWidth()*0.5f / 2.0f;
+	scalar radius2 = marble2.getWidth()*0.5f / 2.0f;
 
 	scalar distanceSquare =
 		powf((marble2.getCentralPosition()._x - marble1.getCentralPosition()._x), 2.0f)

@@ -51,7 +51,7 @@ MarbleColor MarbleBoard::existMarble(int x, int y) const
 	if (_marbles[x][y] != nullptr)
 		return _marbles[x][y]->getColor();
 	else
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : existMarble()!"));
+		(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : existMarble()!"));
 }
 
 bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
@@ -170,7 +170,7 @@ BoardState MarbleBoard::dragDown()
 
 	// 화면 밖에만 Marble 이 존재. 
 	// 화면에 보일 때 까지 더 끌어내림.
-	int toDrag = getFloor() - 10;
+	int toDrag = getFloor() - MIN_X;
 	if (toDrag > 0)
 	{
 		for (int i = 0; i < toDrag; i++)
@@ -215,7 +215,7 @@ void MarbleBoard::makeRandomBoard()
 	}
 
 	// if (getHeight()<10) 생략.
-	while (getHeight() < 10)
+	while (getHeight() < MIN_X)
 	{
 		if (even == true)
 			_marbles.push_front(MarbleRow(MAX_Y));
@@ -283,7 +283,7 @@ void MarbleBoard::updateMarblePositions()
 int MarbleBoard::positionToColumnIndex(scalar x, RowType rowType) const
 {
 	if (getRowType(x) == RowType::Odd)
-		return static_cast<int>(floorf(x - (MARBLE_WIDTH/2.0f) / MARBLE_WIDTH));
+		return static_cast<int>(floorf((x - MARBLE_WIDTH/2.0f) / MARBLE_WIDTH));
 	else
 		return static_cast<int>(floorf(x / MARBLE_WIDTH));
 }
@@ -327,7 +327,7 @@ void MarbleBoard::render()
 	
 
 	//marbles draw
-	//0~10번 Row만 그림. 혹은 (ceiling이 내려왔거나 하는 이유로 _marbles.size()가 더작은 경우는 _marbles.size())
+	//0~MIN_X번 Row만 그림. 혹은 (ceiling이 내려왔거나 하는 이유로 _marbles.size()가 더작은 경우는 _marbles.size())
 	int minX = (MIN_X < _marbles.size()) ? MIN_X : _marbles.size();
 
 	if (_boardState!=BoardState::Build)

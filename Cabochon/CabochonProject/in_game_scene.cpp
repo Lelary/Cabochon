@@ -118,22 +118,14 @@ void InGameScene::lateUpdate(float frameTime)
 	else if (getBoardState() == BoardState::GameOver)
 		_nextScene = SceneName::MainScene;
 
-	//attach, break
 	if (_marbleControl.isShooting())
 	{
-		if (_marbleControl.attach(_marbleControl.getShootedMarble()))
-		{
-			// dummy
-			int i = 0;
-			i++;
-			i++;
-		}
+		_marbleControl.attach(_marbleControl.getShootedMarble());
 	}
-
-
-
-
-
+	if (_marbleControl.hasJustAttached())
+	{
+		//break °Ë»ç.
+	}
 
 
 

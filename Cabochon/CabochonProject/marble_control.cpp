@@ -37,6 +37,18 @@ bool MarbleControl::isShooting() const
 	else
 		return true;
 }
+
+IntPosition MarbleControl::getJustAttached() const
+{
+	return _justAttached;
+}
+bool MarbleControl::hasJustAttached() const
+{
+	if (getJustAttached()._x == -1 || getJustAttached()._y == -1)
+		return false;
+	else
+		return true;
+}
 //Shooted Marble
 shooted_ptr& MarbleControl::getShootedMarble()
 {
@@ -72,7 +84,7 @@ const MarbleBoard& MarbleControl::getMarbleBoard() const
 //Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMarble) const
 {
-	IntPosition marblePosition = _marbleBoard.positionToIndex(shootedMarble->getCentralPosition());
+	IntPosition marblePosition = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	return getTestSet(marblePosition);
 }
 //Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
@@ -80,7 +92,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 {
 	//quadrant 미 사용시 6번 검사.
 	const int testNumber = 6;
-	std::vector<IntPosition> testSet(testNumber);
+	std::vector<IntPosition> testSet;
 	int x = marblePosition._x;
 	int y = marblePosition._y;
 
@@ -89,7 +101,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	// 좌 우 Marble
 	if (marblePosition._y > 0)
 		testSet.push_back({ x, y - 1 });
-	if (marblePosition._y < maxY)
+	if (marblePosition._y < maxY-1)
 		testSet.push_back({ x, y + 1 });
 
 	// 다음 X와 Y의 모든 쌍을 검사해야함.
@@ -98,11 +110,14 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	int testUpX = x + 1;
 	int testDownX = x - 1;
 
+	//row-1, row+1 의 상황.
+	maxY = (_marbleBoard.getRowType(x) == RowType::Odd) ? MAX_Y : MAX_Y - 1;
+
 	if (testDownX >= 1)
 	{
 		if (testLeftY >= 0)
 			testSet.push_back({ testDownX, testLeftY});
-		if (testRightY <= maxY)
+		if (testRightY < maxY)
 			testSet.push_back({ testDownX, testRightY });
 	}
 
@@ -110,7 +125,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	{
 		if (testLeftY >= 0)
 			testSet.push_back({ testUpX, testLeftY });
-		if (testRightY <= maxY)
+		if (testRightY < maxY)
 			testSet.push_back({ testUpX, testRightY });
 	}
 	return testSet;
@@ -125,7 +140,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	2. Attach 하고자 하는 위치가 비었는지 검사.
 	3. isAttachable(const shooted_ptr& shootedMarble)const 호출.
 	*/
-	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getCentralPosition());
+	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	if (currentIndex._x == gridPosition._x	&&	currentIndex._y == gridPosition._y )
 		if (_marbleBoard.existMarble(gridPosition) == MarbleColor::None)
 			return isAttachable(shootedMarble);
@@ -145,16 +160,16 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	*/
 
 	//1. MarbleColor::None 검사.
-	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getCentralPosition());
+	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	if (_marbleBoard.existMarble(currentIndex)!=MarbleColor::None)
 		return false;
 
 	//2. testSet을 얻음.
 	auto testSet = getTestSet(shootedMarble);
 	//3. 인접위치 (testSet)을 하나씩 확인.
-	for (auto testPosition : testSet){
+	for (auto& testPosition : testSet){
 		// 해당 인접위치가 비어있지않으면, 
-		if (_marbleBoard.existMarble(currentIndex) != MarbleColor::None){
+		if (_marbleBoard.existMarble(testPosition) != MarbleColor::None){
 			// 4. 반지름 검사. (원형 충돌 검사)
 			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition._x, testPosition._y).get())){
 				return true;
@@ -168,18 +183,24 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble, const IntPosition& gridPo
 {
 	if (isAttachable(shootedMarble, gridPosition))
 	{
+		//attach 확정.
+
 		_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
 		shootedMarble.reset();
 
 		_justAttached = gridPosition;
 		return true;
 	}
+	// if(ceiling)
+	// force attach.
+
+
 	return false;
 }
 // attach 의 오버로드 된 함수.
 bool MarbleControl::attach(shooted_ptr& shootedMarble)
 {
-	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getCentralPosition());
+	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	return attach(shootedMarble, currentIndex);
 }
 

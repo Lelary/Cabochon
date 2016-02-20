@@ -57,6 +57,10 @@ namespace controls
 
 		// Shooted Marble이 있는지 검사.
 		bool isShooting() const;
+
+		IntPosition getJustAttached() const;
+		bool hasJustAttached() const;
+
 		// Shooted Marble의 참조 반환.
 		shooted_ptr& getShootedMarble();
 		// 새로운 Shooted Marble을 설정하고 만든다.

@@ -31,6 +31,7 @@ namespace components
 	private:
 		static const scalar defaultSpeed;
 		Velocity _velocity;
+		Position _prevCentralPosition;
 
 	public:
 		ShootedMarble();
@@ -38,6 +39,16 @@ namespace components
 		ShootedMarble(const ShootedMarble& rhs) = delete;
 		virtual ~ShootedMarble();
 		ShootedMarble& operator=(const ShootedMarble& rhs) = delete;
+
+		virtual void setPosition(const Position& position);
+		// the position of Left Top 
+		virtual void setPosition(scalar x, scalar y);
+		// the position of middle, changes position property.
+		virtual void setCentralPosition(const Position& position);
+		// the position of middle, changes position property.
+		virtual void setCentralPosition(scalar x, scalar y);
+
+		virtual Position getPrevCentralPosition() const;
 
 		/*
 		2016. 1. 17
@@ -49,13 +60,13 @@ namespace components
 		(하지않더라도 무관)
 
 		*/
-		void move(const MarbleBoard& board, float frameTime);
+		virtual void move(const MarbleBoard& board, float frameTime);
 		
 		static scalar getDefaultSpeed();
-		Velocity getVelocity() const;
-		void setVelocity(Velocity velocity);
-		void setVelocity(scalar vx, scalar vy);
-		void setVelocity(scalar speed, Angle angle);
+		virtual Velocity getVelocity() const;
+		virtual void setVelocity(Velocity velocity);
+		virtual void setVelocity(scalar vx, scalar vy);
+		virtual void setVelocity(scalar speed, Angle angle);
 
 	};
 }

@@ -60,33 +60,33 @@ namespace components
 		Object& operator=(const Object& rhs);
 
 		// the position of Left Top 
-		Position getPosition() const;
+		virtual Position getPosition() const;
 		// the position of middle
-		Position getCentralPosition() const;
+		virtual Position getCentralPosition() const;
 		//scalar getCenterOfRotation() const;
-		scalar getWidth() const;
-		scalar getHeight() const;
+		virtual scalar getWidth() const;
+		virtual scalar getHeight() const;
 
 		// the position of Left Top 
-		void setPosition(const Position& position);
+		virtual void setPosition(const Position& position);
 		// the position of Left Top 
-		void setPosition(scalar x, scalar y);
+		virtual void setPosition(scalar x, scalar y);
 		// the position of middle, changes position property.
-		void setCentralPosition(const Position& position);
+		virtual void setCentralPosition(const Position& position);
 		// the position of middle, changes position property.
-		void setCentralPosition(scalar x, scalar y);
+		virtual void setCentralPosition(scalar x, scalar y);
 		//void setCenterOfRotation(const Position& position);
 		//void setCenterOfRotation(scalar x, scalar y);
-		void setWidth(scalar width);
-		void setHeight(scalar height);
+		virtual void setWidth(scalar width);
+		virtual void setHeight(scalar height);
 
 
 		static Position convertOrigin(const Position& oldPosition, Origin newOrigin, scalar width, scalar height);
 		//---------------------------------------------------
 		// Sprite ฐüทร.
 
-		bool isLayersLoaded();
-		void adjustLayersPosition();
+		virtual bool isLayersLoaded();
+		virtual void adjustLayersPosition();
 		virtual void loadLayers(TextureList& textureList) = 0;
 		virtual void draw()=0;
 		//-----------------------------------------------------

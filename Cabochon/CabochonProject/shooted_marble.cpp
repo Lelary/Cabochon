@@ -1,11 +1,13 @@
 // 2016. 1. 17
 #include "shooted_marble.h"
 #include "cabochon_constants.h"
+using components::Object;
 using components::ShootedMarble;
 using controls::Grid;
 using controls::MarbleBoard;
 using components::marble_ptr;
 using mathematics::scalar;
+using mathematics::Position;
 using mathematics::Velocity;
 using mathematics::Angle;
 using components::MarbleColor;
@@ -34,6 +36,35 @@ ShootedMarble::~ShootedMarble()
 	2016. 1. 18.
 	nothing to do.
 	*/
+}	
+
+void ShootedMarble::setPosition(const Position& position)
+{
+	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
+	Object::setPosition(position);
+}
+
+void ShootedMarble::setPosition(scalar x, scalar y)
+{
+	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
+	Object::setPosition(x, y);
+}
+
+void ShootedMarble::setCentralPosition(const Position& position)
+{
+	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
+	Object::setCentralPosition(position);
+}
+
+void ShootedMarble::setCentralPosition(scalar x, scalar y)
+{
+	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
+	Object::setCentralPosition(x, y);
+}
+
+Position ShootedMarble::getPrevCentralPosition() const
+{
+	return _prevCentralPosition;
 }
 
 void ShootedMarble::move(const MarbleBoard& board, float frameTIme)
