@@ -13,8 +13,8 @@
 */
 namespace components
 {
-	using components::SteeringWheel;
 	using mathematics::Angle;
+	using components::SteeringWheel;
 	using scenes::TextureList;
 
 	class SteeringWheel

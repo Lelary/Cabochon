@@ -14,6 +14,9 @@ namespace cabochon_constants
 	const scalar RIGHT_WALL = MAX_Y * MARBLE_WIDTH;
 	const scalar LINE = MIN_X * MARBLE_HEIGHT;
 
+	const char FONT[] = "Courier New";
+	const int POINT_SIZE = 14;
+	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);
 }
 
 #endif

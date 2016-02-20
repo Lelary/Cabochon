@@ -23,7 +23,7 @@ void Layer::setY(float newY)
 {
 	Image::setY(newY);
 }
-Position Layer::getDistance()
+Position Layer::getDistance() const
 {
 	return _distance;
 }
@@ -34,12 +34,12 @@ void Layer::setDistance(const Position& object, const Position& distance)
 }
 void Layer::setDistanceFromCenter(const Position& object, scalar objectWidth, scalar objectHeight, const Position& distance)
 {
-	setDistance(object, { objectWidth / 2.0f - getScale()*getWidth() / 2.0f + distance._x, objectHeight / 2.0f - getScale()*getHeight() / 2.0f + distance._y});
+	setDistance(object, { objectWidth / 2.0f - getScale()*getWidth() / 2.0f + distance.x, objectHeight / 2.0f - getScale()*getHeight() / 2.0f + distance.y});
 }
 void Layer::adjustPosition(const Position& object)
 {
-	setX(object._x + _distance._x);
-	setY(object._y + _distance._y);
+	setX(object.x + _distance.x);
+	setY(object.y + _distance.y);
 }
 void Layer::setScaleFromWidth(float s, float objectWidth)
 {

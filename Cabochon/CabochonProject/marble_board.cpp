@@ -30,7 +30,7 @@ MarbleBoard::~MarbleBoard()
 
 const marble_ptr& MarbleBoard::getMarble(IntPosition gridPosition) const
 {
-	return getMarble(gridPosition._x, gridPosition._y);
+	return getMarble(gridPosition.x, gridPosition.y);
 }
 const marble_ptr& MarbleBoard::getMarble(int x, int y) const
 {
@@ -39,7 +39,7 @@ const marble_ptr& MarbleBoard::getMarble(int x, int y) const
 
 MarbleColor MarbleBoard::existMarble(IntPosition gridPosition) const
 {
-	return existMarble(gridPosition._x, gridPosition._y);
+	return existMarble(gridPosition.x, gridPosition.y);
 }
 MarbleColor MarbleBoard::existMarble(int x, int y) const
 {
@@ -57,7 +57,7 @@ MarbleColor MarbleBoard::existMarble(int x, int y) const
 
 bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
 {
-	return addMarble(gridPosition._x, gridPosition._y, color);
+	return addMarble(gridPosition.x, gridPosition.y, color);
 }
 // 실제 메모리를 이동 하는 것이 아니라, None에서 다른 컬러로 변경함.
 bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
@@ -308,7 +308,7 @@ IntPosition MarbleBoard::positionToIndex(scalar x, scalar y) const
 
 IntPosition MarbleBoard::positionToIndex(const Position& position) const
 {
-	return positionToIndex(position._x, position._y);
+	return positionToIndex(position.x, position.y);
 }
 
 RowType MarbleBoard::getRowType(int row) const

@@ -14,16 +14,10 @@ class Cabochon : public Game
 private:
 	// 게임 아이템
 	scenes::Scene* _currentScene;
+	scenes::TextureList _textureList;
 	void changeScene(scenes::SceneName newSceneName);
 
-	scenes::TextureList _textureList;
-
-	//TextureManager startButtonTexture;
-
-	//std::vector<TextureManager> textures;
-
 public:
-
 	Cabochon();
 	virtual ~Cabochon();
 

@@ -5,7 +5,6 @@
 #include "steering_wheel.h"
 #include "marble.h"
 #include "control.h"
-//#include "timer.h"
 #include "texture_list.h"
 /*
 	2016. 1. 13
@@ -14,12 +13,12 @@
 
 namespace controls
 {
-	using controls::SteeringWheelControl;
 	using mathematics::scalar;
 	using components::marble_ptr;
-	using components::SteeringWheel;
-	using scenes::TextureList; 
 	using components::MarbleColor;
+	using components::SteeringWheel;
+	using controls::SteeringWheelControl;
+	using scenes::TextureList;
 
 	/*
 		2016. 1. 13
@@ -34,15 +33,8 @@ namespace controls
 		marble_ptr _marbleCurrent;
 		marble_ptr _marbleNext;
 
-		/*
-			2016. 1. 13
-			아직 미작성된 클래스
-		*/
-		//MarbleGenerator marbleGenerator;
-		//Timer timer;
-
-		const scalar _angularVelocity = 10;
-		const scalar _maxDegree = 70;
+		const scalar angularVelocity = 10;
+		const scalar maxDegree = 70;
 
 	public:
 		SteeringWheelControl();

@@ -13,8 +13,8 @@ namespace controls
 {
 	using components::marble_ptr;
 	using components::Marble;
-	using scenes::TextureList;
 	using components::MarbleColor;
+	using scenes::TextureList;
 
 	struct MarbleColorBitField
 	{
@@ -57,9 +57,6 @@ namespace controls
 		static marble_ptr makeMarble(MarbleColor color=MarbleColor::None);
 		static marble_ptr makeRandomMarble();
 		static marble_ptr makeRandomMarble(MarbleColorOn colorRange);
-
-
-		//static marble_ptr loadTexture(marble_ptr marble, TextureList& textureList);
 		
 	};
 

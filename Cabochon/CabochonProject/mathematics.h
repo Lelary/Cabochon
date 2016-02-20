@@ -4,11 +4,14 @@
 //forward declaration of classes
 namespace mathematics
 {
+	typedef float scalar;
+
 	enum class Origin{LEFT_TOP, CENTER};
 
-	//vector2
 	struct Position;
 	struct IntPosition;
+	using Velocity = Position;
+
 	/*
 	2016. 1. 11
 	degree 로 나타낸 angle
@@ -16,11 +19,6 @@ namespace mathematics
 	이에 대한 예외처리는 필요하지 않음(자동으로 계산)
 	*/
 	class Angle;
-
-	typedef float scalar;
-	using Velocity = Position;
-
-
 }
 
 #endif	

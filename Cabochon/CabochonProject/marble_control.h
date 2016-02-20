@@ -11,16 +11,16 @@
 
 namespace controls
 {
-	using controls::MarbleControl;
+	using mathematics::IntPosition;
+	using mathematics::Angle;
 	using components::Marble;
 	using components::marble_ptr;
 	using components::ShootedMarble;
+	using controls::MarbleControl;
 	using controls::MarbleBoard;
 	using controls::BoardState;
 	using controls::MarbleRows;
 	using controls::MarbleColorOn;
-	using mathematics::IntPosition;
-	using mathematics::Angle;
 	using scenes::TextureList;
 
 /*
@@ -47,7 +47,7 @@ namespace controls
 		MarbleBoard _marbleBoard;
 		// 발사되어 아직 marbleBoard에 부착되지 않은 marble. 다른 marble_ptr과 다르게 매번 생성과 삭제를 반복한다.
 		shooted_ptr _shootedMarble;
-		// 방금 부착된 marble의 board 상 위치. attach 가 성공한 시점부터, break 체크가 끝날때까지 유효하다.
+		// 방금 부착된 marble의 board 상 위치. attach 가 성공한 시점부터, smash 체크가 끝날때까지 유효하다.
 		IntPosition _justAttached;		
 
 	public:
@@ -58,7 +58,7 @@ namespace controls
 
 		// Shooted Marble이 있는지 검사.
 		bool isShooting() const;
-
+		
 		IntPosition getJustAttached() const;
 		bool hasJustAttached() const;
 
@@ -74,14 +74,12 @@ namespace controls
 		// marble board의 참조를 반환한다. (const)
 		const MarbleBoard& getMarbleBoard() const;
 
-		//Grid 위치 (인접위치) 반환, (최대 6개)
+		//Grid 위치 (인접위치) 반환, (최대 6개) , smash()에 사용.
 		std::vector<IntPosition> getTestSet(const shooted_ptr& shootedMarble) const;
-		//Grid 위치 (인접위치) 반환, (최대 6개)
+		//Grid 위치 (인접위치) 반환, (최대 6개) , smash()에 사용.
 		std::vector<IntPosition> getTestSet(const IntPosition& gridPosition) const;
-		//Grid 위치 (인접위치) 반환, (최대 2개)
-		//isAttachable 에 사용.
+		//Grid 위치 (인접위치) 반환, (최대 2개) , isAttachable 에 사용.
 		std::vector<IntPosition> getLessTestSet(const shooted_ptr& shootedMarble) const;
-
 
 		//Quadrant
 		Quadrant getQuadrant(const shooted_ptr& shootedMarble) const;
@@ -91,10 +89,12 @@ namespace controls
 		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
 
-		//test 하고 가능하면 Attach 한다.
+		// test 하고 가능하면 Attach 한다.
+		// Attach 되었을 경우 true
 		bool attach(shooted_ptr& shootedMarble);
 
 		// justAttached 가 있으면 colorMatch를 해본다.
+		// Smash 된 Marble이 있을 경우 true
 		bool smash();
 
 		//pure virtual functions

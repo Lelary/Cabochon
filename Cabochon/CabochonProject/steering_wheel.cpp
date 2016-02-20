@@ -91,6 +91,8 @@ void SteeringWheel::loadLayers(TextureList& textureList)
 	_layers.back().setScaleFromWidth(1, getWidth());
 	_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 
+	_layersLoaded = true;
+
 }
 
 void SteeringWheel::draw()

@@ -3,7 +3,6 @@
 #include "cabochon_constants.h"
 using components::Object;
 using components::ShootedMarble;
-using controls::Grid;
 using controls::MarbleBoard;
 using components::marble_ptr;
 using mathematics::scalar;
@@ -16,9 +15,10 @@ using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
 const scalar ShootedMarble::defaultSpeed = 300;
+const IntPosition noPosition = { -1, -1 };
 
 ShootedMarble::ShootedMarble()
-	:Marble(), _velocity({0.0f,0.0f})
+	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(noPosition), _prevIndex(noPosition)
 {
 	/*
 	2016. 1. 18.
@@ -26,7 +26,7 @@ ShootedMarble::ShootedMarble()
 	*/
 }
 ShootedMarble::ShootedMarble(MarbleColor color)
-	:Marble(color), _velocity({ 0.0f, 0.0f })
+	:Marble(color), _velocity({ 0.0f, 0.0f }), _currentIndex(noPosition), _prevIndex(noPosition)
 {
 
 }
@@ -69,18 +69,18 @@ Position ShootedMarble::getPrevCentralPosition() const
 
 void ShootedMarble::move(const MarbleBoard& board, float frameTIme)
 {
-	setPosition(getPosition()._x + _velocity._x*frameTIme, getPosition()._y + _velocity._y*frameTIme);
+	setPosition(getPosition().x + _velocity.x*frameTIme, getPosition().y + _velocity.y*frameTIme);
 
 	// �¿캮
-	if (getCentralPosition()._x-getWidth()/2.0f <  LEFT_WALL
+	if (getCentralPosition().x-getWidth()/2.0f <  LEFT_WALL
 		||
-		getCentralPosition()._x+getWidth()/2.0f > RIGHT_WALL
+		getCentralPosition().x+getWidth()/2.0f > RIGHT_WALL
 		)
-		_velocity._x *= -1;
+		_velocity.x *= -1;
 		
 
-	if (getCentralPosition()._y-getHeight()/2.0f < board.getCeilingPosition())
-		_velocity._y *= -1;
+	if (getCentralPosition().y-getHeight()/2.0f < board.getCeilingPosition())
+		_velocity.y *= -1;
 
 }
 scalar ShootedMarble::getDefaultSpeed()
@@ -132,8 +132,8 @@ bool ShootedMarble::updateIndex(const MarbleBoard& board)
 	{
 		setCurrentIndex(board.positionToIndex(getPosition()));
 
-		int maxY = (board.getRowType(_currentIndex._x) == controls::RowType::Even) ? cabochon_constants::MAX_Y : cabochon_constants::MAX_Y - 1;
-		if (_currentIndex._x < 0 || _currentIndex._y<0 || _currentIndex._x>getHeight() || _currentIndex._y >= maxY)
+		int maxY = (board.getRowType(_currentIndex.x) == controls::RowType::Even) ? cabochon_constants::MAX_Y : cabochon_constants::MAX_Y - 1;
+		if (_currentIndex.x < 0 || _currentIndex.y<0 || _currentIndex.x>getHeight() || _currentIndex.y >= maxY)
 			return false;
 
 		return true;

@@ -24,8 +24,8 @@ SteeringWheelControl::SteeringWheelControl()
 	_marbleCurrent->setCentralPosition(_steeringWheel.getCentralPosition());
 	_marbleNext = MarbleGenerator::makeMarble();
 	_marbleNext->setCentralPosition(
-		_steeringWheel.getCentralPosition()._x - 120,
-		_steeringWheel.getCentralPosition()._y + 20);
+		_steeringWheel.getCentralPosition().x - 120,
+		_steeringWheel.getCentralPosition().y + 20);
 }
 SteeringWheelControl::~SteeringWheelControl()
 {

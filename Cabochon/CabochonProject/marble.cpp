@@ -128,9 +128,9 @@ bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2, scala
 	scalar radius2 = marble2.getWidth() * scale / 2.0f;
 
 	scalar distanceSquare =
-		powf((marble2.getCentralPosition()._x - marble1.getCentralPosition()._x), 2.0f)
+		powf((marble2.getCentralPosition().x - marble1.getCentralPosition().x), 2.0f)
 		-
-		powf((marble2.getCentralPosition()._y - marble1.getCentralPosition()._y), 2.0f);
+		powf((marble2.getCentralPosition().y - marble1.getCentralPosition().y), 2.0f);
 	
 	//제곱연산이 더 빠르다.
 	if (powf(radius1 + radius2, 2.0f) < distanceSquare)

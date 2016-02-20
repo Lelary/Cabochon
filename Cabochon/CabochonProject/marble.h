@@ -9,13 +9,6 @@
 
 	게임의 구슬을 나타냅니다. 
 	Object를 상속받아 자신의 좌표공간상의 위치를 기술합니다.
-
-	TODO :
-		퍼즐공간상의 좌표 생성
-
-	_px, _py 는 puzzle x puzzle y 를 의미합니다.
-	-> vector2<int>, IntPosition
-
 */
 /*
 	2016. 1. 15
@@ -24,9 +17,9 @@
 
 namespace components
 {
+	using mathematics::IntPosition;
 	using components::Marble;
 	using components::marble_ptr;
-	using mathematics::IntPosition;
 	using scenes::TextureList;
 	
 	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Num};
@@ -56,6 +49,7 @@ namespace components
 		void setGridPosition(IntPosition gridPosition);
 		IntPosition getGridPosition() const;
 
+		// marble은 회전 성분을 가지고 있지 않지만, layer 를 회전시킨다.
 		void rotate(scalar degree);
 		void draw();
 		void update(float frameTime);

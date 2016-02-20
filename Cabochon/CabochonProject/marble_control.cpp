@@ -49,7 +49,7 @@ IntPosition MarbleControl::getJustAttached() const
 }
 bool MarbleControl::hasJustAttached() const
 {
-	if (getJustAttached()._x == -1 || getJustAttached()._y == -1)
+	if (getJustAttached().x == -1 || getJustAttached().y == -1)
 		return false;
 	else
 		return true;
@@ -96,8 +96,8 @@ std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMar
 std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosition) const
 {
 	std::vector<IntPosition> testSet;
-	int x = marblePosition._x;
-	int y = marblePosition._y;
+	int x = marblePosition.x;
+	int y = marblePosition.y;
 
 	int maxY = (_marbleBoard.getRowType(x)==RowType::Even)?MAX_Y: MAX_Y-1;
 
@@ -145,45 +145,45 @@ std::vector<IntPosition> MarbleControl::getLessTestSet(const shooted_ptr& shoote
 	Quadrant quadrant = getQuadrant(shootedMarble);
 	IntPosition index = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 
-	bool even = _marbleBoard.getRowType(index._x) == RowType::Even;
+	bool even = _marbleBoard.getRowType(index.x) == RowType::Even;
 
 	int remove_col;
 	int remove_row;
 	IntPosition removeSide;
-	removeSide._x = index._x;
+	removeSide.x = index.x;
 
 	// first||fourth 면 왼쪽을, second||third 면 오른쪽을 지운다.
 	if (quadrant == Quadrant::first || quadrant == Quadrant::fourth)
 	{
-		removeSide._y = index._y - 1;
+		removeSide.y = index.y - 1;
 
 		if (even)
-			remove_col = index._y - 1; //left
+			remove_col = index.y - 1; //left
 		else
-			remove_col = index._y;	//left
+			remove_col = index.y;	//left
 	}
 	else
 	{
-		removeSide._y = index._y + 1;
+		removeSide.y = index.y + 1;
 
 		if (even)
-			remove_col = index._y; //right
+			remove_col = index.y; //right
 		else
-			remove_col = index._y + 1;	//right
+			remove_col = index.y + 1;	//right
 	}
 
 	// first || second 면 아래쪽을, third || fourth면 윗쪽을 지운다.
 	if (quadrant == Quadrant::first || quadrant == Quadrant::second){
-		remove_row = index._x - 1;
+		remove_row = index.x - 1;
 	}
 	else{
-		remove_row = index._x + 1;
+		remove_row = index.x + 1;
 	}
 
 	auto toRemove = [&](const IntPosition& position) -> bool {return
-		(position._y == remove_col 
-		|| position._x == remove_row 
-		|| (position._x == removeSide._x && position._y == removeSide._y)
+		(position.y == remove_col 
+		|| position.x == remove_row 
+		|| (position.x == removeSide.x && position.y == removeSide.y)
 		) ? true : false; };
 
 	testSet.erase(
@@ -201,19 +201,19 @@ Quadrant MarbleControl::getQuadrant(const Position& marblePosition) const
 {
 	IntPosition index = _marbleBoard.positionToIndex(marblePosition);
 	Position leftTop;
-	bool even = (_marbleBoard.getRowType(index._x) == RowType::Odd) ? false : true;
+	bool even = (_marbleBoard.getRowType(index.x) == RowType::Odd) ? false : true;
 	bool left;
 	bool up;
 
 	if (even)
-		leftTop = { 0 + index._y*MARBLE_WIDTH, LINE - index._x*MARBLE_HEIGHT };
+		leftTop = { 0 + index.y*MARBLE_WIDTH, LINE - index.x*MARBLE_HEIGHT };
 	else
-		leftTop = { 0 + index._y*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), LINE - index._x*MARBLE_HEIGHT };
-	if (marblePosition._x < leftTop._x + MARBLE_WIDTH / 2.0f)
+		leftTop = { 0 + index.y*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), LINE - index.x*MARBLE_HEIGHT };
+	if (marblePosition.x < leftTop.x + MARBLE_WIDTH / 2.0f)
 		left = true;
 	else
 		left = false;
-	if (marblePosition._y < leftTop._y + MARBLE_HEIGHT / 2.0f)
+	if (marblePosition.y < leftTop.y + MARBLE_HEIGHT / 2.0f)
 		up = true;
 	else
 		up = false;
@@ -243,7 +243,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	3. isAttachable(const shooted_ptr& shootedMarble)const 호출.
 	*/
 	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
-	if (currentIndex._x == gridPosition._x	&&	currentIndex._y == gridPosition._y )
+	if (currentIndex.x == gridPosition.x	&&	currentIndex.y == gridPosition.y )
 		if (_marbleBoard.existMarble(gridPosition) == MarbleColor::None)
 			return isAttachable(shootedMarble);
 
@@ -267,7 +267,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 		//3. 해당 인접위치가 비어있지않으면, 
 		if (_marbleBoard.existMarble(testPosition) != MarbleColor::None){
 			// 4. 반지름 검사. (원형 충돌 검사)
-			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition._x, testPosition._y).get())){
+			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition.x, testPosition.y).get())){
 				return true;
 			}
 		}
@@ -301,7 +301,7 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 	}
 
 	// 천장에 닿아서 force attach.
-	if (shootedMarble->getCurrentIndex()._x == _marbleBoard.getHeight()) {
+	if (shootedMarble->getCurrentIndex().x == _marbleBoard.getHeight()) {
 		//attach 확정.
 		_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
 		shootedMarble.reset();
@@ -335,7 +335,7 @@ bool MarbleControl::smash()
 		for (auto test : testSet)
 		{
 			for (auto c : checked) {
-				if (test._x == c._x && test._y == c._y) {
+				if (test.x == c.x && test.y == c.y) {
 					toBreak = true;
 					break;
 				}
@@ -358,7 +358,7 @@ bool MarbleControl::smash()
 
 	if (sameColors.size() >= 3)	{
 		for (auto index : sameColors) {
-			_marbleBoard.removeMarble(index._x, index._y);
+			_marbleBoard.removeMarble(index.x, index.y);
 		}
 		return true;
 	}

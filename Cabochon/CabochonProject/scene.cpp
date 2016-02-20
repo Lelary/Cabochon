@@ -4,7 +4,9 @@ using scenes::SceneName;
 using scenes::TextureList;
 
 Scene::Scene(Graphics& graphics, Input& input, TextureList& textureList)
-	:_started(false), _nextScene(SceneName::Null), _graphics(graphics), _input(input), _textureList(textureList){}
+	:_started(false), _nextScene(SceneName::None), _graphics(graphics), _input(input), _textureList(textureList)
+{
+}
 
 Scene::~Scene()
 {
@@ -14,7 +16,7 @@ void Scene::start()
 {
 	if (_started)
 		return;
-	_nextScene = SceneName::Null;
+	_nextScene = SceneName::None;
 }
 SceneName Scene::getNextScene()
 {

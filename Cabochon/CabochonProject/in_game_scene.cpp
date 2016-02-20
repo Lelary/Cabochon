@@ -140,8 +140,8 @@ void InGameScene::render()
 	static float x=-1, y=-1;
 	if (_marbleControl.getShootedMarble() != nullptr)
 	{
-		x = _marbleControl.getShootedMarble()->getCentralPosition()._x;
-		y = _marbleControl.getShootedMarble()->getCentralPosition()._y;
+		x = _marbleControl.getShootedMarble()->getCentralPosition().x;
+		y = _marbleControl.getShootedMarble()->getCentralPosition().y;
 	}
 	_text2.print(
 	"\n Index Row: "

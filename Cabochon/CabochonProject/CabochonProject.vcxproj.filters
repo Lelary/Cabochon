@@ -60,9 +60,6 @@
     <ClInclude Include="controls.h">
       <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>
-    <ClInclude Include="frameworks.h">
-      <Filter>헤더 파일\namespaces</Filter>
-    </ClInclude>
     <ClInclude Include="patterns.h">
       <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>
@@ -167,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="marble_control.h">
       <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes.h">
+      <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

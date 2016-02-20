@@ -24,17 +24,23 @@ namespace components
 	using mathematics::Velocity;
 	using mathematics::Angle;
 	using controls::MarbleBoard;
-
+	
 	class ShootedMarble
 		:public Marble
 	{
 	private:
 		static const scalar defaultSpeed;
+		static const IntPosition noPosition;
 		Velocity _velocity;
+
+		// 이전 위치
 		Position _prevCentralPosition;
+		// 현재 Index
 		IntPosition _currentIndex;
+		// 이전 Index
 		IntPosition _prevIndex;
 
+		void setCurrentIndex(IntPosition index);
 	public:
 		ShootedMarble();
 		ShootedMarble(MarbleColor color);
@@ -42,6 +48,7 @@ namespace components
 		virtual ~ShootedMarble();
 		ShootedMarble& operator=(const ShootedMarble& rhs) = delete;
 
+		// the position of Left Top 
 		virtual void setPosition(const Position& position);
 		// the position of Left Top 
 		virtual void setPosition(scalar x, scalar y);
@@ -50,7 +57,17 @@ namespace components
 		// the position of middle, changes position property.
 		virtual void setCentralPosition(scalar x, scalar y);
 
+		// 이전 위치.
 		virtual Position getPrevCentralPosition() const;
+
+		// updateIndex 호출 시 마다 _currentIndex, _prevIndex 가 업데이트 된다.
+		// 이전 호출과 비교했을때 변경점이 있으면 true 리턴.
+		bool updateIndex(const MarbleBoard& board);
+
+		// ShootedMarble이 MarbleBoard 상에서 몇번 자리 위에 있는지 검사하는 함수.
+		IntPosition getCurrentIndex() const;
+		// ShootedMarble이 MarbleBoard 상에서 몇번 자리 위에 있었는지 검사하는 함수.
+		IntPosition getPrevIndex() const;
 
 		/*
 		2016. 1. 17
@@ -64,18 +81,12 @@ namespace components
 		*/
 		virtual void move(const MarbleBoard& board, float frameTime);
 		
+		// 속도 설정 함수.
 		static scalar getDefaultSpeed();
 		virtual Velocity getVelocity() const;
 		virtual void setVelocity(Velocity velocity);
 		virtual void setVelocity(scalar vx, scalar vy);
 		virtual void setVelocity(scalar speed, Angle angle);
-
-		void setCurrentIndex(IntPosition index);
-		IntPosition getCurrentIndex() const;
-		IntPosition getPrevIndex() const;
-
-		bool updateIndex(const MarbleBoard& board);
-
 	};
 }
 

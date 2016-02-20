@@ -11,19 +11,6 @@
 #include <array>
 namespace controls
 {
-	/*
-	2016. 2. 18.
-	MarbleRow 의 변경(array->vector)으로 인해 많은 메소드의 코드들이 더 짧아질수있으나(getRowType() 등),
-	다른 클래스(MarbleControl) 부터 수정 후, 차후에 업데이트.
-	*/
-	/*
-	2016. 1. 16
-	구슬 판의 최대 크기 = 구슬이 가질수 있는 최대위치 +1
-	구슬판의 마지막 행은 dead zone
-	maxX는 8이지만 실제로는
-	해당 행이 even인 경우 8이며, odd 일 경우 8-1=7 이다.
-	maxY는 차후 변경 가능
-	*/
 	using mathematics::scalar;	
 	using mathematics::Position;
 	using mathematics::IntPosition;

@@ -6,18 +6,18 @@ namespace mathematics
 {
 	struct Position
 	{
-		scalar _x;
-		scalar _y;
+		scalar x;
+		scalar y;
 	};
 
 	struct IntPosition
 	{
-		int _x;
-		int _y;
+		int x;
+		int y;
 
 		bool operator==(const IntPosition& rhs) const
 		{
-			if (this->_x == rhs._x && this->_y == rhs._y)
+			if (this->x == rhs.x && this->y == rhs.y)
 				return true;
 			else
 				return false;
