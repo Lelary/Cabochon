@@ -132,54 +132,51 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	}
 	return testSet;
 }
-// vector내의순서가유의미함.
+
 std::vector<IntPosition> MarbleControl::getTwoTestSet(const shooted_ptr& shootedMarble) const
 {
-	std::vector<IntPosition> testSet;
+	// getTestSet()으로 (최대)6개의 testSet을 받아서, 
+	// Quadrant를 이용하여 정확하게 attachable 검사를 하기 위한 (최대)2개의 위치만을 남긴다.
+	// getTestSet()과 비슷한 함수를 만드는 편이 간단하고 빠르지만, 코드중복을 없애는 것이 더 중요.
+
+	//std::vector<IntPosition> newTestSet;
+	std::vector<IntPosition> testSet = getTestSet(shootedMarble);
+	Quadrant quadrant = getQuadrant(shootedMarble);
 	IntPosition index = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
-	Quadrant quad = getQuadrant(shootedMarble->getPrevCentralPosition());
 
-	// 다음 X와 Y의 모든 쌍을 검사해야함.
-	int testLeftY = (_marbleBoard.getRowType(index._x) == RowType::Even) ? index._y - 1 : index._y;
-	int testRightY = (_marbleBoard.getRowType(index._x) == RowType::Even) ? index._y : index._y + 1;
-	int testUpX = index._x + 1;
-	int testDownX = index._x - 1;
+	bool even = _marbleBoard.getRowType(index._x) == RowType::Even;
+	
+	int remove_col;
+	int remove_row;
 
-	//row-1, row+1 의 상황.
-	int maxY = (_marbleBoard.getRowType(index._x) == RowType::Odd) ? MAX_Y : MAX_Y - 1;
-
-	if (quad == Quadrant::first || quad == Quadrant::second) {
-		if (testUpX <= _marbleBoard.getHeight())
-		{
-			if (quad == Quadrant::second && testLeftY >= 0)
-				testSet.push_back({ testUpX, testLeftY });
-			if (quad == Quadrant::first && testRightY < maxY)
-				testSet.push_back({ testUpX, testRightY });
-		}
+	// first||fourth 면 왼쪽을, second||third 면 오른쪽을 지운다.
+	if (even) {
+		if (quadrant==Quadrant::first || quadrant==Quadrant::fourth)
+			remove_col = index._y - 1; //left
+		else
+			remove_col = index._y; //right
 	}
 	else {
-		if (testDownX >= 1)
-		{
-			if (quad == Quadrant::third && testLeftY >= 0)
-				testSet.push_back({ testDownX, testLeftY });
-			if (quad == Quadrant::fourth && testRightY < maxY)
-				testSet.push_back({ testDownX, testRightY });
-		}
+		if (quadrant == Quadrant::first || quadrant == Quadrant::fourth)
+			remove_col = index._y;	//left
+		else
+			remove_col = index._y + 1;	//right
 	}
 
-	// 내위치의 RowType
-	maxY = (_marbleBoard.getRowType(index._x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+	// first || second 면 아래쪽을, third || fourth면 윗쪽을 지운다.
+	if (quadrant == Quadrant::first || quadrant == Quadrant::second){
+		remove_col = index._x - 1;
+	}
+	else{
+		remove_col = index._x + 1;
+	}
 
-	// 왼쪽 Marble
-	if (quad == Quadrant::second || quad == Quadrant::third) {
-		if (index._y > 0)
-			testSet.push_back({ index._x, index._y - 1 });
-	}
-	// 오른쪽 Marble
-	else {
-		if (index._y < maxY - 1)
-			testSet.push_back({ index._x, index._y + 1 });
-	}
+	auto toRemove = [&](const IntPosition& position) -> bool { return (position._y == remove_col || position._x == remove_row) ? true : false; };
+
+	testSet.erase(
+		std::remove_if(testSet.begin(), testSet.end(), toRemove),
+		testSet.end()
+		);
 
 	return testSet;
 }
