@@ -80,7 +80,7 @@ namespace controls
 		std::vector<IntPosition> getTestSet(const IntPosition& gridPosition) const;
 		//Grid 위치 (인접위치) 반환, (최대 2개)
 		//isAttachable 에 사용.
-		std::vector<IntPosition> getTwoTestSet(const shooted_ptr& shootedMarble) const;
+		std::vector<IntPosition> getLessTestSet(const shooted_ptr& shootedMarble) const;
 
 		//Quadrant
 		Quadrant getQuadrant(const shooted_ptr& shootedMarble) const;

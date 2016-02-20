@@ -133,7 +133,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	return testSet;
 }
 
-std::vector<IntPosition> MarbleControl::getTwoTestSet(const shooted_ptr& shootedMarble) const
+std::vector<IntPosition> MarbleControl::getLessTestSet(const shooted_ptr& shootedMarble) const
 {
 	// getTestSet()으로 (최대)6개의 testSet을 받아서, 
 	// Quadrant를 이용하여 정확하게 attachable 검사를 하기 위한 (최대)2개의 위치만을 남긴다.
@@ -145,33 +145,45 @@ std::vector<IntPosition> MarbleControl::getTwoTestSet(const shooted_ptr& shooted
 	IntPosition index = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 
 	bool even = _marbleBoard.getRowType(index._x) == RowType::Even;
-	
+
 	int remove_col;
 	int remove_row;
+	IntPosition removeSide;
+	removeSide._x = index._x;
 
 	// first||fourth 면 왼쪽을, second||third 면 오른쪽을 지운다.
-	if (even) {
-		if (quadrant==Quadrant::first || quadrant==Quadrant::fourth)
+	if (quadrant == Quadrant::first || quadrant == Quadrant::fourth)
+	{
+		removeSide._y = index._y - 1;
+
+		if (even)
 			remove_col = index._y - 1; //left
 		else
-			remove_col = index._y; //right
-	}
-	else {
-		if (quadrant == Quadrant::first || quadrant == Quadrant::fourth)
 			remove_col = index._y;	//left
+	}
+	else
+	{
+		removeSide._y = index._y + 1;
+
+		if (even)
+			remove_col = index._y; //right
 		else
 			remove_col = index._y + 1;	//right
 	}
 
 	// first || second 면 아래쪽을, third || fourth면 윗쪽을 지운다.
 	if (quadrant == Quadrant::first || quadrant == Quadrant::second){
-		remove_col = index._x - 1;
+		remove_row = index._x - 1;
 	}
 	else{
-		remove_col = index._x + 1;
+		remove_row = index._x + 1;
 	}
 
-	auto toRemove = [&](const IntPosition& position) -> bool { return (position._y == remove_col || position._x == remove_row) ? true : false; };
+	auto toRemove = [&](const IntPosition& position) -> bool {return
+		(position._y == remove_col 
+		|| position._x == remove_row 
+		|| (position._x == removeSide._x && position._y == removeSide._y)
+		) ? true : false; };
 
 	testSet.erase(
 		std::remove_if(testSet.begin(), testSet.end(), toRemove),
@@ -248,13 +260,16 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	4. 반지름 검사. (원형충돌검사)
 	*/
 
+	/*
+	// 없애는게 오류가 적다.
 	//1. MarbleColor::None 검사.
 	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	if (_marbleBoard.existMarble(currentIndex)!=MarbleColor::None)
 		return false;
+	*/
 
 	//2. testSet을 얻음.
-	auto testSet = getTwoTestSet(shootedMarble);
+	auto testSet = getLessTestSet(shootedMarble);
 	//3. 인접위치 (testSet)을 하나씩 확인.
 	for (auto& testPosition : testSet){
 		// 해당 인접위치가 비어있지않으면, 

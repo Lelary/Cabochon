@@ -135,18 +135,19 @@ void InGameScene::render()
 	_backGround.draw();
 	_wheelControl.render();
 	_marbleControl.render();
-	if (_marbleControl.getShootedMarble()!=nullptr)
-		_text2.print("\nx: "
-		+ std::to_string(_marbleControl.getShootedMarble()->getCentralPosition()._x)
-		+ "\ny: "
-		+ std::to_string(_marbleControl.getShootedMarble()->getCentralPosition()._y)
-		+ "\nVx: "
-		+ std::to_string(_marbleControl.getShootedMarble()->getVelocity()._x)
-		+ "\nVy: "
-		+ std::to_string(_marbleControl.getShootedMarble()->getVelocity()._y)
-		+ "\nDegree: "
-		+ std::to_string(_wheelControl.getDegree())
-		, 100, 200);
+
+	static float x=-1, y=-1;
+	if (_marbleControl.getShootedMarble() != nullptr)
+	{
+		x = _marbleControl.getShootedMarble()->getCentralPosition()._x;
+		y = _marbleControl.getShootedMarble()->getCentralPosition()._y;
+	}
+	_text2.print(
+	"\n Index Row: "
+	+ std::to_string(_marbleControl.getMarbleBoard().positionToRowIndex(y))
+	+ "\n Index Column: "
+	+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)))
+	, 100, 200);
 
 	switch (getBoardState())
 	{

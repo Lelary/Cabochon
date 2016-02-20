@@ -51,7 +51,7 @@ MarbleColor MarbleBoard::existMarble(int x, int y) const
 	if (_marbles[x][y] != nullptr)
 		return _marbles[x][y]->getColor();
 	else
-		(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : existMarble()!"));
+		throw (GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : existMarble()!"));
 }
 
 bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
