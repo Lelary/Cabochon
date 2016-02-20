@@ -119,7 +119,7 @@ int MarbleBoard::getFloor() const
 {
 	for (int row = 0; row < (int)_marbles.size(); row++)
 		for (const marble_ptr& marble : _marbles[row])
-			if (marble != nullptr)
+			if (marble->getColor() != MarbleColor::None)
 				return row;				// _marbles의 인덱스.
 
 	// 모두 nullptr일 경우. 이 상황은 게임이 클리어된상태임. 
@@ -280,57 +280,27 @@ void MarbleBoard::updateMarblePositions()
 	
 	_dragged = false;
 }
-int MarbleBoard::positionToIndexX(scalar x, RowType rowType) const
+int MarbleBoard::positionToIndexColumn(scalar x, RowType rowType) const
 {
 	if (getRowType(x) == RowType::Odd)
 		return static_cast<int>(floorf(x - (MARBLE_WIDTH/2.0f) / MARBLE_WIDTH));
 	else
 		return static_cast<int>(floorf(x / MARBLE_WIDTH));
 }
-int MarbleBoard::positionToIndexY(scalar y) const
+int MarbleBoard::positionToIndexRow(scalar y) const
 {
 	return static_cast<int>(ceilf((LINE - y) / MARBLE_HEIGHT));
 }
 RowType MarbleBoard::getRowType(scalar y) const
 {
-	return getRowType(positionToIndexY(y));
+	return getRowType(positionToIndexRow(y));
 }
-RowType MarbleBoard::getRowType(int y) const
+RowType MarbleBoard::getRowType(int row) const
 {
-	//2016. 2. 19.
-	//_marbles 의 1Dim이 vector로 변경되어서 가능.
-	if (_marbles.at(y).size() == MAX_X)
+	if (_marbles.at(row).size() == MAX_X)
 		return RowType::Even;
 	else
 		return RowType::Odd;
-	/*
-	//grid 안에 없거나 Board가 Build 되어있지않음.
-	if (y < 0 || y >= getHeight() || getHeight()<1)
-		return RowType::None;
-	//grid의 기준점
-	else if (y == 0){
-		if (_marbles[0][MAX_X-1] != nullptr)
-			return RowType::Even;
-		else
-			return RowType::Odd;
-	}
-	else {
-		if (getRowType(0) == RowType::Even){
-			if (y % 2 == 0)
-				return RowType::Even;
-			else
-				return RowType::Odd;
-		}
-		else if (getRowType(0) == RowType::Odd){
-			if (y % 2 == 0)
-				return RowType::Odd;
-			else
-				return RowType::Even;
-		}
-		else
-			return RowType::None;
-	}
-	*/
 }
 
 

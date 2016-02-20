@@ -7,7 +7,6 @@ using components::Marble;
 using components::marble_ptr;
 using components::MarbleColor;
 using components::ShootedMarble;
-using controls::Grid;
 using controls::RowType;
 using mathematics::Position;
 using mathematics::IntPosition;

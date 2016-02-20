@@ -4,7 +4,6 @@
 #include "temporary.h"
 #include "controls.h"
 #include "marble.h"
-#include "grid.h"
 #include "control.h"
 #include "shooted_marble.h"
 #include "marble_board.h"
@@ -17,7 +16,6 @@ namespace controls
 	using components::Marble;
 	using components::marble_ptr;
 	using components::ShootedMarble;
-	using controls::Grid;
 	using controls::MarbleBoard;
 	using controls::BoardState;
 	using controls::MarbleRows;

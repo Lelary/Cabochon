@@ -58,35 +58,48 @@ namespace controls
 		MarbleBoard();
 		~MarbleBoard();
 
-		const marble_ptr& getMarble(IntPosition gridPosition)const;
-		const marble_ptr& getMarble(int x, int y)const;
+		// marble_ptr 참조 반환.
+		const marble_ptr& getMarble(IntPosition gridPosition) const;
+		const marble_ptr& getMarble(int x, int y) const;
 
-		// Marble 이 있을 경우 MarbleColor 반환, 없을 경우엔 MarbleColor::None 반환.
-		// 2016. 2. 18.
-		// Marble 이 없는 것을 ,  Marble 객체가 없는 nullptr로 표시할 것인지, Color만 None으로 표시하여 없는척을 할것인지 결정해야함.
-		// 후자를 선택하여 진행.
+		// Marble 이 있을 경우 MarbleColor 반환, 없을 경우엔 MarbleColor::None 반환 (개체에 Color만 None으로 표시하여 없는척)
 		MarbleColor existMarble(IntPosition gridPosition) const;
 		MarbleColor existMarble(int x, int y) const;
+	
+		// 해당 색상의 Marble 추가 (실제로는 색깔만 바꾸고 카운트를 올림)
 		bool addMarble(IntPosition gridPosition, MarbleColor color);
 		bool addMarble(int x, int y, MarbleColor color);
+
+		// 해당 위치의 Marble 삭제 (실제로는 색깔만 None으로, 카운트를 내림)
 		bool removeMarble(int x, int y);
 
+		// 해당 Color를 가진 Marble Instance 생성.
 		marble_ptr makeMarble(MarbleColor color);
 		marble_ptr makeRandomMarble();
 		marble_ptr makeRandomMarble(MarbleColorOn colorRange);
 
-		// marble의 존재 여부와 상관없이 0번 줄을 삭제한다.
-		// RowZero는 Line 아래에 있는 Row.
+		// 남아있는 marble의 존재 여부와 상관없이 0번 줄을 삭제한다.
+		// RowZero는 Line 아래에 있는 Row. 
 		void removeRowZero();
 
+		// 해당 색상의 Marble 갯수를 반환한다.
 		int getMarbleCount(MarbleColor c) const;
+
+		// 남아있는 Marble 갯수를 반환한다.
 		int getMarbleCount() const;
+
+		// 현재 높이(Row 수) 반환. (Ceiling 직전 마지막 Row의 번호이다.)
 		int getHeight() const;
+
+		// 현재 Board의 상태 지정 (현재 게임의 상태이기도 하다.)
 		void setBoardState(BoardState state);
-		BoardState getBoardState()const;
+
+		// 현재 Board의 상태 반환 (현재 게임의 상태이기도 하다.)
+		BoardState getBoardState() const;
+
 		/*
 		// 이 함수로 알 수 있는 것.
-		// 반환값 :  현재 Marble 이 있는 첫번 째 줄.
+		// 반환값 :  현재 남은 Marble 이 존재하는 첫번 째 줄.
 		// 0반환 : 게임 오버.										// gameOver() 가 효율이 나음.
 		// getHeight() 반환 :게임이 클리어 된 상태.					// gameClear() 가 효율이 나음.
 		// 10초과일 경우 화면에 보이는 것이 없으므로 내려줘야함.	// 다른 함수에서.
@@ -102,21 +115,36 @@ namespace controls
 		// Marble이 Board에 남아 있지 않으면 true.
 		bool gameClear();
 
+		// ( 타이머가 있을 경우 일정 턴 수 마다 )
+		// 한 줄 내리는 처리를 하며 동반되는 작용들을 함께 처리한다.
+		// 이 작업으로 인해 갱신된 현재 상태 BoardState를 반환한다.
 		BoardState dragDown();
 
 		//void loadBoard(File* file);
 		//void buildBoard();
 
+		// 임의의 Board Map을 생성한다. 
+		// (Level 기능 추가 후에 한 Level로 치며, negative 값으로 센다.)
 		void makeRandomBoard();
+
+		// 모든 Marble들이 자신이 가지고 있는 Dequeue 에서의 번호를 기준으로,
+		// GridPosition 과 Position을 갱신한다. (Marble들이 정렬됨)
 		void updateMarblePositions();
 
-		// 0<=x<50 -> 10
-		int positionToIndexX(scalar x, RowType rowType) const;
-		int positionToIndexY(scalar y)const ;
+		// 자신의 중심점의 x좌표를 파라미터로 주고 Column 번호를 얻는다.
+		// rowType이 argument로 필요하다. getRowType(y)로 알 수 있다.
+		// example : 0 <= x < 50 -> 10
+		int positionToIndexColumn(scalar x, RowType rowType) const;
+		// 자신의 중심점의 y 좌표를 파라미터로 주고 Row 번호를 얻는다.
+		int positionToIndexRow(scalar y)const ;
+		// 자신의 중심점의 y 좌표를 통해 Even Row 인지 Odd Row인지 알 수 있다.
 		RowType getRowType(scalar y) const;
-		RowType getRowType(int y) const; 
+		// 자신의 Row 번호를 통해, RowType이 Even인지 Odd인지 알 수 있다. 
+		RowType getRowType(int row) const; 
 
+		// marbleBoard의 텍스처를 일괄적으로 로드한다.
 		void loadTextures(TextureList& textureList);
+
 		//pure virtual functions
 		virtual void render();
 		virtual void update(float frameTime);
