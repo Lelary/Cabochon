@@ -1,7 +1,7 @@
 #include "scene.h"
-using frameworks::Scene;
-using frameworks::SceneName;
-using frameworks::TextureList;
+using scenes::Scene;
+using scenes::SceneName;
+using scenes::TextureList;
 
 Scene::Scene(Graphics& graphics, Input& input, TextureList& textureList)
 	:_started(false), _nextScene(SceneName::Null), _graphics(graphics), _input(input), _textureList(textureList){}

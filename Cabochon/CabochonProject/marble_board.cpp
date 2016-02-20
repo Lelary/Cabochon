@@ -16,7 +16,7 @@ using mathematics::Position;
 using mathematics::scalar;
 using components::marble_ptr;
 using mathematics::IntPosition;
-using frameworks::TextureList;
+using scenes::TextureList;
 using controls::MarbleColorOn;
 
 MarbleBoard::MarbleBoard()

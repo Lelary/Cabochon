@@ -15,7 +15,7 @@ namespace components
 {
 	using components::SteeringWheel;
 	using mathematics::Angle;
-	using frameworks::TextureList;
+	using scenes::TextureList;
 
 	class SteeringWheel
 		:public Object

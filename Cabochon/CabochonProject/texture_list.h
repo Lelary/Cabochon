@@ -4,11 +4,11 @@
 #define _TEXTURE_LIST_H
 
 #include "dx9_game_engine\texture_manager.h"
-#include "frameworks.h"
+#include "scenes.h"
 #include <array>
 #include <string>
 
-namespace frameworks
+namespace scenes
 {
 	class TextureList
 	{

@@ -1,11 +1,10 @@
 #include "marble.h"
-#include "temporary.h"
 #include "texture_list.h"
 #include "dx9_game_engine\graphics.h"
 using components::Marble;
 using mathematics::scalar;
 using mathematics::IntPosition;
-using frameworks::TextureList;
+using scenes::TextureList;
 using components::Layer;
 using components::MarbleColor;
 
@@ -114,19 +113,19 @@ void Marble::update(float frameTime)
 		layer.update(frameTime);
 }
 
-bool Marble::circularHitTest(const Marble& anotherMarble) const
+bool Marble::circularHitTest(const Marble& anotherMarble, scalar scale) const
 {
-	return circularHitTest(*this, anotherMarble);
+	return circularHitTest(*this, anotherMarble, scale);
 }
-bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2)
+bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2, scalar scale)
 {
 	/* 
 		2016. 1. 22.
 		Marble 객체는 Width = Height = 2*radius
 		현재는 radius 멤버변수가 없으므로 이를 이용한다.
 	*/
-	scalar radius1 = marble1.getWidth() / 2.0f;
-	scalar radius2 = marble2.getWidth() / 2.0f;
+	scalar radius1 = marble1.getWidth() * scale / 2.0f;
+	scalar radius2 = marble2.getWidth() * scale / 2.0f;
 
 	scalar distanceSquare =
 		powf((marble2.getCentralPosition()._x - marble1.getCentralPosition()._x), 2.0f)

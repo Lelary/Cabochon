@@ -3,7 +3,7 @@
 using components::SteeringWheel;
 using mathematics::Angle;
 using mathematics::scalar;
-using frameworks::TextureList;
+using scenes::TextureList;
 using components::Layer;
 
 SteeringWheel::SteeringWheel()

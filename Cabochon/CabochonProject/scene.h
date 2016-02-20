@@ -3,7 +3,7 @@
 #ifndef _SCENE_H
 #define _SCENE_H
 
-#include "frameworks.h"
+#include "scenes.h"
 #include "dx9_game_engine\texture_manager.h"
 #include "dx9_game_engine\image.h"
 #include "dx9_game_engine\input.h"
@@ -14,7 +14,7 @@
 	dx9_game_engine 의 Game class와 
 	controls 과의 연결고리.
 */
-namespace frameworks
+namespace scenes
 {
 	namespace default_settings
 	{

@@ -13,7 +13,7 @@ namespace controls
 {
 	using components::marble_ptr;
 	using components::Marble;
-	using frameworks::TextureList;
+	using scenes::TextureList;
 	using components::MarbleColor;
 
 	struct MarbleColorBitField

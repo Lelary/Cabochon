@@ -27,7 +27,7 @@ namespace components
 	using components::Marble;
 	using components::marble_ptr;
 	using mathematics::IntPosition;
-	using frameworks::TextureList;
+	using scenes::TextureList;
 	
 	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Num};
 
@@ -60,8 +60,8 @@ namespace components
 		void draw();
 		void update(float frameTime);
 
-		bool circularHitTest(const Marble& anotherMarble) const;
-		static bool circularHitTest(const Marble& marble1, const Marble& marble2);
+		bool circularHitTest(const Marble& anotherMarble, scalar scale = 1.0f) const;
+		static bool circularHitTest(const Marble& marble1, const Marble& marble2, scalar scale = 1.0f);
 
 
 	};

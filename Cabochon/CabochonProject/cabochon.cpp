@@ -1,10 +1,10 @@
 // 2016. 2. 2.
 
 #include "cabochon.h"
-using frameworks::SceneName;
-using frameworks::Scene;
-using frameworks::MainScene;
-using frameworks::InGameScene;
+using scenes::SceneName;
+using scenes::Scene;
+using scenes::MainScene;
+using scenes::InGameScene;
 
 Cabochon::Cabochon() 
 {
@@ -90,7 +90,7 @@ void Cabochon::resetAll()
 	return;
 }
 
-void Cabochon::changeScene(frameworks::SceneName newSceneName)
+void Cabochon::changeScene(scenes::SceneName newSceneName)
 {
 	// Àß¸øµÈ SceneName.
 	if (newSceneName == SceneName::Null || newSceneName == SceneName::Num)

@@ -1,7 +1,6 @@
 #ifndef _MARBLE_CONTROL_H
 #define _MARBLE_CONTROL_H
 
-#include "temporary.h"
 #include "controls.h"
 #include "marble.h"
 #include "control.h"
@@ -22,7 +21,7 @@ namespace controls
 	using controls::MarbleColorOn;
 	using mathematics::IntPosition;
 	using mathematics::Angle;
-	using frameworks::TextureList;
+	using scenes::TextureList;
 
 /*
 	2016. 1. 18.

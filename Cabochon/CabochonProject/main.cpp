@@ -2,9 +2,9 @@
 // dx9_game_engine\winmain.cpp 으로 대체.
 
 /*
-#include "frameworks.h"
+#include "scenes.h"
 #include "console.h"
-using frameworks::System;
+using scenes::System;
 */
 /*
 	2016. 1. 7

@@ -3,7 +3,7 @@ using components::marble_ptr;
 using components::MarbleColor;
 using controls::MarbleColorOn;
 using controls::MarbleGenerator;
-using frameworks::TextureList;
+using scenes::TextureList;
 
 int MarbleGenerator::getRandomNumber(int min, int max)
 {

@@ -13,10 +13,10 @@ class Cabochon : public Game
 {
 private:
 	// 게임 아이템
-	frameworks::Scene* _currentScene;
-	void changeScene(frameworks::SceneName newSceneName);
+	scenes::Scene* _currentScene;
+	void changeScene(scenes::SceneName newSceneName);
 
-	frameworks::TextureList _textureList;
+	scenes::TextureList _textureList;
 
 	//TextureManager startButtonTexture;
 

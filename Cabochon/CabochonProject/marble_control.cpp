@@ -14,7 +14,7 @@ using mathematics::scalar;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 using controls::MarbleColorOn;
 using controls::MarbleBoard;
-using frameworks::TextureList;
+using scenes::TextureList;
 using cabochon_constants::MAX_Y;
 using controls::Quadrant;
 using cabochon_constants::MARBLE_HEIGHT;

@@ -2,8 +2,8 @@
 
 #include "in_game_scene.h"
 #include "marble_control.h"
-using frameworks::InGameScene;
-using frameworks::TextureList;
+using scenes::InGameScene;
+using scenes::TextureList;
 using components::ShootedMarble;
 using controls::BoardState;
 using controls::MarbleColorOn; 
@@ -26,8 +26,8 @@ void InGameScene::start()
 
 	
 	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
-	_text.initialize(&_graphics, 20, false, false, frameworks::default_settings::FONT);
-	_text2.initialize(&_graphics, 20, false, false, frameworks::default_settings::FONT);
+	_text.initialize(&_graphics, 20, false, false, scenes::default_settings::FONT);
+	_text2.initialize(&_graphics, 20, false, false, scenes::default_settings::FONT);
 	_wheelControl.loadTextures(_textureList);
 
 	_marbleControl.getMarbleBoard().makeRandomBoard();

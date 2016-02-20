@@ -38,7 +38,7 @@ namespace components
 {
 	using mathematics::scalar;
 	using mathematics::Position;
-	using frameworks::TextureList;
+	using scenes::TextureList;
 	using mathematics::Origin;
 
 	class Object

@@ -1,8 +1,8 @@
 //2016. 2. 4
 
 #include "main_scene.h"
-using frameworks::MainScene;
-using frameworks::TextureList;
+using scenes::MainScene;
+using scenes::TextureList;
 
 MainScene::MainScene(Graphics& graphics, Input& input, TextureList& textureList)
 	:Scene(graphics, input, textureList)
@@ -31,7 +31,7 @@ void MainScene::start()
 	_exitButton.setX(GAME_WIDTH / 2 - (_exitButton.getWidth() / 2.0f));
 	_exitButton.setY(GAME_HEIGHT*(1.0f / 2.0f)+_exitButton.getHeight()*2);
 
-	_text.initialize(&_graphics, 15, false, false, frameworks::default_settings::FONT);
+	_text.initialize(&_graphics, 15, false, false, scenes::default_settings::FONT);
 
 	//ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);
 	//ship.setCurrentFrame(SHIP_START_FRAME);

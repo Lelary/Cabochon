@@ -8,7 +8,7 @@
 #include "marble_control.h"
 #include "dx9_game_engine\text_dx.h"
 
-namespace frameworks
+namespace scenes
 {
 	using controls::SteeringWheelControl;
 	using controls::MarbleControl;

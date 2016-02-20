@@ -1,6 +1,6 @@
 // 2016. 2. 5
 #include "texture_list.h"
-using frameworks::TextureList;
+using scenes::TextureList;
 
 TextureList::TextureList()
 	:_graphics(nullptr)

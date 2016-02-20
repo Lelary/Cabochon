@@ -7,7 +7,7 @@ using controls::SteeringWheelControl;
 using mathematics::scalar;
 using components::marble_ptr;
 using components::SteeringWheel;
-using frameworks::TextureList;
+using scenes::TextureList;
 using components::MarbleColor;
 SteeringWheelControl::SteeringWheelControl()
 {
