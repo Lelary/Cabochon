@@ -1,7 +1,7 @@
 //2016. 1. 16.
 
 #include "marble_control.h"
-
+#include <deque>
 using controls::MarbleControl;
 using components::Marble;
 using components::marble_ptr;
@@ -307,7 +307,59 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	return attach(shootedMarble, currentIndex);
 }
+bool MarbleControl::smash()
+{
+	if (hasJustAttached() == false)
+		return false;
 
+	MarbleColor color = _marbleBoard.getMarble(_justAttached)->getColor();
+	std::vector<IntPosition> testSet;
+
+	std::deque<IntPosition> checked;
+	std::vector<IntPosition> sameColors;
+
+	bool toBreak = false;
+
+
+	//-----------------------------------------
+	sameColors.push_back(_justAttached);
+	int i=0;
+	for (int i = 0; i < sameColors.size(); i++) {
+		testSet = getTestSet(sameColors[i]);
+
+		for (auto test : testSet)
+		{
+			for (auto c : checked) {
+				if (test._x == c._x && test._y == c._y) {
+					toBreak = true;
+					break;
+				}
+			}
+			if (toBreak) {
+				toBreak = false;
+				break;
+			}
+
+			// if not checked yet
+			checked.push_front(test);
+			if (_marbleBoard.getMarble(test)->getColor() == color) {
+				sameColors.push_back(test);
+			}
+		}
+	}
+
+	// tag Á¦°Å.
+	_justAttached = { -1, -1 };
+
+	if (sameColors.size() >= 3)	{
+		for (auto index : sameColors) {
+			_marbleBoard.removeMarble(index._x, index._y);
+		}
+		return true;
+	}
+	else
+		return false;
+}
 void MarbleControl::render()
 {
 	_marbleBoard.render();

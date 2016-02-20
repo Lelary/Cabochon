@@ -82,6 +82,8 @@ namespace controls
 		//isAttachable 에 사용.
 		std::vector<IntPosition> getLessTestSet(const shooted_ptr& shootedMarble) const;
 
+
+
 		//Quadrant
 		Quadrant getQuadrant(const shooted_ptr& shootedMarble) const;
 		Quadrant getQuadrant(const Position& marblePosition) const;
@@ -93,6 +95,8 @@ namespace controls
 
 		//test 하고 가능하면 Attach 한다.
 		bool attach(shooted_ptr& shootedMarble);
+
+		bool smash();
 
 		//pure virtual functions
 		virtual void render();

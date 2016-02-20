@@ -124,9 +124,10 @@ void InGameScene::lateUpdate(float frameTime)
 	}
 	if (_marbleControl.hasJustAttached())
 	{
-		//break °Ë»ç.
+		_marbleControl.smash();
 	}
 
+	// drop
 
 
 }
