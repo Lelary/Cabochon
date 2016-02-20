@@ -2,7 +2,6 @@
 #ifndef _SHOOTED_MARBLE_H
 #define _SHOOTED_MARBLE_H
 #include "marble.h"
-#include "grid.h"
 #include "angle.h"
 #include "marble_board.h"
 

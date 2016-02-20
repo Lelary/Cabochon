@@ -5,14 +5,14 @@ namespace cabochon_constants
 {
 	using mathematics::scalar;
 
-	const int MAX_X = 8;
-	const int MIN_Y = 10;
+	const int MAX_Y = 8;
+	const int MIN_X = 10;
 	const int MARBLE_WIDTH = 50;
 	const int MARBLE_HEIGHT = 50;
 	
 	const scalar LEFT_WALL = 0;
-	const scalar RIGHT_WALL = MAX_X * MARBLE_WIDTH;
-	const scalar LINE = MIN_Y * MARBLE_HEIGHT;
+	const scalar RIGHT_WALL = MAX_Y * MARBLE_WIDTH;
+	const scalar LINE = MIN_X * MARBLE_HEIGHT;
 
 }
 

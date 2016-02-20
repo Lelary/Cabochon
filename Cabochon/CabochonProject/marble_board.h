@@ -24,9 +24,11 @@ namespace controls
 	해당 행이 even인 경우 8이며, odd 일 경우 8-1=7 이다.
 	maxY는 차후 변경 가능
 	*/
-	using mathematics::scalar;
+	using mathematics::scalar;	
+	using mathematics::Position;
 	using mathematics::IntPosition;
 	using components::MarbleColor;
+
 	using MarbleRow = std::vector < components::marble_ptr> ;
 	using MarbleRows = std::deque <MarbleRow> ;
 
@@ -56,7 +58,9 @@ namespace controls
 		
 	public:
 		MarbleBoard();
+		MarbleBoard(const MarbleBoard& rhs) = delete;
 		~MarbleBoard();
+		MarbleBoard& operator=(const MarbleBoard& rhs) = delete;
 
 		// marble_ptr 참조 반환.
 		const marble_ptr& getMarble(IntPosition gridPosition) const;
@@ -134,9 +138,14 @@ namespace controls
 		// 자신의 중심점의 x좌표를 파라미터로 주고 Column 번호를 얻는다.
 		// rowType이 argument로 필요하다. getRowType(y)로 알 수 있다.
 		// example : 0 <= x < 50 -> 10
-		int positionToIndexColumn(scalar x, RowType rowType) const;
+		int positionToColumnIndex(scalar x, RowType rowType) const;
 		// 자신의 중심점의 y 좌표를 파라미터로 주고 Row 번호를 얻는다.
-		int positionToIndexRow(scalar y)const ;
+		int positionToRowIndex(scalar y) const ;
+		// 자신의 중심점의 좌표를 파라미터로 MarbleBoard에서의 Index 번호를 얻는다.
+		IntPosition positionToIndex(scalar x, scalar y) const;
+		// 자신의 중심점의 좌표를 파라미터로 MarbleBoard에서의 Index 번호를 얻는다.
+		IntPosition positionToIndex(const Position& position) const;
+
 		// 자신의 중심점의 y 좌표를 통해 Even Row 인지 Odd Row인지 알 수 있다.
 		RowType getRowType(scalar y) const;
 		// 자신의 Row 번호를 통해, RowType이 Even인지 Odd인지 알 수 있다. 

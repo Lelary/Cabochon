@@ -40,14 +40,14 @@ namespace controls
 		:public Control
 	{
 	private:
+		using shooted_ptr = std::unique_ptr < ShootedMarble >;
+
 		//marble_ptr 에 대한 2차원 배열
 		MarbleBoard _marbleBoard;
-		using shooted_ptr = std::unique_ptr < ShootedMarble >;
-		// steeringWheelControl 로 부터 소유권이 이전될 것.-> 객체가 이동한것처럼 보이도록변경
+		// 발사되어 아직 marbleBoard에 부착되지 않은 marble. 다른 marble_ptr과 다르게 매번 생성과 삭제를 반복한다.
 		shooted_ptr _shootedMarble;
-		bool _shooting;
-		IntPosition _justAttached;
-		
+		// 방금 부착된 marble의 board 상 위치. attach 가 성공한 시점부터, break 체크가 끝날때까지 유효하다.
+		IntPosition _justAttached;		
 
 	public:
 		MarbleControl();
@@ -55,19 +55,28 @@ namespace controls
 		virtual ~MarbleControl();
 		MarbleControl& operator=(const MarbleControl& rhs) = delete;
 
-		//Shooted Marble
+		// Shooted Marble이 있는지 검사.
 		bool isShooting() const;
+		// Shooted Marble의 참조 반환.
 		shooted_ptr& getShootedMarble();
+		// 새로운 Shooted Marble을 설정하고 만든다.
 		void setShootedMarble(MarbleColor color, Position position, scalar speed, Angle degree, TextureList& textureList);
 
+		// 지금 marbleBoard 위에 어느 색깔 marble이 있는지 on off 로 표시한다.
 		MarbleColorOn getExistColors() const;
+		// marble board의 참조를 반환한다.
 		MarbleBoard& getMarbleBoard();
+		// marble board의 참조를 반환한다. (const)
 		const MarbleBoard& getMarbleBoard() const;
 
-		//Attach 가능성이 있는 Grid 위치 반환. nullptr검사는 하지 않음.
+		//Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
 		std::vector<IntPosition> getTestSet(const shooted_ptr& shootedMarble) const;
-		//Attach 가능성이 있는 Grid 위치 반환. nullptr검사는 하지 않음.
+		//Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
 		std::vector<IntPosition> getTestSet(const IntPosition& gridPosition) const;
+
+		//========================================================================================
+
+
 		//attach shooted marble
 		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
