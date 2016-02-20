@@ -32,6 +32,8 @@ namespace components
 		static const scalar defaultSpeed;
 		Velocity _velocity;
 		Position _prevCentralPosition;
+		IntPosition _currentIndex;
+		IntPosition _prevIndex;
 
 	public:
 		ShootedMarble();
@@ -67,6 +69,12 @@ namespace components
 		virtual void setVelocity(Velocity velocity);
 		virtual void setVelocity(scalar vx, scalar vy);
 		virtual void setVelocity(scalar speed, Angle angle);
+
+		void setCurrentIndex(IntPosition index);
+		IntPosition getCurrentIndex() const;
+		IntPosition getPrevIndex() const;
+
+		bool updateIndex(const MarbleBoard& board);
 
 	};
 }

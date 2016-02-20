@@ -11,7 +11,7 @@ using mathematics::Position;
 using mathematics::Velocity;
 using mathematics::Angle;
 using components::MarbleColor;
-
+using mathematics::IntPosition;
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
@@ -111,4 +111,32 @@ void ShootedMarble::setVelocity(scalar speed, Angle angle)
 	*/
 	_velocity = { speed*sinf(angle.getDegree()*PI / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
 	
+}
+
+void ShootedMarble::setCurrentIndex(IntPosition index)
+{
+	_prevIndex = _currentIndex;
+	_currentIndex = index;
+}
+IntPosition ShootedMarble::getCurrentIndex() const
+{
+	return _currentIndex;
+}
+IntPosition ShootedMarble::getPrevIndex() const
+{
+	return _prevIndex;
+}
+bool ShootedMarble::updateIndex(const MarbleBoard& board)
+{
+	if (board.positionToIndex(getPosition()) != _currentIndex)
+	{
+		setCurrentIndex(board.positionToIndex(getPosition()));
+
+		int maxY = (board.getRowType(_currentIndex._x) == controls::RowType::Even) ? cabochon_constants::MAX_Y : cabochon_constants::MAX_Y - 1;
+		if (_currentIndex._x < 0 || _currentIndex._y<0 || _currentIndex._x>getHeight() || _currentIndex._y >= maxY)
+			return false;
+
+		return true;
+	}
+	return false;
 }

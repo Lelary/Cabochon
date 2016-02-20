@@ -7,8 +7,8 @@ namespace mathematics
 	enum class Origin{LEFT_TOP, CENTER};
 
 	//vector2
-	template < typename T >
-	struct Vector2;
+	struct Position;
+	struct IntPosition;
 	/*
 	2016. 1. 11
 	degree 로 나타낸 angle
@@ -18,10 +18,8 @@ namespace mathematics
 	class Angle;
 
 	typedef float scalar;
+	using Velocity = Position;
 
-	using Position = Vector2 < scalar >;
-	using Velocity = Vector2 < scalar >;
-	using IntPosition = Vector2 < int > ;
 
 }
 

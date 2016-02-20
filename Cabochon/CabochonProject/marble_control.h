@@ -91,7 +91,6 @@ namespace controls
 		//attach shooted marble
 		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
-		bool attach(shooted_ptr& shootedMarble, const IntPosition& marblePosition);
 
 		//test 하고 가능하면 Attach 한다.
 		bool attach(shooted_ptr& shootedMarble);

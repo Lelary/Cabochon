@@ -4,17 +4,29 @@
 
 namespace mathematics
 {
-	template < typename T >
-	struct Vector2
+	struct Position
 	{
-		T _x;
-		T _y;
+		scalar _x;
+		scalar _y;
 	};
 
-	/*
-		vector2¿¡
-		operator overloading
-		Ãß°¡
-	*/
+	struct IntPosition
+	{
+		int _x;
+		int _y;
+
+		bool operator==(const IntPosition& rhs) const
+		{
+			if (this->_x == rhs._x && this->_y == rhs._y)
+				return true;
+			else
+				return false;
+		}
+		bool operator!=(const IntPosition& rhs) const
+		{
+			return !(*this == rhs);
+		}
+	};
+
 }
 #endif

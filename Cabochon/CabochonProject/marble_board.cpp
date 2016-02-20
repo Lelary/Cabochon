@@ -61,11 +61,15 @@ bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
 // 실제 메모리를 이동 하는 것이 아니라, None에서 다른 컬러로 변경함.
 bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
 {
+	int maxY = (getRowType(x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+	if (x < 0 || y<0 || x>getHeight() || y>=maxY)
+		return false;
+
 	if (_marbles[x][y] == nullptr)
 		throw(GameError(gameErrorNS::FATAL_ERROR ,"Error in MarbleBoard : addMarble()"));
 
 	if (_marbles[x][y]->getColor() != MarbleColor::None)
-		return false;
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : addMarble()"));
 
 	_colorCount[(int)color]++;
 	_marbles[x][y]->setColor(color);
