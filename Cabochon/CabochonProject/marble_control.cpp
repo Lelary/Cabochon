@@ -18,7 +18,7 @@ using controls::MarbleBoard;
 using frameworks::TextureList;
 
 MarbleControl::MarbleControl()
-	:_shooting(false)
+	:_shooting(false), _justAttached({ -1, -1 })
 {
 
 }
@@ -175,17 +175,23 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 	return false;
 }
 //shootedMarble은 color값만 넘겨주고, reset()된다.
-void MarbleControl::attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition)
+bool MarbleControl::attach(shooted_ptr& shootedMarble, const IntPosition& gridPosition)
 {
 	if (isAttachable(shootedMarble, gridPosition))
+	{
 		_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
 
-	shootedMarble.reset();		
+		_justAttached = gridPosition;
+		_shooting = false;
+		shootedMarble.reset();		
+		return true;
+	}
+	return false;
 }
-void MarbleControl::attach(shooted_ptr& shootedMarble)
+bool MarbleControl::attach(shooted_ptr& shootedMarble)
 {
 	IntPosition gridPosition = Grid::getGridPosition(_marbleBoard, shootedMarble->getCentralPosition());
-	attach(shootedMarble, gridPosition);
+	return attach(shootedMarble, gridPosition);
 }
 
 void MarbleControl::render()

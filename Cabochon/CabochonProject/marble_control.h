@@ -48,6 +48,7 @@ namespace controls
 		// steeringWheelControl 로 부터 소유권이 이전될 것.-> 객체가 이동한것처럼 보이도록변경
 		shooted_ptr _shootedMarble;
 		bool _shooting;
+		IntPosition _justAttached;
 		
 
 	public:
@@ -72,8 +73,8 @@ namespace controls
 		//attach shooted marble
 		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
-		void attach(shooted_ptr& shootedMarble, const IntPosition& marblePosition);
-		void attach(shooted_ptr& shootedMarble);
+		bool attach(shooted_ptr& shootedMarble, const IntPosition& marblePosition);
+		bool attach(shooted_ptr& shootedMarble);
 
 		//pure virtual functions
 		virtual void render();

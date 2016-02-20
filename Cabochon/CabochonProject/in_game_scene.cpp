@@ -121,7 +121,13 @@ void InGameScene::lateUpdate(float frameTime)
 	//attach, break
 	if (_marbleControl.isShooting())
 	{
-	//	_marbleControl.attach(_marbleControl.getShootedMarble());
+		if (_marbleControl.attach(_marbleControl.getShootedMarble()))
+		{
+			// dummy
+			int i = 0;
+			i++;
+			i++;
+		}
 	}
 
 
