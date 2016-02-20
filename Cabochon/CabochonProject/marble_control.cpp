@@ -16,6 +16,10 @@ using controls::MarbleColorOn;
 using controls::MarbleBoard;
 using frameworks::TextureList;
 using cabochon_constants::MAX_Y;
+using controls::Quadrant;
+using cabochon_constants::MARBLE_HEIGHT;
+using cabochon_constants::MARBLE_WIDTH;
+using cabochon_constants::LINE;
 
 MarbleControl::MarbleControl()
 	:_justAttached({ -1, -1 })
@@ -90,8 +94,6 @@ std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMar
 //Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
 std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosition) const
 {
-	//quadrant 미 사용시 6번 검사.
-	const int testNumber = 6;
 	std::vector<IntPosition> testSet;
 	int x = marblePosition._x;
 	int y = marblePosition._y;
@@ -99,9 +101,9 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	int maxY = (_marbleBoard.getRowType(x)==RowType::Even)?MAX_Y: MAX_Y-1;
 
 	// 좌 우 Marble
-	if (marblePosition._y > 0)
+	if (y > 0)
 		testSet.push_back({ x, y - 1 });
-	if (marblePosition._y < maxY-1)
+	if (y < maxY-1)
 		testSet.push_back({ x, y + 1 });
 
 	// 다음 X와 Y의 모든 쌍을 검사해야함.
@@ -130,6 +132,96 @@ std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosi
 	}
 	return testSet;
 }
+// vector내의순서가유의미함.
+std::vector<IntPosition> MarbleControl::getTwoTestSet(const shooted_ptr& shootedMarble) const
+{
+	std::vector<IntPosition> testSet;
+	IntPosition index = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
+	Quadrant quad = getQuadrant(shootedMarble->getPrevCentralPosition());
+
+	// 다음 X와 Y의 모든 쌍을 검사해야함.
+	int testLeftY = (_marbleBoard.getRowType(index._x) == RowType::Even) ? index._y - 1 : index._y;
+	int testRightY = (_marbleBoard.getRowType(index._x) == RowType::Even) ? index._y : index._y + 1;
+	int testUpX = index._x + 1;
+	int testDownX = index._x - 1;
+
+	//row-1, row+1 의 상황.
+	int maxY = (_marbleBoard.getRowType(index._x) == RowType::Odd) ? MAX_Y : MAX_Y - 1;
+
+	if (quad == Quadrant::first || quad == Quadrant::second) {
+		if (testUpX <= _marbleBoard.getHeight())
+		{
+			if (quad == Quadrant::second && testLeftY >= 0)
+				testSet.push_back({ testUpX, testLeftY });
+			if (quad == Quadrant::first && testRightY < maxY)
+				testSet.push_back({ testUpX, testRightY });
+		}
+	}
+	else {
+		if (testDownX >= 1)
+		{
+			if (quad == Quadrant::third && testLeftY >= 0)
+				testSet.push_back({ testDownX, testLeftY });
+			if (quad == Quadrant::fourth && testRightY < maxY)
+				testSet.push_back({ testDownX, testRightY });
+		}
+	}
+
+	// 내위치의 RowType
+	maxY = (_marbleBoard.getRowType(index._x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+
+	// 왼쪽 Marble
+	if (quad == Quadrant::second || quad == Quadrant::third) {
+		if (index._y > 0)
+			testSet.push_back({ index._x, index._y - 1 });
+	}
+	// 오른쪽 Marble
+	else {
+		if (index._y < maxY - 1)
+			testSet.push_back({ index._x, index._y + 1 });
+	}
+
+	return testSet;
+}
+Quadrant MarbleControl::getQuadrant(const shooted_ptr& shootedMarble) const
+{
+	return getQuadrant(shootedMarble->getPrevCentralPosition());
+}
+Quadrant MarbleControl::getQuadrant(const Position& marblePosition) const
+{
+	IntPosition index = _marbleBoard.positionToIndex(marblePosition);
+	Position leftTop;
+	bool even = (_marbleBoard.getRowType(index._x) == RowType::Odd) ? false : true;
+	bool left;
+	bool up;
+
+	if (even)
+		leftTop = { 0 + index._y*MARBLE_WIDTH, LINE - index._x*MARBLE_HEIGHT };
+	else
+		leftTop = { 0 + index._y*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), LINE - index._x*MARBLE_HEIGHT };
+	if (marblePosition._x < leftTop._x + MARBLE_WIDTH / 2.0f)
+		left = true;
+	else
+		left = false;
+	if (marblePosition._y < leftTop._y + MARBLE_HEIGHT / 2.0f)
+		up = true;
+	else
+		up = false;
+
+	if (up == true) {
+		if (left == false)
+			return Quadrant::first;
+		else
+			return Quadrant::second;
+	}
+	else {
+		if (left == true)
+			return Quadrant::third;
+		else
+			return Quadrant::fourth;
+	}
+}
+
 //attach shooted marble
 bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const
 {
@@ -165,7 +257,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 		return false;
 
 	//2. testSet을 얻음.
-	auto testSet = getTestSet(shootedMarble);
+	auto testSet = getTwoTestSet(shootedMarble);
 	//3. 인접위치 (testSet)을 하나씩 확인.
 	for (auto& testPosition : testSet){
 		// 해당 인접위치가 비어있지않으면, 

@@ -35,6 +35,7 @@ namespace controls
 	5. 삭제 애니메이션
 	6. 삭제+점수추가.
 */
+	enum class Quadrant{ none = -1, first = 1, second, third, fourth };
 
 	class MarbleControl
 		:public Control
@@ -73,18 +74,24 @@ namespace controls
 		// marble board의 참조를 반환한다. (const)
 		const MarbleBoard& getMarbleBoard() const;
 
-		//Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
+		//Grid 위치 (인접위치) 반환, (최대 6개), vector내의 순서에 유의
 		std::vector<IntPosition> getTestSet(const shooted_ptr& shootedMarble) const;
-		//Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
+		//Grid 위치 (인접위치) 반환, (최대 6개), vector내의 순서에 유의
 		std::vector<IntPosition> getTestSet(const IntPosition& gridPosition) const;
+		//Grid 위치 (인접위치) 반환, (최대 2개), vector내의 순서에 유의
+		//isAttachable 에 사용.
+		std::vector<IntPosition> getTwoTestSet(const shooted_ptr& shootedMarble) const;
 
-		//========================================================================================
-
+		//Quadrant
+		Quadrant getQuadrant(const shooted_ptr& shootedMarble) const;
+		Quadrant getQuadrant(const Position& marblePosition) const;
 
 		//attach shooted marble
 		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
 		bool attach(shooted_ptr& shootedMarble, const IntPosition& marblePosition);
+
+		//test 하고 가능하면 Attach 한다.
 		bool attach(shooted_ptr& shootedMarble);
 
 		//pure virtual functions
