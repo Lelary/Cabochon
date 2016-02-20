@@ -84,9 +84,6 @@
     <ClInclude Include="template_dynamic_singleton.h">
       <Filter>헤더 파일\pattern</Filter>
     </ClInclude>
-    <ClInclude Include="temporary.h">
-      <Filter>헤더 파일\etc</Filter>
-    </ClInclude>
     <ClInclude Include="mathematics.h">
       <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>

@@ -42,6 +42,7 @@ namespace controls
 	{
 	private:
 		using shooted_ptr = std::unique_ptr < ShootedMarble >;
+		static const IntPosition noPosition;
 
 		//marble_ptr 에 대한 2차원 배열
 		MarbleBoard _marbleBoard;
@@ -83,7 +84,6 @@ namespace controls
 		std::vector<IntPosition> getLessTestSet(const shooted_ptr& shootedMarble) const;
 
 
-
 		//Quadrant
 		Quadrant getQuadrant(const shooted_ptr& shootedMarble) const;
 		Quadrant getQuadrant(const Position& marblePosition) const;
@@ -95,6 +95,7 @@ namespace controls
 		//test 하고 가능하면 Attach 한다.
 		bool attach(shooted_ptr& shootedMarble);
 
+		// justAttached 가 있으면 colorMatch를 해본다.
 		bool smash();
 
 		//pure virtual functions

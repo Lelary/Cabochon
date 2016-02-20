@@ -61,6 +61,9 @@ namespace controls
 		MarbleBoard(const MarbleBoard& rhs) = delete;
 		~MarbleBoard();
 		MarbleBoard& operator=(const MarbleBoard& rhs) = delete;
+		// marbleBoard의 텍스처를 일괄적으로 로드한다.
+		void loadTextures(TextureList& textureList);
+
 
 		// marble_ptr 참조 반환.
 		const marble_ptr& getMarble(IntPosition gridPosition) const;
@@ -150,9 +153,6 @@ namespace controls
 		RowType getRowType(scalar y) const;
 		// 자신의 Row 번호를 통해, RowType이 Even인지 Odd인지 알 수 있다. 
 		RowType getRowType(int row) const; 
-
-		// marbleBoard의 텍스처를 일괄적으로 로드한다.
-		void loadTextures(TextureList& textureList);
 
 		//pure virtual functions
 		virtual void render();

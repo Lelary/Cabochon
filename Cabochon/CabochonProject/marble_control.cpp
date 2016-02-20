@@ -21,8 +21,9 @@ using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::MARBLE_WIDTH;
 using cabochon_constants::LINE;
 
+const IntPosition MarbleControl::noPosition = { -1, -1 };
 MarbleControl::MarbleControl()
-	:_justAttached({ -1, -1 })
+	:_justAttached(noPosition), _shootedMarble(nullptr)
 {
 
 }

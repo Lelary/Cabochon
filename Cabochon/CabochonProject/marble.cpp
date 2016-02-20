@@ -9,6 +9,7 @@ using frameworks::TextureList;
 using components::Layer;
 using components::MarbleColor;
 
+const IntPosition Marble::noPosition = { -1, -1 };
 Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
 	: _gridPosition(gridPosition), _color(color)
 {
@@ -17,7 +18,7 @@ Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
 }
 
 Marble::Marble(MarbleColor color)
-	: Marble({ noPosition, noPosition }, color)
+	: Marble(noPosition, color)
 {
 }
 
@@ -50,10 +51,10 @@ Marble& Marble::operator=(const Marble& rhs)
 }
 void Marble::loadLayers(TextureList& textureList)
 {
-	int marbleTextureWidth = 128;
-	int marbleTextureHeight = 128;
-	int rows = (int)MarbleColor::Num;
-	int cols = 8;		
+	const int marbleTextureWidth = 128;
+	const int marbleTextureHeight = 128;
+	const int rows = (int)MarbleColor::Num;
+	const int cols = 8;		
 
 	for (int row = 0; row < rows; row++)
 	{
@@ -73,7 +74,7 @@ void Marble::loadLayers(TextureList& textureList)
 	adjustLayersPosition();
 }
 
-MarbleColor Marble::getColor()
+MarbleColor Marble::getColor() const
 {
 	return _color;
 }

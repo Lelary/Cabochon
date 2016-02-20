@@ -108,7 +108,6 @@
     <ClInclude Include="steering_wheel.h" />
     <ClInclude Include="steering_wheel_control.h" />
     <ClInclude Include="template_dynamic_singleton.h" />
-    <ClInclude Include="temporary.h" />
     <ClInclude Include="patterns.h" />
     <ClInclude Include="texture_list.h" />
     <ClInclude Include="vector2.h" />

@@ -2,6 +2,11 @@
 #include "marble_board.h"
 #include "vector2.h"
 
+using cabochon_constants::MAX_Y;
+using cabochon_constants::MIN_X;
+using cabochon_constants::MARBLE_WIDTH;
+using cabochon_constants::MARBLE_HEIGHT;
+using cabochon_constants::LINE;
 using components::MarbleColor;
 using controls::MarbleBoard;
 using controls::BoardState;
@@ -10,11 +15,6 @@ using controls::MarbleGenerator;
 using mathematics::Position;
 using mathematics::scalar;
 using components::marble_ptr;
-using cabochon_constants::MAX_Y;
-using cabochon_constants::MIN_X;
-using cabochon_constants::MARBLE_WIDTH;
-using cabochon_constants::MARBLE_HEIGHT;
-using cabochon_constants::LINE;
 using mathematics::IntPosition;
 using frameworks::TextureList;
 using controls::MarbleColorOn;
@@ -22,6 +22,7 @@ using controls::MarbleColorOn;
 MarbleBoard::MarbleBoard()
 	:_boardState(BoardState::Build), _dragged(false)
 {
+	_colorCount.assign(0);
 }
 MarbleBoard::~MarbleBoard()
 {

@@ -37,20 +37,20 @@ namespace components
 	public:
 		static const int marbleWidth = cabochon_constants::MARBLE_WIDTH;
 		static const int marbleHeight = cabochon_constants::MARBLE_HEIGHT;
-		static const int noPosition = -1;
+		static const IntPosition noPosition;
 	private:
 		IntPosition _gridPosition;
 		MarbleColor _color;
 
 	public:
 		Marble(MarbleColor color);
-		Marble(const IntPosition& gridPosition = { noPosition, noPosition }, MarbleColor color = MarbleColor::None);
+		Marble(const IntPosition& gridPosition = noPosition, MarbleColor color = MarbleColor::None);
 		Marble(const Marble& rhs);
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
 
 		void loadLayers(TextureList& textureList);
-		MarbleColor getColor();
+		MarbleColor getColor() const; 
 		MarbleColor setColor(MarbleColor color);
 
 		void setGridPosition(IntPosition gridPosition);
