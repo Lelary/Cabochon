@@ -8,8 +8,8 @@ namespace mathematics
 
 	enum class Origin{LEFT_TOP, CENTER};
 
-	struct Position;
 	struct IntPosition;
+	struct Position;
 	using Velocity = Position;
 
 	/*

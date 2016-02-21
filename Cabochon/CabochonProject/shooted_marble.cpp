@@ -1,21 +1,21 @@
 // 2016. 1. 17
 #include "shooted_marble.h"
 #include "cabochon_constants.h"
-using components::Object;
-using components::ShootedMarble;
-using controls::MarbleBoard;
-using components::marble_ptr;
 using mathematics::scalar;
 using mathematics::Position;
 using mathematics::Velocity;
 using mathematics::Angle;
-using components::MarbleColor;
 using mathematics::IntPosition;
+using components::Object;
+using components::ShootedMarble;
+using components::marble_ptr;
+using components::MarbleColor;
+using controls::MarbleBoard;
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
 const scalar ShootedMarble::defaultSpeed = 300;
-const IntPosition noPosition = { -1, -1 };
+const IntPosition ShootedMarble::noPosition = { -1, -1 };
 
 ShootedMarble::ShootedMarble()
 	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(noPosition), _prevIndex(noPosition)

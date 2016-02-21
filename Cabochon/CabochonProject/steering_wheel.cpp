@@ -1,10 +1,10 @@
 //2016. 1. 15.
 #include "steering_wheel.h"
-using components::SteeringWheel;
 using mathematics::Angle;
 using mathematics::scalar;
-using scenes::TextureList;
+using components::SteeringWheel;
 using components::Layer;
+using scenes::TextureList;
 
 SteeringWheel::SteeringWheel()
 {

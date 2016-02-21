@@ -2,24 +2,24 @@
 
 #include "marble_control.h"
 #include <deque>
-using controls::MarbleControl;
+using mathematics::Position;
+using mathematics::IntPosition;
+using mathematics::scalar;
 using components::Marble;
 using components::marble_ptr;
 using components::MarbleColor;
 using components::ShootedMarble;
+using controls::MarbleControl;
 using controls::RowType;
-using mathematics::Position;
-using mathematics::IntPosition;
-using mathematics::scalar;
-using shooted_ptr = std::unique_ptr < ShootedMarble >;
 using controls::MarbleColorOn;
 using controls::MarbleBoard;
+using controls::Quadrant;
 using scenes::TextureList;
 using cabochon_constants::MAX_Y;
-using controls::Quadrant;
 using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::MARBLE_WIDTH;
 using cabochon_constants::LINE;
+using shooted_ptr = std::unique_ptr < ShootedMarble >;
 
 const IntPosition MarbleControl::noPosition = { -1, -1 };
 MarbleControl::MarbleControl()
@@ -49,7 +49,7 @@ IntPosition MarbleControl::getJustAttached() const
 }
 bool MarbleControl::hasJustAttached() const
 {
-	if (getJustAttached().x == -1 || getJustAttached().y == -1)
+	if (getJustAttached() == noPosition)
 		return false;
 	else
 		return true;
@@ -183,7 +183,7 @@ std::vector<IntPosition> MarbleControl::getLessTestSet(const shooted_ptr& shoote
 	auto toRemove = [&](const IntPosition& position) -> bool {return
 		(position.y == remove_col 
 		|| position.x == remove_row 
-		|| (position.x == removeSide.x && position.y == removeSide.y)
+		|| (position == removeSide)
 		) ? true : false; };
 
 	testSet.erase(
@@ -243,7 +243,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosi
 	3. isAttachable(const shooted_ptr& shootedMarble)const È£Ãâ.
 	*/
 	IntPosition currentIndex = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
-	if (currentIndex.x == gridPosition.x	&&	currentIndex.y == gridPosition.y )
+	if (currentIndex == gridPosition )
 		if (_marbleBoard.existMarble(gridPosition) == MarbleColor::None)
 			return isAttachable(shootedMarble);
 
@@ -335,7 +335,7 @@ bool MarbleControl::smash()
 		for (auto test : testSet)
 		{
 			for (auto c : checked) {
-				if (test.x == c.x && test.y == c.y) {
+				if (test == c) {
 					toBreak = true;
 					break;
 				}

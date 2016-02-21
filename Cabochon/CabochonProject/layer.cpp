@@ -1,8 +1,8 @@
 #include "layer.h"
-using components::Layer;
 using mathematics::Position;
 using mathematics::Origin;
 using mathematics::scalar;
+using components::Layer;
 
 Layer::Layer() 
 	:Image(), _distance({0.0f,0.0f})

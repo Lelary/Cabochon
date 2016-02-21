@@ -1,8 +1,8 @@
 #include "object.h"
-using components::Object;
 using mathematics::scalar;
 using mathematics::Position;
 using mathematics::Origin;
+using components::Object;
 
 Object::Object()
 	:_position({ 0, 0 }), _width(0), _height(0), _layersLoaded(false)

@@ -3,12 +3,12 @@
 #include "steering_wheel_control.h"
 #include "marble_generator.h"
 
-using controls::SteeringWheelControl;
 using mathematics::scalar;
 using components::marble_ptr;
 using components::SteeringWheel;
-using scenes::TextureList;
 using components::MarbleColor;
+using controls::SteeringWheelControl;
+using scenes::TextureList;
 SteeringWheelControl::SteeringWheelControl()
 {
 	/*
@@ -72,23 +72,23 @@ void SteeringWheelControl::setOrigin()
 }
 void SteeringWheelControl::rotateLeft(float frameTime)
 {
-	scalar i = _angularVelocity;
-	while (i-- > 0 && (getDegree() > -1*_maxDegree))
+	scalar i = angularVelocity;
+	while (i-- > 0 && (getDegree() > -1*maxDegree))
 	{
-		_steeringWheel.rotateLeft(_angularVelocity*frameTime);
+		_steeringWheel.rotateLeft(angularVelocity*frameTime);
 		if (_marbleCurrent != nullptr)
-			_marbleCurrent->rotate(-1*_angularVelocity*frameTime);
+			_marbleCurrent->rotate(-1*angularVelocity*frameTime);
 	}
 
 }
 void SteeringWheelControl::rotateRight(float frameTime)
 {
-	scalar i = _angularVelocity;
-	while (i-- > 0 && getDegree() < _maxDegree)
+	scalar i = angularVelocity;
+	while (i-- > 0 && getDegree() < maxDegree)
 	{
-		_steeringWheel.rotateRight(_angularVelocity*frameTime);
+		_steeringWheel.rotateRight(angularVelocity*frameTime);
 		if (_marbleCurrent != nullptr)
-			_marbleCurrent->rotate(+1 * _angularVelocity*frameTime);
+			_marbleCurrent->rotate(+1 * angularVelocity*frameTime);
 	}
 }
 

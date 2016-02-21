@@ -1,6 +1,7 @@
 //2016. 2. 4
 
 #include "main_scene.h"
+#include "cabochon_constants.h"
 using scenes::MainScene;
 using scenes::TextureList;
 
@@ -31,18 +32,13 @@ void MainScene::start()
 	_exitButton.setX(GAME_WIDTH / 2 - (_exitButton.getWidth() / 2.0f));
 	_exitButton.setY(GAME_HEIGHT*(1.0f / 2.0f)+_exitButton.getHeight()*2);
 
-	_text.initialize(&_graphics, 15, false, false, scenes::default_settings::FONT);
-
-	//ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);
-	//ship.setCurrentFrame(SHIP_START_FRAME);
-	//ship.setFrameDelay(SHIP_ANIMATION_DELAY);
-	//ship.setDegrees(45.0f);
-
+	_text.initialize(&_graphics, 15, false, false, cabochon_constants::FONT);
+	
 	_started = true;
 }
 void MainScene::update(float frameTime)
 {
-	if (_input.isKeyDown(ENTER_KEY))
+	if (_input.wasKeyPressed(ENTER_KEY))
 	{
 		_nextScene = SceneName::InGameScene;
 	}

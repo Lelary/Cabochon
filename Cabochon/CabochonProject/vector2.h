@@ -8,12 +8,30 @@ namespace mathematics
 	{
 		scalar x;
 		scalar y;
+
+		Position operator+(const Position& rhs) const
+		{
+			return { x + rhs.x, y + rhs.y };
+		}
+		Position operator-(const Position& rhs) const
+		{
+			return { x - rhs.x, y - rhs.y };
+		}
 	};
 
 	struct IntPosition
 	{
 		int x;
 		int y;
+
+		IntPosition operator+(const IntPosition& rhs) const
+		{
+			return{ x + rhs.x, y + rhs.y };
+		}
+		IntPosition operator-(const IntPosition& rhs) const
+		{
+			return{ x - rhs.x, y - rhs.y };
+		}
 
 		bool operator==(const IntPosition& rhs) const
 		{

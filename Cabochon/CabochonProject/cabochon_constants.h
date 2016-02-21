@@ -1,6 +1,7 @@
 #ifndef _CABOCHON_CONSTANTS_H
 #define _CABOCHON_CONSTANTS_H
 #include "mathematics.h"
+#include "dx9_game_engine\graphics.h"
 namespace cabochon_constants
 {
 	using mathematics::scalar;

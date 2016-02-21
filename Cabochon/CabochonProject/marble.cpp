@@ -1,12 +1,12 @@
 #include "marble.h"
 #include "texture_list.h"
 #include "dx9_game_engine\graphics.h"
-using components::Marble;
 using mathematics::scalar;
 using mathematics::IntPosition;
-using scenes::TextureList;
+using components::Marble;
 using components::Layer;
 using components::MarbleColor;
+using scenes::TextureList;
 
 const IntPosition Marble::noPosition = { -1, -1 };
 Marble::Marble(const IntPosition& gridPosition, MarbleColor color)

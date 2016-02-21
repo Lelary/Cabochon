@@ -53,7 +53,7 @@ void Cabochon::update()
 		_currentScene->update(frameTime);
 		_currentScene->lateUpdate(frameTime);
 	}
-	if (_currentScene->getNextScene() != SceneName::Null)
+	if (_currentScene->getNextScene() != SceneName::None)
 		changeScene(_currentScene->getNextScene());
 }
 void Cabochon::ai(){}
@@ -93,7 +93,7 @@ void Cabochon::resetAll()
 void Cabochon::changeScene(scenes::SceneName newSceneName)
 {
 	// Àß¸øµÈ SceneName.
-	if (newSceneName == SceneName::Null || newSceneName == SceneName::Num)
+	if (newSceneName == SceneName::None || newSceneName == SceneName::Num)
 		return;
 
 	if (_currentScene != nullptr)
