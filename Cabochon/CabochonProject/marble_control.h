@@ -95,6 +95,9 @@ namespace controls
 		// justAttached 가 있으면 colorMatch를 해본다.
 		// Smash 된 Marble이 있을 경우 true
 		bool smash();
+		
+		void drop();
+		std::vector<bool> getNextLinkedLine(const std::vector<bool>& thisLine, int thisRow) const;
 
 		//pure virtual functions
 		virtual void render();

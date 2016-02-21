@@ -387,6 +387,57 @@ bool MarbleControl::smash()
 	else
 		return false;
 }
+
+std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& thisLine, int thisRow) const
+{
+
+	//---------------------------------------------------------------
+	// 2016. 2. 22. 
+	// 예외처리 꼭 추가.
+	// ftn은 임의의 색깔 확인 함수.
+	// ftn 함수작성하되, 예외처리가 아닌 false를 반환하도록 작성할것.
+	//---------------------------------------------------------------
+
+	if (thisRow <0 || thisRow>_marbleBoard.getHeight()) {
+		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
+	}
+
+	int nextRow = thisRow - 1;
+
+	// 더 체크할 필요가 없음. 근데 이함수호출뒤에 문제발생여지가있으니 예외처리.
+	if (nextRow < 0)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
+
+	// 이번줄.
+	int maxY = (_marbleBoard.getRowType(thisRow) == RowType::Even) ? MAX_Y : MAX_Y-1;
+
+	std::vector<bool> nextLine;
+	for (int i = 0; i < maxY; i++)
+	{
+		//0~nextMaxY
+
+		if (even)
+		{
+			if (thisLine[i]){
+				if (ftn(nextLine[i-1]))
+					nextLine[i - 1] = true;
+				if (ftn(nextLine[i+1]))
+					nextLine[i + 1] = true;
+			}
+
+		}
+		else
+		{
+
+		}
+		
+		return nextLine;
+}
+void MarbleControl::drop()
+{
+
+}
+
 void MarbleControl::render()
 {
 	_marbleBoard.render();
