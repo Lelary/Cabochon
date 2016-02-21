@@ -98,6 +98,7 @@ namespace controls
 		
 		void drop();
 		std::vector<bool> getNextLinkedLine(const std::vector<bool>& thisLine, int thisRow) const;
+		bool isNotMarbleColorNone(IntPosition index) const;
 
 		//pure virtual functions
 		virtual void render();

@@ -408,34 +408,54 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	if (nextRow < 0)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
 
-	// ÀÌ¹øÁÙ.
-	int maxY = (_marbleBoard.getRowType(thisRow) == RowType::Even) ? MAX_Y : MAX_Y-1;
-
 	std::vector<bool> nextLine;
-	for (int i = 0; i < maxY; i++)
+	for (int i = 0; i < thisLine.size(); i++)
 	{
-		//0~nextMaxY
-
-		if (even)
-		{
-			if (thisLine[i]){
-				if (ftn(nextLine[i-1]))
-					nextLine[i - 1] = true;
-				if (ftn(nextLine[i+1]))
-					nextLine[i + 1] = true;
-			}
-
+		if (thisLine[i]){
+			if (isNotMarbleColorNone({ nextRow, i - 1 }))
+				nextLine[i - 1] = true;
+			if (isNotMarbleColorNone({ nextRow, i + 1 }))
+				nextLine[i + 1] = true;
 		}
-		else
-		{
+	}
 
-		}
-		
-		return nextLine;
+	return nextLine;
 }
+
+
+bool MarbleControl::isNotMarbleColorNone(IntPosition index) const
+{
+	if (_marbleBoard.isInvalidIndex(index))
+		return false;
+
+	if (_marbleBoard.getMarble(index)->getColor() == MarbleColor::None)
+		return false;
+	else
+		return true;
+}
+
 void MarbleControl::drop()
 {
+	std::vector < std::vector<bool> > checked;
+	
+	for (int i = _marbleBoard.getHeight(); i >= 1; i--)
+	{
+		auto line = getNextLinkedLine(checked[_marbleBoard.getHeight() - i], i);
+		checked.push_back(line);
+	}
 
+	for (int i = 0; i <= _marbleBoard.getHeight(); i++)
+	{
+		for (int j = 0; j < checked[i].size(); i++)
+		{
+			if (checked[i][j] == true)
+			{
+				//drop
+				if (isNotMarbleColorNone({ i, j }))
+					_marbleBoard.removeMarble({ i, j });
+			}
+		}
+	}
 }
 
 void MarbleControl::render()
