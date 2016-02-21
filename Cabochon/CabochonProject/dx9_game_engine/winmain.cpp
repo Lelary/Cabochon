@@ -62,14 +62,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	catch (const GameError& err)
 	{
-		game->deleteAll();
-		DestroyWindow(hwnd);
+		//game->deleteAll();
+		//DestroyWindow(hwnd);
 		MessageBox(NULL, err.getMessage(), "Error", MB_OK);
+	}
+	catch (const std::exception& err)
+	{
+		//game->deleteAll();
+		//DestroyWindow(hwnd);
+		MessageBox(NULL, err.what(), "Error", MB_OK);
 	}
 	catch (...)
 	{
-		game->deleteAll();
-		DestroyWindow(hwnd);
+		//game->deleteAll();
+		//DestroyWindow(hwnd);
 		MessageBox(NULL, "Unknown error occured in game.", "Error", MB_OK);
 	}
 

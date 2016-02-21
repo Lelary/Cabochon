@@ -19,9 +19,6 @@
     <Filter Include="헤더 파일\components">
       <UniqueIdentifier>{dde15dcc-1c21-480c-874f-0e8f6610fa33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\frameworks">
-      <UniqueIdentifier>{6ba6c430-a25a-4423-b76c-216f204a91c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\etc">
       <UniqueIdentifier>{6873fad9-f9bb-461f-a4de-1898b9646d43}</UniqueIdentifier>
     </Filter>
@@ -40,9 +37,6 @@
     <Filter Include="소스 파일\components">
       <UniqueIdentifier>{48cda983-6494-413f-a6a1-ac4311664fed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\frameworks">
-      <UniqueIdentifier>{8c53b165-9725-4810-97b0-def9e945d5a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\controls">
       <UniqueIdentifier>{6c774193-4c1a-47d6-9be6-71875f703eb3}</UniqueIdentifier>
     </Filter>
@@ -51,6 +45,12 @@
     </Filter>
     <Filter Include="헤더 파일\dx9_game_engine">
       <UniqueIdentifier>{be02238c-c66e-4f3b-ab0f-24dad9ae035c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\scenes">
+      <UniqueIdentifier>{6ba6c430-a25a-4423-b76c-216f204a91c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\scenes">
+      <UniqueIdentifier>{8c53b165-9725-4810-97b0-def9e945d5a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,22 +124,22 @@
       <Filter>헤더 파일\dx9_game_engine</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
-      <Filter>헤더 파일\frameworks</Filter>
+      <Filter>헤더 파일\scenes</Filter>
     </ClInclude>
     <ClInclude Include="control.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
     <ClInclude Include="main_scene.h">
-      <Filter>헤더 파일\frameworks</Filter>
+      <Filter>헤더 파일\scenes</Filter>
     </ClInclude>
     <ClInclude Include="in_game_scene.h">
-      <Filter>헤더 파일\frameworks</Filter>
+      <Filter>헤더 파일\scenes</Filter>
     </ClInclude>
     <ClInclude Include="cabochon.h">
-      <Filter>헤더 파일\frameworks</Filter>
+      <Filter>헤더 파일\scenes</Filter>
     </ClInclude>
     <ClInclude Include="texture_list.h">
-      <Filter>헤더 파일\frameworks</Filter>
+      <Filter>헤더 파일\scenes</Filter>
     </ClInclude>
     <ClInclude Include="dx9_game_engine\console.h">
       <Filter>헤더 파일\dx9_game_engine</Filter>
@@ -171,7 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일\frameworks</Filter>
+      <Filter>소스 파일\scenes</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
       <Filter>소스 파일\components</Filter>
@@ -216,16 +216,16 @@
       <Filter>소스 파일\dx9_game_engine</Filter>
     </ClCompile>
     <ClCompile Include="main_scene.cpp">
-      <Filter>소스 파일\frameworks</Filter>
+      <Filter>소스 파일\scenes</Filter>
     </ClCompile>
     <ClCompile Include="in_game_scene.cpp">
-      <Filter>소스 파일\frameworks</Filter>
+      <Filter>소스 파일\scenes</Filter>
     </ClCompile>
     <ClCompile Include="scene.cpp">
-      <Filter>소스 파일\frameworks</Filter>
+      <Filter>소스 파일\scenes</Filter>
     </ClCompile>
     <ClCompile Include="texture_list.cpp">
-      <Filter>소스 파일\frameworks</Filter>
+      <Filter>소스 파일\scenes</Filter>
     </ClCompile>
     <ClCompile Include="dx9_game_engine\text_dx.cpp">
       <Filter>소스 파일\dx9_game_engine</Filter>

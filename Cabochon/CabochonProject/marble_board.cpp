@@ -28,21 +28,16 @@ MarbleBoard::~MarbleBoard()
 {
 }
 
-const marble_ptr& MarbleBoard::getMarble(IntPosition gridPosition) const
+const marble_ptr& MarbleBoard::getMarble(IntPosition index) const
 {
-	return getMarble(gridPosition.x, gridPosition.y);
-}
-const marble_ptr& MarbleBoard::getMarble(int x, int y) const
-{
-	return _marbles[x][y];
+	return _marbles.at(index.x).at(index.y);
 }
 
-MarbleColor MarbleBoard::existMarble(IntPosition gridPosition) const
+MarbleColor MarbleBoard::existMarble(IntPosition index) const
 {
-	return existMarble(gridPosition.x, gridPosition.y);
-}
-MarbleColor MarbleBoard::existMarble(int x, int y) const
-{
+	int x = index.x;
+	int y = index.y;
+
 	if (x < 0 || x >= _marbles.size())
 		return MarbleColor::None;
 
@@ -55,13 +50,11 @@ MarbleColor MarbleBoard::existMarble(int x, int y) const
 		throw (GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : existMarble()!"));
 }
 
-bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
-{
-	return addMarble(gridPosition.x, gridPosition.y, color);
-}
 // 실제 메모리를 이동 하는 것이 아니라, None에서 다른 컬러로 변경함.
-bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
+bool MarbleBoard::addMarble(IntPosition index, MarbleColor color)
 {
+	int x = index.x;
+	int y = index.y;
 	int maxY = (getRowType(x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
 	if (x < 0 || y<0 || x>getHeight() || y >= maxY)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : addMarble() \n Invailed Index"));
@@ -77,8 +70,10 @@ bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
 }
 
 // 실제 메모리를 해제 하는 것이 아니라, None으로 컬러를 바꿈.
-bool MarbleBoard::removeMarble(int x, int y)
+bool MarbleBoard::removeMarble(IntPosition index)
 {
+	int x = index.x;
+	int y = index.y;
 	int maxY = (getRowType(x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
 	if (x < 0 || y<0 || x>getHeight() || y >= maxY)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : removeMarble() \n Invailed Index"));
@@ -274,8 +269,8 @@ void MarbleBoard::updateMarblePositions()
 	bool even = (getRowType(0)==RowType::Odd)?false:true;
 	// int position은 자신의 index,
 	// position은 offset + index*width, offset+index*height
-	for (int i = 0; i<(int)_marbles.size(); i++){
-		for (int j = 0; j < (int)_marbles[i].size(); j++){
+	for (unsigned int i = 0; i<(int)_marbles.size(); i++){
+		for (unsigned int j = 0; j < (int)_marbles[i].size(); j++){
 			if (_marbles[i][j] != nullptr){
 				_marbles[i][j]->setGridPosition({ i, j });
 				if (even)

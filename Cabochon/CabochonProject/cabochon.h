@@ -15,6 +15,8 @@ private:
 	// 게임 아이템
 	scenes::Scene* _currentScene;
 	scenes::TextureList _textureList;
+	TextDX _text;
+	std::string _errorMessage;
 	void changeScene(scenes::SceneName newSceneName);
 
 public:

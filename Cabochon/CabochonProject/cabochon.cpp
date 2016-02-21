@@ -41,6 +41,8 @@ void Cabochon::initialize(HWND hwnd)
 	_textureList.setGraphics(*graphics);
 	_textureList.loadTextures();
 
+	_text.initialize(graphics, 15, false, false, cabochon_constants::FONT);
+
 	changeScene(SceneName::MainScene);		
 	
 	return;
@@ -50,8 +52,28 @@ void Cabochon::update()
 {
 	if (_currentScene != nullptr)
 	{
-		_currentScene->update(frameTime);
-		_currentScene->lateUpdate(frameTime);
+		try {
+			_currentScene->update(frameTime);
+		}
+		catch (const GameError& e)
+		{
+			_errorMessage=e.getMessage()+std::string("\n was occured in update()");
+		}
+		catch (const std::exception& e)
+		{
+			_errorMessage = e.what();
+		}
+		try{
+			_currentScene->lateUpdate(frameTime);
+		}
+		catch (const GameError& e)
+		{
+			_errorMessage=e.getMessage() + std::string("\n was occured in late update()");
+		}
+		catch (const std::exception& e)
+		{
+			_errorMessage = e.what();
+		}
 	}
 	if (_currentScene->getNextScene() != SceneName::None)
 		changeScene(_currentScene->getNextScene());
@@ -61,10 +83,10 @@ void Cabochon::collisions(){}
 void Cabochon::render()
 {
 	graphics->spriteBegin();
-
 	if (_currentScene != nullptr)
 		_currentScene->render();
 
+	_text.print(_errorMessage, 0, 0);
 	graphics->spriteEnd();
 }
 void Cabochon::releaseAll()
@@ -74,7 +96,9 @@ void Cabochon::releaseAll()
 	if (_currentScene != nullptr)
 		_currentScene->releaseAll();
 
+	_text.onLostDevice();
 	_textureList.onLostDevice();
+	
 	Game::releaseAll();
 	return;
 }
@@ -84,6 +108,7 @@ void Cabochon::resetAll()
 
 	Game::resetAll();
 	_textureList.onResetDevice();
+	_text.onLostDevice();
 
 	if(_currentScene!=nullptr)
 		_currentScene->resetAll();

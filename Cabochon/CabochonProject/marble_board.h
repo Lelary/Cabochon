@@ -53,19 +53,16 @@ namespace controls
 
 
 		// marble_ptr 참조 반환.
-		const marble_ptr& getMarble(IntPosition gridPosition) const;
-		const marble_ptr& getMarble(int x, int y) const;
+		const marble_ptr& getMarble(IntPosition index) const;
 
 		// Marble 이 있을 경우 MarbleColor 반환, 없을 경우엔 MarbleColor::None 반환 (개체에 Color만 None으로 표시하여 없는척)
-		MarbleColor existMarble(IntPosition gridPosition) const;
-		MarbleColor existMarble(int x, int y) const;
+		MarbleColor existMarble(IntPosition index) const;
 	
 		// 해당 색상의 Marble 추가 (실제로는 색깔만 바꾸고 카운트를 올림)
-		bool addMarble(IntPosition gridPosition, MarbleColor color);
-		bool addMarble(int x, int y, MarbleColor color);
+		bool addMarble(IntPosition index, MarbleColor color);
 
 		// 해당 위치의 Marble 삭제 (실제로는 색깔만 None으로, 카운트를 내림)
-		bool removeMarble(int x, int y);
+		bool removeMarble(IntPosition index);
 
 		// 해당 Color를 가진 Marble Instance 생성.
 		marble_ptr makeMarble(MarbleColor color);
