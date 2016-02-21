@@ -41,7 +41,6 @@ namespace controls
 	{
 	private:
 		using shooted_ptr = std::unique_ptr < ShootedMarble >;
-		static const IntPosition noPosition;
 
 		//marble_ptr 에 대한 2차원 배열
 		MarbleBoard _marbleBoard;

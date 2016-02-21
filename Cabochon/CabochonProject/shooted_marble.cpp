@@ -15,10 +15,9 @@ using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
 const scalar ShootedMarble::defaultSpeed = 300;
-const IntPosition ShootedMarble::noPosition = { -1, -1 };
 
 ShootedMarble::ShootedMarble()
-	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(noPosition), _prevIndex(noPosition)
+	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION)
 {
 	/*
 	2016. 1. 18.
@@ -26,7 +25,7 @@ ShootedMarble::ShootedMarble()
 	*/
 }
 ShootedMarble::ShootedMarble(MarbleColor color)
-	:Marble(color), _velocity({ 0.0f, 0.0f }), _currentIndex(noPosition), _prevIndex(noPosition)
+	:Marble(color), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION)
 {
 
 }

@@ -20,7 +20,8 @@ namespace components
 	using mathematics::IntPosition;
 	using components::Marble;
 	using components::marble_ptr;
-	using scenes::TextureList;
+	using scenes::TextureList; 
+	using cabochon_constants::NO_POSITION;
 	
 	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Num};
 
@@ -30,14 +31,13 @@ namespace components
 	public:
 		static const int marbleWidth = cabochon_constants::MARBLE_WIDTH;
 		static const int marbleHeight = cabochon_constants::MARBLE_HEIGHT;
-		static const IntPosition noPosition;
 	private:
 		IntPosition _gridPosition;
 		MarbleColor _color;
 
 	public:
 		Marble(MarbleColor color);
-		Marble(const IntPosition& gridPosition = noPosition, MarbleColor color = MarbleColor::None);
+		Marble(const IntPosition& gridPosition = NO_POSITION, MarbleColor color = MarbleColor::None);
 		Marble(const Marble& rhs);
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);

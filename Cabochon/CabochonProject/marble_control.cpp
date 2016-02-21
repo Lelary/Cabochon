@@ -19,11 +19,11 @@ using cabochon_constants::MAX_Y;
 using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::MARBLE_WIDTH;
 using cabochon_constants::LINE;
+using cabochon_constants::NO_POSITION;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 
-const IntPosition MarbleControl::noPosition = { -1, -1 };
 MarbleControl::MarbleControl()
-	:_justAttached(noPosition), _shootedMarble(nullptr)
+	:_justAttached(NO_POSITION), _shootedMarble(nullptr)
 {
 
 }
@@ -49,7 +49,7 @@ IntPosition MarbleControl::getJustAttached() const
 }
 bool MarbleControl::hasJustAttached() const
 {
-	if (getJustAttached() == noPosition)
+	if (getJustAttached() == NO_POSITION)
 		return false;
 	else
 		return true;
@@ -329,7 +329,7 @@ bool MarbleControl::smash()
 	//-----------------------------------------
 	sameColors.push_back(_justAttached);
 	int i=0;
-	for (int i = 0; i < sameColors.size(); i++) {
+	for (unsigned int i = 0; i < sameColors.size(); i++) {
 		testSet = getTestSet(sameColors[i]);
 
 		for (auto test : testSet)
@@ -354,7 +354,7 @@ bool MarbleControl::smash()
 	}
 
 	// tag Á¦°Å.
-	_justAttached = { -1, -1 };
+	_justAttached = NO_POSITION;
 
 	if (sameColors.size() >= 3)	{
 		for (auto index : sameColors) {

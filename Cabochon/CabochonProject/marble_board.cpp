@@ -63,14 +63,13 @@ bool MarbleBoard::addMarble(IntPosition gridPosition, MarbleColor color)
 bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
 {
 	int maxY = (getRowType(x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
-	if (x < 0 || y<0 || x>getHeight() || y>=maxY)
-		return false;
+	if (x < 0 || y<0 || x>getHeight() || y >= maxY)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : addMarble() \n Invailed Index"));
 
 	if (_marbles[x][y] == nullptr)
-		throw(GameError(gameErrorNS::FATAL_ERROR ,"Error in MarbleBoard : addMarble()"));
-
+		throw(GameError(gameErrorNS::FATAL_ERROR ,"Error in MarbleBoard : addMarble() \n nullptr"));
 	if (_marbles[x][y]->getColor() != MarbleColor::None)
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : addMarble()"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, std::to_string(x) + ", " + std::to_string(y) + " already has MarbleColor !"));
 
 	_colorCount[(int)color]++;
 	_marbles[x][y]->setColor(color);
@@ -80,8 +79,13 @@ bool MarbleBoard::addMarble(int x, int y, MarbleColor color)
 // 실제 메모리를 해제 하는 것이 아니라, None으로 컬러를 바꿈.
 bool MarbleBoard::removeMarble(int x, int y)
 {
+	int maxY = (getRowType(x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+	if (x < 0 || y<0 || x>getHeight() || y >= maxY)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : removeMarble() \n Invailed Index"));
 	if (_marbles[x][y] == nullptr)
-		return false;
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : removeMarble()"));
+	if (_marbles[x][y]->getColor() == MarbleColor::None)
+		throw(GameError(gameErrorNS::FATAL_ERROR, std::to_string(x) + ", " + std::to_string(y) + " is already MarbleColor::None!"));
 
 	_colorCount[(int)_marbles[x][y]->getColor()]--;
 	_marbles[x][y]->setColor(MarbleColor::None);

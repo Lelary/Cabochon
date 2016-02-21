@@ -8,7 +8,6 @@ using components::Layer;
 using components::MarbleColor;
 using scenes::TextureList;
 
-const IntPosition Marble::noPosition = { -1, -1 };
 Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
 	: _gridPosition(gridPosition), _color(color)
 {
@@ -17,7 +16,7 @@ Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
 }
 
 Marble::Marble(MarbleColor color)
-	: Marble(noPosition, color)
+	: Marble(NO_POSITION, color)
 {
 }
 

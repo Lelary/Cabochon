@@ -30,7 +30,6 @@ namespace components
 	{
 	private:
 		static const scalar defaultSpeed;
-		static const IntPosition noPosition;
 		Velocity _velocity;
 
 		// 이전 위치
