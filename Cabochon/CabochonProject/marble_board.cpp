@@ -131,7 +131,7 @@ int MarbleBoard::getFloor() const
 			if (marble->getColor() != MarbleColor::None)
 				return row;				// _marbles의 인덱스.
 
-	// 모두 nullptr일 경우. 이 상황은 게임이 클리어된상태임. 
+	// 모두 MarbleColor::None일 경우. 이 상황은 게임이 클리어된상태임. 
 	return getHeight();
 }
 scalar MarbleBoard::getCeilingPosition() const
@@ -323,6 +323,19 @@ RowType MarbleBoard::getRowType(int row) const
 		return RowType::Odd;
 }
 
+bool MarbleBoard::isInvalidIndex(IntPosition index) const
+{
+	if (index.x < 0 || index.x>getHeight())
+		return true;
+
+	int maxY = (getRowType(index.x) == controls::RowType::Even)
+		? cabochon_constants::MAX_Y : cabochon_constants::MAX_Y - 1;
+
+	if (index.y < 0 || index.y >= maxY)
+		return true;
+
+	return false;
+}
 
 void MarbleBoard::loadTextures(TextureList& textureList)
 {
@@ -340,8 +353,8 @@ void MarbleBoard::render()
 	int minX = (MIN_X < _marbles.size()) ? MIN_X : _marbles.size();
 
 	if (_boardState!=BoardState::Build)
-		for (int i = 0; i < minX; i++)
-			for (int j = 0; j < _marbles[i].size(); j++)
+		for (unsigned int i = 0; i < minX; i++)
+			for (unsigned int j = 0; j < _marbles[i].size(); j++)
 				if (_marbles[i][j]!=nullptr)
 					_marbles[i][j]->draw();
 }

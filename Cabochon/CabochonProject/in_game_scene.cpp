@@ -146,7 +146,7 @@ void InGameScene::lateUpdate(float frameTime)
 	// 부가효과 ( marble smach ) 확인, 처리.
 	if (_marbleControl.hasJustAttached())
 	{
-		_marbleControl.smash();
+		//_marbleControl.smash();
 	}
 
 	// smash() 된 marble 이 있을 때, 

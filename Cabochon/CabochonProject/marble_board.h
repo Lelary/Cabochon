@@ -141,6 +141,9 @@ namespace controls
 		// 자신의 Row 번호를 통해, RowType이 Even인지 Odd인지 알 수 있다. 
 		RowType getRowType(int row) const; 
 
+		// 오류를 일으킬 index 값인지 검사한다.
+		bool isInvalidIndex(IntPosition index) const;
+
 		//pure virtual functions
 		virtual void render();
 		virtual void update(float frameTime);

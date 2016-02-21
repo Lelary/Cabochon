@@ -42,19 +42,19 @@ namespace components
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
 
-		void loadLayers(TextureList& textureList);
-		MarbleColor getColor() const; 
-		MarbleColor setColor(MarbleColor color);
+		virtual void loadLayers(TextureList& textureList);
+		virtual MarbleColor getColor() const; 
+		virtual MarbleColor setColor(MarbleColor color);
 
-		void setGridPosition(IntPosition gridPosition);
-		IntPosition getGridPosition() const;
+		virtual void setGridPosition(IntPosition gridPosition);
+		virtual IntPosition getGridPosition() const;
 
 		// marble은 회전 성분을 가지고 있지 않지만, layer 를 회전시킨다.
-		void rotate(scalar degree);
-		void draw();
-		void update(float frameTime);
+		virtual void rotate(scalar degree);
+		virtual void draw();
+		virtual void update(float frameTime);
 
-		bool circularHitTest(const Marble& anotherMarble, scalar scale = 1.0f) const;
+		virtual bool circularHitTest(const Marble& anotherMarble, scalar scale = 1.0f) const;
 		static bool circularHitTest(const Marble& marble1, const Marble& marble2, scalar scale = 1.0f);
 
 

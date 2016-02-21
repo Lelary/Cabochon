@@ -16,16 +16,16 @@ using cabochon_constants::RIGHT_WALL;
 
 const scalar ShootedMarble::defaultSpeed = 300;
 
-ShootedMarble::ShootedMarble()
-	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION)
+ShootedMarble::ShootedMarble(const MarbleBoard& marbleBoard)
+	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
 {
 	/*
 	2016. 1. 18.
 	nothing to do.
 	*/
 }
-ShootedMarble::ShootedMarble(MarbleColor color)
-	:Marble(color), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION)
+ShootedMarble::ShootedMarble(MarbleColor color, const MarbleBoard& marbleBoard)
+	:Marble(color), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
 {
 
 }
@@ -111,10 +111,17 @@ void ShootedMarble::setVelocity(scalar speed, Angle angle)
 	_velocity = { speed*sinf(angle.getDegree()*PI / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
 	
 }
+void ShootedMarble::update(float frameTIme)
+{
+	Marble::update(frameTIme);
+	updateIndex(_marbleBoard);
+}
 
 void ShootedMarble::setCurrentIndex(IntPosition index)
 {
-	_prevIndex = _currentIndex;
+	//prevIndex는 무조건 업데이트되지는 않음. (전전 위치를 유지할 때가 있다.)
+	if(isInInvalidIndex()==false)
+		_prevIndex = _currentIndex;
 	_currentIndex = index;
 }
 IntPosition ShootedMarble::getCurrentIndex() const
@@ -125,17 +132,26 @@ IntPosition ShootedMarble::getPrevIndex() const
 {
 	return _prevIndex;
 }
+bool ShootedMarble::indexChanged() const
+{
+	return _indexChanged;
+}
 bool ShootedMarble::updateIndex(const MarbleBoard& board)
 {
 	if (board.positionToIndex(getPosition()) != _currentIndex)
 	{
 		setCurrentIndex(board.positionToIndex(getPosition()));
 
-		int maxY = (board.getRowType(_currentIndex.x) == controls::RowType::Even) ? cabochon_constants::MAX_Y : cabochon_constants::MAX_Y - 1;
-		if (_currentIndex.x < 0 || _currentIndex.y<0 || _currentIndex.x>getHeight() || _currentIndex.y >= maxY)
-			return false;
-
-		return true;
+		return _indexChanged = true;
 	}
-	return false;
+	return _indexChanged = false;
+}
+bool ShootedMarble::isInInvalidIndex() const
+{
+	return _marbleBoard.isInvalidIndex(_currentIndex);
+}
+
+bool ShootedMarble:: wasInInvalidIndex() const
+{
+	return _marbleBoard.isInvalidIndex(_prevIndex);
 }

@@ -30,6 +30,7 @@ namespace components
 	{
 	private:
 		static const scalar defaultSpeed;
+		const MarbleBoard& _marbleBoard;
 		Velocity _velocity;
 
 		// 이전 위치
@@ -38,11 +39,13 @@ namespace components
 		IntPosition _currentIndex;
 		// 이전 Index
 		IntPosition _prevIndex;
+		// index가 방금 변함.
+		bool _indexChanged;
 
 		void setCurrentIndex(IntPosition index);
 	public:
-		ShootedMarble();
-		ShootedMarble(MarbleColor color);
+		ShootedMarble(const MarbleBoard& marbleBoard);
+		ShootedMarble(MarbleColor color, const MarbleBoard& marbleBoard);
 		ShootedMarble(const ShootedMarble& rhs) = delete;
 		virtual ~ShootedMarble();
 		ShootedMarble& operator=(const ShootedMarble& rhs) = delete;
@@ -62,11 +65,16 @@ namespace components
 		// updateIndex 호출 시 마다 _currentIndex, _prevIndex 가 업데이트 된다.
 		// 이전 호출과 비교했을때 변경점이 있으면 true 리턴.
 		bool updateIndex(const MarbleBoard& board);
-
 		// ShootedMarble이 MarbleBoard 상에서 몇번 자리 위에 있는지 검사하는 함수.
 		IntPosition getCurrentIndex() const;
 		// ShootedMarble이 MarbleBoard 상에서 몇번 자리 위에 있었는지 검사하는 함수.
 		IntPosition getPrevIndex() const;
+		bool indexChanged() const;
+		// 현재 위치가 MarbleBoard 의 인덱스 범위를 벗어남.
+		bool isInInvalidIndex() const;
+		// 이전 위치가 MarbleBoard 의 인덱스 범위를 벗어남. // 그러면 업데이트하지않음.
+		// 하지만 처음 위치는 invalid함.
+		bool wasInInvalidIndex() const;
 
 		/*
 		2016. 1. 17
@@ -86,6 +94,8 @@ namespace components
 		virtual void setVelocity(Velocity velocity);
 		virtual void setVelocity(scalar vx, scalar vy);
 		virtual void setVelocity(scalar speed, Angle angle);
+
+		virtual void update(float frameTIme);
 	};
 }
 

@@ -61,7 +61,7 @@ shooted_ptr& MarbleControl::getShootedMarble()
 }
 void MarbleControl::setShootedMarble(MarbleColor color, Position position, scalar speed, mathematics::Angle degree, TextureList& textureList)
 {
-	shooted_ptr shootedMarble=std::make_unique<ShootedMarble>(color);
+	shooted_ptr shootedMarble=std::make_unique<ShootedMarble>(color, _marbleBoard);
 	shootedMarble->setCentralPosition(position);
 	shootedMarble->setVelocity(speed, degree);
 	_shootedMarble = std::move(shootedMarble);
@@ -289,15 +289,30 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 		return true;
 	}
 	*/
-	if (shootedMarble->updateIndex(getMarbleBoard())) {
-		if (_marbleBoard.getMarble(shootedMarble->getCurrentIndex())->getColor() != MarbleColor::None) {
-			//attach 확정.
-			_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
-			shootedMarble.reset();
 
-			_justAttached = gridPosition;
-			return true;
+	// 이전인덱스와 현재 인덱스 확인하여 attach
+	if (shootedMarble->indexChanged()) {
+		// 현재 위치가 valid (그래야 color검사가능.) 하고 이전 위치가 valid ( 그래야 부착 가능, 최초 위치를 제외하곤 항상 valid)
+		if (shootedMarble->isInInvalidIndex() == false && shootedMarble->wasInInvalidIndex()==false){
+			// currentIndex has Color
+			if (_marbleBoard.getMarble(shootedMarble->getCurrentIndex())->getColor() != MarbleColor::None) {
+				//attach 확정, prevIndex에 부착.
+				_marbleBoard.addMarble(shootedMarble->getPrevIndex(), shootedMarble->getColor());
+
+				_justAttached = shootedMarble->getPrevIndex();
+				shootedMarble.reset();
+				return true;
+			}
 		}
+		// 이전 위치가 invalid인데 현재 위치에 color 가 있음.
+		// 사실 이 상황이 오기전에 이미 gameOver 처리가 되었어야함. (현재는 처리하는 로직이 미완성)
+		// 나중에 예외처리로 교체.
+		else if (shootedMarble->isInInvalidIndex() == false && shootedMarble->wasInInvalidIndex())
+		{
+			if (_marbleBoard.getMarble(shootedMarble->getCurrentIndex())->getColor() != MarbleColor::None)
+				_marbleBoard.setBoardState(BoardState::GameOver);
+		}
+
 	}
 
 	// 천장에 닿아서 force attach.
@@ -377,6 +392,9 @@ void MarbleControl::render()
 void MarbleControl::update(float frameTime)
 {
 	if (_shootedMarble != nullptr)
+	{
 		_shootedMarble->move(_marbleBoard, frameTime);
+		_shootedMarble->update(frameTime);
+	}
 	_marbleBoard.update(frameTime);
 }
