@@ -345,7 +345,7 @@ bool MarbleControl::smash()
 	std::deque<IntPosition> checked;
 	std::vector<IntPosition> sameColors;
 
-	bool toBreak = false;
+	bool toContinue = false;
 	
 	//-----------------------------------------
 	sameColors.push_back(_justAttached);
@@ -355,17 +355,16 @@ bool MarbleControl::smash()
 	for (unsigned int i = 0; i < sameColors.size(); i++) {
 		testSet = getTestSet(sameColors[i]);
 
-		for (auto test : testSet)
-		{
+		for (auto test : testSet) {
 			for (auto c : checked) {
 				if (test == c) {
-					toBreak = true;
+					toContinue = true;
 					break;
 				}
 			}
-			if (toBreak) {
-				toBreak = false;
-				break;
+			if (toContinue) {
+				toContinue = false;
+				continue;
 			}
 
 			// if not checked yet
