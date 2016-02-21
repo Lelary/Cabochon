@@ -268,7 +268,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 		//3. 해당 인접위치가 비어있지않으면, 
 		if (_marbleBoard.existMarble(testPosition) != MarbleColor::None){
 			// 4. 반지름 검사. (원형 충돌 검사)
-			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition).get())){
+			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition).get(), 0.8f)){
 				return true;
 			}
 		}
@@ -280,6 +280,13 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 {
 	IntPosition gridPosition = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	
+	if (gridPosition.y > _marbleBoard.getHeight() || gridPosition.y<0)
+		return false;
+	int maxY = (_marbleBoard.getRowType(gridPosition.y) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+	if (gridPosition.x >= maxY || gridPosition.x<0)
+		return false;
+
+	// 블록의 인접블록을 검사하는 방법으로 attach.
 	if (isAttachable(shootedMarble, gridPosition))
 	{
 		//attach 확정.
@@ -289,7 +296,6 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 		_justAttached = gridPosition;
 		return true;
 	}
-	
 
 	// 이전인덱스와 현재 인덱스 확인하여 attach
 	if (shootedMarble->indexChanged()) {

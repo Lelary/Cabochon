@@ -18,14 +18,14 @@ SteeringWheelControl::SteeringWheelControl()
 	*/
 	_steeringWheel.setWidth(100);
 	_steeringWheel.setHeight(100);
-	_steeringWheel.setCentralPosition(GAME_WIDTH/2.0f, 7*GAME_HEIGHT/8);
+	_steeringWheel.setCentralPosition(GAME_WIDTH/2.0f, 9*GAME_HEIGHT/10.0f);
 
 	_marbleCurrent = MarbleGenerator::makeMarble();	
 	_marbleCurrent->setCentralPosition(_steeringWheel.getCentralPosition());
 	_marbleNext = MarbleGenerator::makeMarble();
 	_marbleNext->setCentralPosition(
 		_steeringWheel.getCentralPosition().x - 120,
-		_steeringWheel.getCentralPosition().y + 20);
+		_steeringWheel.getCentralPosition().y + 10);
 }
 SteeringWheelControl::~SteeringWheelControl()
 {

@@ -118,6 +118,9 @@ void InGameScene::update(float frameTime)
 		y = _marbleControl.getShootedMarble()->getCentralPosition().y;
 	}
 
+	if (mathematics::IntPosition{ x, y } == cabochon_constants::NO_POSITION)
+		return;
+
 	_debugMessage =
 		"\n Index Row: "
 		+ std::to_string(_marbleControl.getMarbleBoard().positionToRowIndex(y))
@@ -155,22 +158,25 @@ void InGameScene::lateUpdate(float frameTime)
 	//----------------------------------------------------------
 	// 현재 상태에 따른 계산 수행.
 	//----------------------------------------------------------
-
-	// 현재 shooting 중 일 때,
-	if (_marbleControl.isShooting())
+	if (getBoardState() == BoardState::Play)
 	{
-		_marbleControl.attach(_marbleControl.getShootedMarble());
-	}
-	// shooting 된 marble이 방금 attach 되었을 때, 
-	// 부가효과 ( marble smach ) 확인, 처리.
-	if (_marbleControl.hasJustAttached())
-	{
-		//_marbleControl.smash();
-	}
+		// 현재 shooting 중 일 때,
+		if (_marbleControl.isShooting())
+		{
+			_marbleControl.attach(_marbleControl.getShootedMarble());
+		}
+		// shooting 된 marble이 방금 attach 되었을 때, 
+		// 부가효과 ( marble smach ) 확인, 처리.
+		if (_marbleControl.hasJustAttached())
+		{
+			// 애니메이션과, 카운트가 필요하다.
+			_marbleControl.smash();
+		}
 
-	// smash() 된 marble 이 있을 때, 
-	// 부가효과 ( ceiling과의 연결이 끊어짐으로 인한 drop() 처리.
-	// 미작성.
+		// smash() 된 marble 이 있을 때, 
+		// 부가효과 ( ceiling과의 연결이 끊어짐으로 인한 drop() 처리.
+		// 미작성.
+	}
 }
 void InGameScene::render()
 {

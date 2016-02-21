@@ -297,7 +297,12 @@ int MarbleBoard::positionToRowIndex(scalar y) const
 }
 RowType MarbleBoard::getRowType(scalar y) const
 {
-	return getRowType(positionToRowIndex(y));
+	int indexY = positionToRowIndex(y);
+
+	if (indexY >= _marbles.size())
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard::getRowType() !"));
+
+	return getRowType(indexY);
 }
 
 IntPosition MarbleBoard::positionToIndex(scalar x, scalar y) const
@@ -312,7 +317,9 @@ IntPosition MarbleBoard::positionToIndex(Position position) const
 
 RowType MarbleBoard::getRowType(int row) const
 {
-	if (_marbles.at(row).size() == MAX_Y)
+	if (row >= _marbles.size())
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard::getRowType() !"));
+ 	if (_marbles.at(row).size() == MAX_Y)
 		return RowType::Even;
 	else
 		return RowType::Odd;
