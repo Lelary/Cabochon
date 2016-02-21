@@ -19,9 +19,6 @@
     <Filter Include="헤더 파일\components">
       <UniqueIdentifier>{dde15dcc-1c21-480c-874f-0e8f6610fa33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\etc">
-      <UniqueIdentifier>{6873fad9-f9bb-461f-a4de-1898b9646d43}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\pattern">
       <UniqueIdentifier>{8ce400a4-3ba7-409a-9f98-4749566f885c}</UniqueIdentifier>
     </Filter>

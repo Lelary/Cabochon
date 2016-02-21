@@ -9,6 +9,7 @@ using controls::BoardState;
 using controls::MarbleColorOn;
 using scenes::InGameScene;
 using scenes::TextureList;
+
 InGameScene::InGameScene(Graphics& graphics, Input& input, TextureList& textureList)
 	:Scene(graphics, input, textureList)
 {
@@ -27,8 +28,8 @@ void InGameScene::start()
 	
 	// Image, Text
 	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
-	_text.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
-	_text2.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
+	_debugText.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
+	_errorText.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
 	
 	// wheelControl
 	_wheelControl.loadTextures(_textureList);
@@ -105,6 +106,24 @@ void InGameScene::update(float frameTime)
 		// Wheel È¸Àü.
 		_wheelControl.rotateRight(frameTime);
 	}
+
+	//----------------------------------------------------------
+	// Debug Message Setting
+	//----------------------------------------------------------
+
+	static float x = -1, y = -1;
+	if (_marbleControl.getShootedMarble() != nullptr)
+	{
+		x = _marbleControl.getShootedMarble()->getCentralPosition().x;
+		y = _marbleControl.getShootedMarble()->getCentralPosition().y;
+	}
+
+	_debugMessage =
+		"\n Index Row: "
+		+ std::to_string(_marbleControl.getMarbleBoard().positionToRowIndex(y))
+		+ "\n Index Column: "
+		+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
+
 }
 void InGameScene::lateUpdate(float frameTime)
 {
@@ -159,52 +178,20 @@ void InGameScene::render()
 	_wheelControl.render();
 	_marbleControl.render();
 
-	static float x=-1, y=-1;
-	if (_marbleControl.getShootedMarble() != nullptr)
-	{
-		x = _marbleControl.getShootedMarble()->getCentralPosition().x;
-		y = _marbleControl.getShootedMarble()->getCentralPosition().y;
-	}
-	_text2.print(
-	"\n Index Row: "
-	+ std::to_string(_marbleControl.getMarbleBoard().positionToRowIndex(y))
-	+ "\n Index Column: "
-	+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)))
-	, 100, 200);
-
-	switch (getBoardState())
-	{
-	case BoardState::Build:
-		_text.print("Build", 100, 100);
-		break;
-	case BoardState::Ready:
-		_text.print("Ready", 100, 100);
-		break;
-	case BoardState::Play:
-		_text.print("Play", 100, 100);
-		break;
-	case BoardState::GameClear:
-		_text.print("GameClear", 100, 100);
-		break;
-	case BoardState::GameOver:
-		_text.print("GameOver", 100, 100);
-		break;
-	default:
-		break;
-	}
-
+	_debugText.print(_debugMessage, 100, 100);
+	_errorText.print(_errorMessage, 100, 300);
 }
 
 void InGameScene::releaseAll()
 {
-	_text.onLostDevice();
-	_text2.onLostDevice();
+	_errorText.onLostDevice();
+	_debugText.onLostDevice();
 }
 
 void InGameScene::resetAll()
 {
-	_text.onResetDevice();
-	_text2.onResetDevice();
+	_debugText.onResetDevice();
+	_errorText.onResetDevice();
 }
 
 BoardState InGameScene::getBoardState() const

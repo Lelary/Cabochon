@@ -305,7 +305,7 @@ IntPosition MarbleBoard::positionToIndex(scalar x, scalar y) const
 	return{ positionToRowIndex(y), positionToColumnIndex(x, getRowType(y)) };
 }
 
-IntPosition MarbleBoard::positionToIndex(const Position& position) const
+IntPosition MarbleBoard::positionToIndex(Position position) const
 {
 	return positionToIndex(position.x, position.y);
 }

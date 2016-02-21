@@ -20,8 +20,10 @@ namespace scenes
 	{
 	private:
 		Image _backGround;
-		TextDX _text;
-		TextDX _text2;
+		TextDX _debugText;
+		TextDX _errorText;
+		std::string _debugMessage;
+		std::string _errorMessage;
 
 		SteeringWheelControl _wheelControl;
 		MarbleControl _marbleControl;

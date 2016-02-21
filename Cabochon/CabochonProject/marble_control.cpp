@@ -93,7 +93,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(const shooted_ptr& shootedMar
 	return getTestSet(marblePosition);
 }
 //Attach 가능성이 있는 Grid 위치 (인접위치) 반환.
-std::vector<IntPosition> MarbleControl::getTestSet(const IntPosition& marblePosition) const
+std::vector<IntPosition> MarbleControl::getTestSet(IntPosition marblePosition) const
 {
 	std::vector<IntPosition> testSet;
 	int x = marblePosition.x;
@@ -197,7 +197,7 @@ Quadrant MarbleControl::getQuadrant(const shooted_ptr& shootedMarble) const
 {
 	return getQuadrant(shootedMarble->getPrevCentralPosition());
 }
-Quadrant MarbleControl::getQuadrant(const Position& marblePosition) const
+Quadrant MarbleControl::getQuadrant(Position marblePosition) const
 {
 	IntPosition index = _marbleBoard.positionToIndex(marblePosition);
 	Position leftTop;
@@ -234,7 +234,7 @@ Quadrant MarbleControl::getQuadrant(const Position& marblePosition) const
 }
 
 //attach shooted marble
-bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const
+bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble, IntPosition gridPosition) const
 {
 	/*
 	2016. 1. 22.

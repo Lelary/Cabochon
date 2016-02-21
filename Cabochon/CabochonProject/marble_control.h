@@ -76,16 +76,16 @@ namespace controls
 		//Grid 위치 (인접위치) 반환, (최대 6개) , smash()에 사용.
 		std::vector<IntPosition> getTestSet(const shooted_ptr& shootedMarble) const;
 		//Grid 위치 (인접위치) 반환, (최대 6개) , smash()에 사용.
-		std::vector<IntPosition> getTestSet(const IntPosition& gridPosition) const;
+		std::vector<IntPosition> getTestSet(IntPosition gridPosition) const;
 		//Grid 위치 (인접위치) 반환, (최대 2개) , isAttachable 에 사용.
 		std::vector<IntPosition> getLessTestSet(const shooted_ptr& shootedMarble) const;
 
 		//Quadrant
 		Quadrant getQuadrant(const shooted_ptr& shootedMarble) const;
-		Quadrant getQuadrant(const Position& marblePosition) const;
+		Quadrant getQuadrant(Position marblePosition) const;
 
 		//attach shooted marble
-		bool isAttachable(const shooted_ptr& shootedMarble, const IntPosition& gridPosition) const;
+		bool isAttachable(const shooted_ptr& shootedMarble, IntPosition gridPosition) const;
 		bool isAttachable(const shooted_ptr& shootedMarble) const;
 
 		// test 하고 가능하면 Attach 한다.
