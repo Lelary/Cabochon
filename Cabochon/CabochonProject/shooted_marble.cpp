@@ -14,7 +14,7 @@ using controls::MarbleBoard;
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
-const scalar ShootedMarble::defaultSpeed = 300;
+const scalar ShootedMarble::defaultSpeed = 500;
 
 ShootedMarble::ShootedMarble(const MarbleBoard& marbleBoard)
 	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
@@ -39,31 +39,34 @@ ShootedMarble::~ShootedMarble()
 
 void ShootedMarble::setPosition(const Position& position)
 {
-	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
+	_prevPosition = getPosition();
 	Object::setPosition(position);
+
+	// Object::setPosition 에서 부가적으로 한 일을 번복. (현재 _position이 private임.)
+	for (Layer& layer : _layers)
+	{
+		layer.adjustPosition(_prevPosition);
+	}
 }
 
 void ShootedMarble::setPosition(scalar x, scalar y)
 {
-	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
-	Object::setPosition(x, y);
+	setPosition({ x, y });
 }
 
 void ShootedMarble::setCentralPosition(const Position& position)
 {
-	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
-	Object::setCentralPosition(position);
+	setPosition(Object::convertOrigin(position, mathematics::Origin::LEFT_TOP, getWidth(), getHeight()));
 }
 
 void ShootedMarble::setCentralPosition(scalar x, scalar y)
 {
-	_prevCentralPosition = Object::convertOrigin(getPosition(), mathematics::Origin::CENTER, getWidth(), getHeight());
-	Object::setCentralPosition(x, y);
+	setPosition(Object::convertOrigin({x, y}, mathematics::Origin::LEFT_TOP, getWidth(), getHeight()));
 }
 
 Position ShootedMarble::getPrevCentralPosition() const
 {
-	return _prevCentralPosition;
+	return Object::convertOrigin(_prevPosition, mathematics::Origin::CENTER, getWidth(), getHeight());
 }
 
 void ShootedMarble::move(const MarbleBoard& board, float frameTIme)

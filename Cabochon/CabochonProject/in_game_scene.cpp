@@ -54,6 +54,7 @@ void InGameScene::update(float frameTime)
 	//----------------------------------------------------------
 	// BoardState::Play 일 떄만
 	//----------------------------------------------------------
+
 	if (getBoardState() != BoardState::Play)
 		return;
 
@@ -62,7 +63,6 @@ void InGameScene::update(float frameTime)
 	//----------------------------------------------------------
 	_wheelControl.update(frameTime);
 	_marbleControl.update(frameTime);
-
 
 	//----------------------------------------------------------
 	// MarbleCurrent 를 Shooting함.

@@ -34,7 +34,7 @@ namespace components
 		Velocity _velocity;
 
 		// 이전 위치
-		Position _prevCentralPosition;
+		Position _prevPosition;
 		// 현재 Index
 		IntPosition _currentIndex;
 		// 이전 Index

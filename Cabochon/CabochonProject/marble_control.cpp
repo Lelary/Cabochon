@@ -59,10 +59,10 @@ shooted_ptr& MarbleControl::getShootedMarble()
 {
 	return _shootedMarble;
 }
-void MarbleControl::setShootedMarble(MarbleColor color, Position position, scalar speed, mathematics::Angle degree, TextureList& textureList)
+void MarbleControl::setShootedMarble(MarbleColor color, Position centralPosition, scalar speed, mathematics::Angle degree, TextureList& textureList)
 {
 	shooted_ptr shootedMarble=std::make_unique<ShootedMarble>(color, _marbleBoard);
-	shootedMarble->setCentralPosition(position);
+	shootedMarble->setCentralPosition(centralPosition);
 	shootedMarble->setVelocity(speed, degree);
 	_shootedMarble = std::move(shootedMarble);
 	_shootedMarble->loadLayers(textureList);
@@ -278,7 +278,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 bool MarbleControl::attach(shooted_ptr& shootedMarble)
 {
 	IntPosition gridPosition = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
-	/*
+	
 	if (isAttachable(shootedMarble, gridPosition))
 	{
 		//attach 확정.
@@ -288,7 +288,7 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 		_justAttached = gridPosition;
 		return true;
 	}
-	*/
+	
 
 	// 이전인덱스와 현재 인덱스 확인하여 attach
 	if (shootedMarble->indexChanged()) {

@@ -7,7 +7,6 @@ using components::Layer;
 Layer::Layer() 
 	:Image(), _distance({0.0f,0.0f})
 {
-
 }	
 Layer::~Layer()
 {
