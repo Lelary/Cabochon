@@ -206,7 +206,8 @@ Quadrant MarbleControl::getQuadrant(const Position& marblePosition) const
 	bool up;
 
 	if (even)
-		leftTop = { 0 + index.y*MARBLE_WIDTH, LINE - index.x*MARBLE_HEIGHT };
+		leftTop = {	static_cast<scalar>(0 + index.y * MARBLE_WIDTH),
+					static_cast<scalar>(LINE - index.x * MARBLE_HEIGHT) };
 	else
 		leftTop = { 0 + index.y*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), LINE - index.x*MARBLE_HEIGHT };
 	if (marblePosition.x < leftTop.x + MARBLE_WIDTH / 2.0f)
@@ -267,7 +268,7 @@ bool MarbleControl::isAttachable(const shooted_ptr& shootedMarble) const
 		//3. 해당 인접위치가 비어있지않으면, 
 		if (_marbleBoard.existMarble(testPosition) != MarbleColor::None){
 			// 4. 반지름 검사. (원형 충돌 검사)
-			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition.x, testPosition.y).get())){
+			if (shootedMarble->circularHitTest(*_marbleBoard.getMarble(testPosition).get())){
 				return true;
 			}
 		}
@@ -373,7 +374,7 @@ bool MarbleControl::smash()
 
 	if (sameColors.size() >= 3)	{
 		for (auto index : sameColors) {
-			_marbleBoard.removeMarble(index.x, index.y);
+			_marbleBoard.removeMarble(index);
 		}
 		return true;
 	}
