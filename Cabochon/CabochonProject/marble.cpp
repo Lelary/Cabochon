@@ -8,8 +8,8 @@ using components::Layer;
 using components::MarbleColor;
 using scenes::TextureList;
 
-Marble::Marble(const IntPosition& gridPosition, MarbleColor color)
-	: _gridPosition(gridPosition), _color(color)
+Marble::Marble(const IntPosition& index, MarbleColor color)
+	: _index(index), _color(color)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
@@ -21,7 +21,7 @@ Marble::Marble(MarbleColor color)
 }
 
 Marble::Marble(const Marble& rhs)
-	: Object(rhs), _gridPosition(rhs._gridPosition), _color(rhs._color)
+	: Object(rhs), _index(rhs._index), _color(rhs._color)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
@@ -43,8 +43,11 @@ Marble& Marble::operator=(const Marble& rhs)
 { 
 	if (&rhs == this)
 		return *this;
+	
+	Object::operator=(rhs);
 
-	_gridPosition = rhs._gridPosition;
+	_color = rhs._color;
+	_index = rhs._index;
 	return *this;
 }
 void Marble::loadLayers(TextureList& textureList)
@@ -95,13 +98,13 @@ void Marble::rotate(scalar degree)
 		layer.setDegrees(layer.getDegrees()+degree);
 }
 
-void Marble::setGridPosition(IntPosition gridPosition)
+void Marble::setIndex(IntPosition index)
 {
-	_gridPosition = gridPosition;
+	_index = index;
 }
-IntPosition Marble::getGridPosition() const
+IntPosition Marble::getIndex() const
 {
-	return _gridPosition;
+	return _index;
 }
 
 void Marble::draw()

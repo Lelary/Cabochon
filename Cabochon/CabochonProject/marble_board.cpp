@@ -272,11 +272,11 @@ void MarbleBoard::updateMarblePositions()
 	for (unsigned int i = 0; i<(int)_marbles.size(); i++){
 		for (unsigned int j = 0; j < (int)_marbles[i].size(); j++){
 			if (_marbles[i][j] != nullptr){
-				_marbles[i][j]->setGridPosition({ i, j });
+				_marbles[i][j]->setIndex({ i, j });
 				if (even)
-					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH, y - i*MARBLE_HEIGHT);
+					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH, y - (i+1)*MARBLE_HEIGHT);
 				else
-					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH + (MARBLE_WIDTH/2.0f), y - i*MARBLE_HEIGHT);
+					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), y - (i + 1)*MARBLE_HEIGHT);
 			}
 		}
 		even = !even;
@@ -286,10 +286,10 @@ void MarbleBoard::updateMarblePositions()
 }
 int MarbleBoard::positionToColumnIndex(scalar x, RowType rowType) const
 {
-	if (getRowType(x) == RowType::Odd)
+	if (rowType == RowType::Odd)
 		return static_cast<int>(floorf((x - MARBLE_WIDTH/2.0f) / MARBLE_WIDTH));
 	else
-		return static_cast<int>(floorf(x / MARBLE_WIDTH));
+ 		return static_cast<int>(floorf(x / MARBLE_WIDTH));
 }
 int MarbleBoard::positionToRowIndex(scalar y) const
 {

@@ -32,12 +32,12 @@ namespace components
 		static const int marbleWidth = cabochon_constants::MARBLE_WIDTH;
 		static const int marbleHeight = cabochon_constants::MARBLE_HEIGHT;
 	private:
-		IntPosition _gridPosition;
+		IntPosition _index;
 		MarbleColor _color;
 
 	public:
 		Marble(MarbleColor color);
-		Marble(const IntPosition& gridPosition = NO_POSITION, MarbleColor color = MarbleColor::None);
+		Marble(const IntPosition& index = NO_POSITION, MarbleColor color = MarbleColor::None);
 		Marble(const Marble& rhs);
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
@@ -46,8 +46,8 @@ namespace components
 		virtual MarbleColor getColor() const; 
 		virtual MarbleColor setColor(MarbleColor color);
 
-		virtual void setGridPosition(IntPosition gridPosition);
-		virtual IntPosition getGridPosition() const;
+		virtual void setIndex(IntPosition index);
+		virtual IntPosition getIndex() const;
 
 		// marble은 회전 성분을 가지고 있지 않지만, layer 를 회전시킨다.
 		virtual void rotate(scalar degree);
