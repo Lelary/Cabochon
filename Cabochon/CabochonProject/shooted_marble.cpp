@@ -138,9 +138,9 @@ bool ShootedMarble::indexChanged() const
 }
 bool ShootedMarble::updateIndex(const MarbleBoard& board)
 {
-	if (board.positionToIndex(getPosition()) != _currentIndex)
+	if (board.positionToIndex(getCentralPosition()) != _currentIndex)
 	{
-		setCurrentIndex(board.positionToIndex(getPosition()));
+		setCurrentIndex(board.positionToIndex(getCentralPosition()));
 
 		return _indexChanged = true;
 	}

@@ -197,12 +197,14 @@ void InGameScene::render()
 
 void InGameScene::releaseAll()
 {
-
+	_text.onLostDevice();
+	_text2.onLostDevice();
 }
 
 void InGameScene::resetAll()
 {
-
+	_text.onResetDevice();
+	_text2.onResetDevice();
 }
 
 BoardState InGameScene::getBoardState() const
