@@ -346,10 +346,11 @@ bool MarbleControl::smash()
 	std::vector<IntPosition> sameColors;
 
 	bool toBreak = false;
-
-
+	
 	//-----------------------------------------
 	sameColors.push_back(_justAttached);
+	checked.push_back(_justAttached);
+
 	int i=0;
 	for (unsigned int i = 0; i < sameColors.size(); i++) {
 		testSet = getTestSet(sameColors[i]);
