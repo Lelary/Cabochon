@@ -131,7 +131,7 @@ int MarbleBoard::getFloor() const
 }
 scalar MarbleBoard::getCeilingPosition() const
 {
-	return -1 * getHeight()*MARBLE_HEIGHT + LINE;
+	return -1 * (getHeight()-1)*MARBLE_HEIGHT + LINE;
 }
 bool MarbleBoard::gameOver()
 {
@@ -274,7 +274,7 @@ void MarbleBoard::updateMarblePositions()
 			if (_marbles[i][j] != nullptr){
 				_marbles[i][j]->setIndex({ i, j });
 				if (even)
-					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH, y - (i+1)*MARBLE_HEIGHT);
+					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH, y - (i + 1)*MARBLE_HEIGHT);
 				else
 					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), y - (i + 1)*MARBLE_HEIGHT);
 			}
@@ -327,7 +327,7 @@ RowType MarbleBoard::getRowType(int row) const
 
 bool MarbleBoard::isInvalidIndex(IntPosition index) const
 {
-	if (index.x < 0 || index.x>getHeight())
+	if (index.x < 0 || index.x>=getHeight())
 		return true;
 
 	int maxY = (getRowType(index.x) == controls::RowType::Even)

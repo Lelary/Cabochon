@@ -14,7 +14,7 @@ using controls::MarbleBoard;
 using cabochon_constants::LEFT_WALL;
 using cabochon_constants::RIGHT_WALL;
 
-const scalar ShootedMarble::defaultSpeed = 100;
+const scalar ShootedMarble::defaultSpeed = 600;
 
 ShootedMarble::ShootedMarble(const MarbleBoard& marbleBoard)
 	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)

@@ -124,7 +124,7 @@ std::vector<IntPosition> MarbleControl::getTestSet(IntPosition marblePosition) c
 			testSet.push_back({ testDownX, testRightY });
 	}
 
-	if (testUpX <= _marbleBoard.getHeight())
+	if (testUpX < _marbleBoard.getHeight())
 	{
 		if (testLeftY >= 0)
 			testSet.push_back({ testUpX, testLeftY });
@@ -280,10 +280,12 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 {
 	IntPosition gridPosition = _marbleBoard.positionToIndex(shootedMarble->getPrevCentralPosition());
 	
-	if (gridPosition.y > _marbleBoard.getHeight() || gridPosition.y<0)
+	// row 검사.
+	if (gridPosition.x >= _marbleBoard.getHeight() || gridPosition.x<0)
 		return false;
-	int maxY = (_marbleBoard.getRowType(gridPosition.y) == RowType::Even) ? MAX_Y : MAX_Y - 1;
-	if (gridPosition.x >= maxY || gridPosition.x<0)
+	// column 검사.
+	int maxY = (_marbleBoard.getRowType(gridPosition.x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+	if (gridPosition.y >= maxY || gridPosition.y<0)
 		return false;
 
 	// 블록의 인접블록을 검사하는 방법으로 attach.
@@ -323,7 +325,7 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 	}
 
 	// 천장에 닿아서 force attach.
-	if (shootedMarble->getCurrentIndex().x == _marbleBoard.getHeight()) {
+	if (shootedMarble->getCurrentIndex().x == _marbleBoard.getHeight()-1) {
 		//attach 확정.
 		_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
 		shootedMarble.reset();
@@ -399,7 +401,7 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	//---------------------------------------------------------------
 
 	// thisRow가 invalid 하면 안됨.
-	if (thisRow <0 || thisRow>_marbleBoard.getHeight()) {
+	if (thisRow <0 || thisRow>=_marbleBoard.getHeight()) {
 		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
 	}
 
@@ -416,7 +418,8 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	bool even = _marbleBoard.getRowType(thisRow) == RowType::Even ? true : false;
 
 	int maxY = (even) ? MAX_Y - 1 : MAX_Y;
-	std::vector<bool> nextLine(maxY);
+	std::vector<bool> nextLine;
+	nextLine.assign(maxY, false);
 
 	for (int i = 0; i < thisLine.size(); i++)
 	{
@@ -433,7 +436,7 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 		// if thisLine[i] 가 true로 마크되어 있으면
 
 		if (thisLine[i]){
-			if (left>0 && isNotMarbleColorNone({ nextRow, left }))
+			if (left>=0 && isNotMarbleColorNone({ nextRow, left }))
 				nextLine[left] = true;
 			if (right < nextLine.size() &&isNotMarbleColorNone({ nextRow, right }))
 				nextLine[right] = true;
@@ -467,8 +470,9 @@ void MarbleControl::drop()
 	// 해당 함수 호출 함수 다 고쳐야함.
 	// 지금은 임시로 getHeight()-1 사용.
 	//======================================================================================
+
+	// 제일 윗줄.
 	bool even = _marbleBoard.getRowType(_marbleBoard.getHeight()-1) == RowType::Even ? true : false;
-	// height Row.
 	int maxY = (even) ? MAX_Y : MAX_Y-1;
 	auto firstLine = std::vector<bool>(maxY);
 	for (int i = 0; i < maxY; i++)
@@ -484,7 +488,7 @@ void MarbleControl::drop()
 		checked.push_back(line);
 	}
 
-	for (int i = 1; i < checked.size(); i++)
+	for (int i = 0; i < checked.size(); i++)
 	{
 		for (int j = 0; j < checked[i].size(); j++)
 		{
@@ -492,8 +496,8 @@ void MarbleControl::drop()
 			if (checked[i][j] == false)
 			{
 				//drop
-				if (isNotMarbleColorNone({ i, j }))	
-					_marbleBoard.removeMarble({ i, j });
+				if (isNotMarbleColorNone({ checked.size()-1-i, j }))	
+					_marbleBoard.removeMarble({ checked.size()-1-i, j });
 			}
 		}
 	}

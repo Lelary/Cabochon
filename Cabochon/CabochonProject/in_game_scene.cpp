@@ -154,7 +154,7 @@ void InGameScene::lateUpdate(float frameTime)
 	// 게임 오버. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
 	else if (getBoardState() == BoardState::GameOver)
 		_nextScene = SceneName::MainScene;
-
+	 
 	//----------------------------------------------------------
 	// 현재 상태에 따른 계산 수행.
 	//----------------------------------------------------------

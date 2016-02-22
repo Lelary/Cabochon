@@ -79,7 +79,7 @@ namespace controls
 		// 남아있는 Marble 갯수를 반환한다.
 		int getMarbleCount() const;
 
-		// 현재 높이(Row 수) 반환. (Ceiling 직전 마지막 Row의 번호이다.)
+		// 현재 높이(Row 수) 반환. (Ceiling 직전 마지막 Row의 번호+1.)
 		int getHeight() const;
 
 		// 현재 Board의 상태 지정 (현재 게임의 상태이기도 하다.)
