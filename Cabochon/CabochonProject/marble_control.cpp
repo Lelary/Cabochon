@@ -398,6 +398,7 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	// ftn 함수작성하되, 예외처리가 아닌 false를 반환하도록 작성할것.
 	//---------------------------------------------------------------
 
+	// thisRow가 invalid 하면 안됨.
 	if (thisRow <0 || thisRow>_marbleBoard.getHeight()) {
 		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
 	}
@@ -408,14 +409,34 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	if (nextRow < 0)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
 
-	std::vector<bool> nextLine;
+
+	int left, right;
+
+	//thisLine
+	bool even = _marbleBoard.getRowType(thisRow) == RowType::Even ? true : false;
+
+	int maxY = (even) ? MAX_Y - 1 : MAX_Y;
+	std::vector<bool> nextLine(maxY);
+
 	for (int i = 0; i < thisLine.size(); i++)
 	{
+		if (even){
+			left = i - 1;
+			right = i;
+		}
+		else{
+			left = i;
+			right = i+1;
+		}
+
+		// left, right의 index 범위 검사 nextLine에 대해서만 함. (_marbleBoard 에 대해서는 하지않고, isNotMarbleColorNone()에게 위임.)
+		// if thisLine[i] 가 true로 마크되어 있으면
+
 		if (thisLine[i]){
-			if (isNotMarbleColorNone({ nextRow, i - 1 }))
-				nextLine[i - 1] = true;
-			if (isNotMarbleColorNone({ nextRow, i + 1 }))
-				nextLine[i + 1] = true;
+			if (left>0 && isNotMarbleColorNone({ nextRow, left }))
+				nextLine[left] = true;
+			if (right < nextLine.size() &&isNotMarbleColorNone({ nextRow, right }))
+				nextLine[right] = true;
 		}
 	}
 
@@ -425,6 +446,7 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 
 bool MarbleControl::isNotMarbleColorNone(IntPosition index) const
 {
+	// 이 함수는 인덱스에 대해 예외를 발생시키지 않는 대신, false 를 리턴한다.
 	if (_marbleBoard.isInvalidIndex(index))
 		return false;
 
@@ -437,21 +459,40 @@ bool MarbleControl::isNotMarbleColorNone(IntPosition index) const
 void MarbleControl::drop()
 {
 	std::vector < std::vector<bool> > checked;
-	
-	for (int i = _marbleBoard.getHeight(); i >= 1; i--)
+
+	// height 의 bool vector 를 추가하고 시작. = 가짜 라인(천장) 을 추가하고 getNextLinkedLine()을 호출하고 싶었는데
+	// 그러고 싶은데 연계되는 함수들에서 예외처리를 당하니까, 안됨.
+	//======================================================================================
+	// getHeight()가 높이가 아님. size()!=height. 
+	// 해당 함수 호출 함수 다 고쳐야함.
+	// 지금은 임시로 getHeight()-1 사용.
+	//======================================================================================
+	bool even = _marbleBoard.getRowType(_marbleBoard.getHeight()-1) == RowType::Even ? true : false;
+	// height Row.
+	int maxY = (even) ? MAX_Y : MAX_Y-1;
+	auto firstLine = std::vector<bool>(maxY);
+	for (int i = 0; i < maxY; i++)
+		firstLine[i]=isNotMarbleColorNone({ _marbleBoard.getHeight()-1, i });
+	checked.push_back(firstLine);
+
+	// Pre : checked 의 첫번째 line (ceiling 바로 아래 line) 을 구함.
+	// Post : getNextLinkedLine을 이용하여 나머지 line을 구함.
+
+	for (int i = _marbleBoard.getHeight()-1; i >= 1; i--)
 	{
-		auto line = getNextLinkedLine(checked[_marbleBoard.getHeight() - i], i);
+		auto line = getNextLinkedLine(checked[_marbleBoard.getHeight()-1 - i], i);
 		checked.push_back(line);
 	}
 
-	for (int i = 0; i <= _marbleBoard.getHeight(); i++)
+	for (int i = 1; i < checked.size(); i++)
 	{
-		for (int j = 0; j < checked[i].size(); i++)
+		for (int j = 0; j < checked[i].size(); j++)
 		{
-			if (checked[i][j] == true)
+			// 연결이 되어 있으면 true.
+			if (checked[i][j] == false)
 			{
 				//drop
-				if (isNotMarbleColorNone({ i, j }))
+				if (isNotMarbleColorNone({ i, j }))	
 					_marbleBoard.removeMarble({ i, j });
 			}
 		}

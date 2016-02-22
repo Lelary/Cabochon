@@ -176,6 +176,10 @@ void InGameScene::lateUpdate(float frameTime)
 		// smash() 된 marble 이 있을 때, 
 		// 부가효과 ( ceiling과의 연결이 끊어짐으로 인한 drop() 처리.
 		// 미작성.
+		//if ()
+		// _marbleControl.drop();
+
+
 
 	}
 }
