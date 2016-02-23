@@ -97,7 +97,9 @@ namespace controls
 		bool smash();
 		
 		void drop();
-		std::vector<bool> getNextLinkedLine(const std::vector<bool>& thisLine, int thisRow) const;
+
+		std::vector<bool> linkFromUpperLine(const std::vector<bool>& upperLine, int upperRow) const;
+		void linkFromSideWays(std::vector<bool>& line, int row) const;
 		bool isNotMarbleColorNone(IntPosition index) const;
 
 		//pure virtual functions

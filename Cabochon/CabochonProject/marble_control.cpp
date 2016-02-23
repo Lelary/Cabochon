@@ -390,9 +390,11 @@ bool MarbleControl::smash()
 		return false;
 }
 
-std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& thisLine, int thisRow) const
+std::vector<bool> MarbleControl::linkFromUpperLine(const std::vector<bool>& upperLine, int upperRow) const
 {
-
+	// upperLine(Row) 로부터 nextLine(Row)를의 Linking 여부를 구함.
+	// 모든 Line에 대해 이 함수를 호출 한 뒤, 같은 방법으로
+	// getLinkingFromSideways()를 수행해야 한다.
 	//---------------------------------------------------------------
 	// 2016. 2. 22. 
 	// 예외처리 꼭 추가.
@@ -400,30 +402,28 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	// ftn 함수작성하되, 예외처리가 아닌 false를 반환하도록 작성할것.
 	//---------------------------------------------------------------
 
-	// thisRow가 invalid 하면 안됨.
-	if (thisRow <0 || thisRow>=_marbleBoard.getHeight()) {
+	// upperRow가 invalid 하면 안됨.
+	// upperRow == getHeight() 인 경우는 ceiling 바로 아래라인을 nextLine으로 구하고자하므로 예외처리하지않는다.
+	if (upperRow <0 || upperRow>_marbleBoard.getHeight()) {
 		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
 	}
 
-	int nextRow = thisRow - 1;
-
+	int nextRow = upperRow - 1;
 	// 더 체크할 필요가 없음. 근데 이함수호출뒤에 문제발생여지가있으니 예외처리.
 	if (nextRow < 0)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
 
-
 	int left, right;
 
-	//thisLine
-	bool even = _marbleBoard.getRowType(thisRow) == RowType::Even ? true : false;
-
-	int maxY = (even) ? MAX_Y - 1 : MAX_Y;
+	//upperRow가 even 인지 false 인지. (nextRow의 반대.)
+	bool upperEven = _marbleBoard.getRowType(nextRow) == RowType::Even ? false: true;
+	int nextMaxY = (upperEven) ? MAX_Y-1 : MAX_Y;
 	std::vector<bool> nextLine;
-	nextLine.assign(maxY, false);
+	nextLine.assign(nextMaxY, false);
 
-	for (int i = 0; i < thisLine.size(); i++)
+	for (int i = 0; i < upperLine.size(); i++)
 	{
-		if (even){
+		if (upperEven){
 			left = i - 1;
 			right = i;
 		}
@@ -433,9 +433,9 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 		}
 
 		// left, right의 index 범위 검사 nextLine에 대해서만 함. (_marbleBoard 에 대해서는 하지않고, isNotMarbleColorNone()에게 위임.)
-		// if thisLine[i] 가 true로 마크되어 있으면
+		// if upperLine[i] 가 true로 마크되어 있으면
 
-		if (thisLine[i]){
+		if (upperLine[i]){
 			if (left>=0 && isNotMarbleColorNone({ nextRow, left }))
 				nextLine[left] = true;
 			if (right < nextLine.size() &&isNotMarbleColorNone({ nextRow, right }))
@@ -446,6 +446,32 @@ std::vector<bool> MarbleControl::getNextLinkedLine(const std::vector<bool>& this
 	return nextLine;
 }
 
+void MarbleControl::linkFromSideWays(std::vector<bool>& line, int row) const
+{
+	// Row가 invalid 하면 안됨.
+	if (row < 0 || row >= _marbleBoard.getHeight()) {
+		throw(GameError(gameErrorNS::FATAL_ERROR, "error in getNextLinkedRow"));
+	}
+
+	int size = line.size();
+
+	//left to right
+	for (int col = 1; col < size; col++)
+	{
+		if (line[col] == false)
+			// MarbleColor::None 이 아니고, 옆칸(왼쪽)이 linked 상태이면, 나도 linked 상태이다.
+			if (isNotMarbleColorNone({ row, col }) && line[col - 1] == true)
+				line[col] = true;
+	}
+
+	//right to left, 상동.
+	for (int col = size - 2; col > 0; col--)
+	{
+		if (line[col] == false)
+			if (isNotMarbleColorNone({ row, col }) && line[col + 1] == true)
+				line[col] = true;
+	}
+}
 
 bool MarbleControl::isNotMarbleColorNone(IntPosition index) const
 {
@@ -461,43 +487,44 @@ bool MarbleControl::isNotMarbleColorNone(IntPosition index) const
 
 void MarbleControl::drop()
 {
+	//======================================================================================
+	// checked와 _marbles는 역순. 
+	//======================================================================================
 	std::vector < std::vector<bool> > checked;
+	int highestRow = _marbleBoard.getHeight() - 1;
 
-	// height 의 bool vector 를 추가하고 시작. = 가짜 라인(천장) 을 추가하고 getNextLinkedLine()을 호출하고 싶었는데
-	// 그러고 싶은데 연계되는 함수들에서 예외처리를 당하니까, 안됨.
-	//======================================================================================
-	// getHeight()가 높이가 아님. size()!=height. 
-	// 해당 함수 호출 함수 다 고쳐야함.
-	// 지금은 임시로 getHeight()-1 사용.
-	//======================================================================================
+	
+	std::vector<bool> ceiling;
+	int ceilingMaxY = _marbleBoard.getRowType(highestRow) == RowType::Even ? MAX_Y-1 : MAX_Y;
+	ceiling.assign(ceilingMaxY, true);
+	checked.push_back(linkFromUpperLine(ceiling, _marbleBoard.getHeight()));	//firstLine
 
-	// 제일 윗줄.
-	bool even = _marbleBoard.getRowType(_marbleBoard.getHeight()-1) == RowType::Even ? true : false;
-	int maxY = (even) ? MAX_Y : MAX_Y-1;
-	auto firstLine = std::vector<bool>(maxY);
-	for (int i = 0; i < maxY; i++)
-		firstLine[i]=isNotMarbleColorNone({ _marbleBoard.getHeight()-1, i });
-	checked.push_back(firstLine);
+	// Pre : highestRow의 linkFromUpperLine을 구함.
 
-	// Pre : checked 의 첫번째 line (ceiling 바로 아래 line) 을 구함.
-	// Post : getNextLinkedLine을 이용하여 나머지 line을 구함.
-
-	for (int i = _marbleBoard.getHeight()-1; i >= 1; i--)
+	for (int row = highestRow; row >= 1; row--)
 	{
-		auto line = getNextLinkedLine(checked[_marbleBoard.getHeight()-1 - i], i);
+		auto line = linkFromUpperLine(checked[highestRow - row], row);
 		checked.push_back(line);
 	}
 
-	for (int i = 0; i < checked.size(); i++)
+	// Pre : checked 에 linkFromUpperLine() 을 적용함. (윗줄의 정보로 아랫줄의 Link여부를 판정함.)
+	// Post : checked 에 getLinkingFromSideways을 적용함. ( 왼쪽의 정보로 오른쪽의 Linke 여부를 판정, 반대방향으로 다시 판정.)
+	for (int row = 0; row < checked.size();row++)
+		linkFromSideWays(checked[row], row);
+
+	// Pre : checked 를 구함.
+	// Post : checked를 가지고, false인 marble을 drop(remove)함.
+
+	for (int row = 0; row < checked.size(); row++)
 	{
-		for (int j = 0; j < checked[i].size(); j++)
+		for (int col = 0; col < checked[row].size(); col++)
 		{
 			// 연결이 되어 있으면 true.
-			if (checked[i][j] == false)
+			if (checked[row][col] == false)
 			{
 				//drop
-				if (isNotMarbleColorNone({ checked.size()-1-i, j }))	
-					_marbleBoard.removeMarble({ checked.size()-1-i, j });
+				if (isNotMarbleColorNone({ checked.size()-1-row, col }))	
+					_marbleBoard.removeMarble({ checked.size()-1-row, col });
 			}
 		}
 	}
@@ -507,15 +534,13 @@ void MarbleControl::render()
 {
 	_marbleBoard.render();
 
-	if (_shootedMarble != nullptr)
-	{
+	if (_shootedMarble != nullptr) {
 		_shootedMarble->draw();
 	}
 }
 void MarbleControl::update(float frameTime)
 {
-	if (_shootedMarble != nullptr)
-	{
+	if (_shootedMarble != nullptr) {
 		_shootedMarble->move(_marbleBoard, frameTime);
 		_shootedMarble->update(frameTime);
 	}
