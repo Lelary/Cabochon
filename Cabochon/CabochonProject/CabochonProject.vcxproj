@@ -76,6 +76,7 @@
     <ClInclude Include="angle.h" />
     <ClInclude Include="cabochon_constants.h" />
     <ClInclude Include="ceiling_block.h" />
+    <ClInclude Include="cheat.h" />
     <ClInclude Include="marble_board.h" />
     <ClInclude Include="cabochon.h" />
     <ClInclude Include="components.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="steering_wheel.cpp" />
     <ClCompile Include="steering_wheel_control.cpp" />
     <ClCompile Include="texture_list.cpp" />
+    <ClCompile Include="cheat.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

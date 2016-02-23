@@ -165,6 +165,9 @@
     <ClInclude Include="scenes.h">
       <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>
+    <ClInclude Include="cheat.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -240,6 +243,9 @@
       <Filter>소스 파일\controls</Filter>
     </ClCompile>
     <ClCompile Include="marble_control.cpp">
+      <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="cheat.cpp">
       <Filter>소스 파일\controls</Filter>
     </ClCompile>
   </ItemGroup>

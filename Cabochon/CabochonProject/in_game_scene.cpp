@@ -7,6 +7,7 @@ using mathematics::Angle;
 using components::ShootedMarble;
 using controls::BoardState;
 using controls::MarbleColorOn;
+using controls::SteeringWheelControl;
 using scenes::InGameScene;
 using scenes::TextureList;
 
@@ -208,4 +209,9 @@ void InGameScene::resetAll()
 BoardState InGameScene::getBoardState() const
 {
 	return _marbleControl.getMarbleBoard().getBoardState();
+}
+
+SteeringWheelControl& InGameScene::getSteeringWheelControl()
+{
+	return _wheelControl;
 }

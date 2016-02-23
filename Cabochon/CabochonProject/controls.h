@@ -16,6 +16,7 @@ namespace controls
 	class MarbleBoard;
 	class MarbleGenerator;
 
+	class Cheat;
 	// 나중에 구현
 	//class LifeCycleControl;
 	//class Timer;

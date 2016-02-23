@@ -28,7 +28,6 @@ namespace scenes
 		SteeringWheelControl _wheelControl;
 		MarbleControl _marbleControl;
 
-		BoardState getBoardState() const;
 	public:
 		InGameScene(Graphics& graphics, Input& input, TextureList& textureList);
 		virtual ~InGameScene();
@@ -40,6 +39,10 @@ namespace scenes
 
 		virtual void releaseAll();
 		virtual void resetAll();
+
+		//-----------------
+		BoardState getBoardState() const;
+		SteeringWheelControl& getSteeringWheelControl();
 
 	};
 }

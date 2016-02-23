@@ -29,6 +29,8 @@ public:
 	virtual void collisions();
 	virtual void render();
 
+	virtual void consoleCommand();
+
 	// 그래픽 디바이스가 로스트 상태가 됐을 떄 호출됨. 예약된 모든 비디오 메모리를 해제하고 그래픽 디바이스를 리셋한다.
 	// Texture의 onLostDevice() 호출.
 	virtual void releaseAll();

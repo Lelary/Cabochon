@@ -1,6 +1,7 @@
 // 2016. 2. 2.
 
 #include "cabochon.h"
+#include "cheat.h"
 using scenes::SceneName;
 using scenes::Scene;
 using scenes::MainScene;
@@ -88,6 +89,55 @@ void Cabochon::render()
 
 	_text.print(_errorMessage, 0, 0);
 	graphics->spriteEnd();
+}
+void Cabochon::consoleCommand()
+{
+	// 콘솔로부터 명령을 얻는다.
+	command = console->getCommand();
+	if (command == "")
+		return;
+	if (command == "help")
+	{
+		console->print("Console Commands:");
+		console->print("fps - toggle display of frames per second");
+		return;
+	}
+
+	if (command == "fps")
+	{
+		fpsOn = !fpsOn;
+		if (fpsOn)
+			console->print("fps On");
+		else
+			console->print("fps Off");
+	}
+	//=======================================================
+
+	if (typeid(*_currentScene)!=typeid(scenes::InGameScene))
+		return;
+	if (static_cast<InGameScene*>(_currentScene)->getBoardState() != controls::BoardState::Play)
+		return;
+
+	if (std::string(command, 0, 12) == "cheat color ")
+	{
+		std::string color(command, 12);
+
+		if (color == "red")	
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Red);
+		else if (color == "orange")
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Orange);
+		else if (color == "yellow")
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Yellow);
+		else if (color == "green")
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Green);
+		else if (color == "blue")
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Blue);
+		else if (color == "purple")
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Purple);
+		else if (color == "gray")
+			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Gray);
+	}
+
 }
 void Cabochon::releaseAll()
 {
