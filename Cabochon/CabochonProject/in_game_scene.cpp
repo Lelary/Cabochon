@@ -171,14 +171,11 @@ void InGameScene::lateUpdate(float frameTime)
 		if (_marbleControl.hasJustAttached())
 		{
 			// 애니메이션과, 카운트가 필요하다.
-			_marbleControl.smash();
+			if(_marbleControl.smash())
+				_marbleControl.drop();
 		}
 
-		// smash() 된 marble 이 있을 때, 
-		// 부가효과 ( ceiling과의 연결이 끊어짐으로 인한 drop() 처리.
-		// 미작성.
-		//if ()
-		_marbleControl.drop();
+		// drop 오류 있음.
 
 
 
