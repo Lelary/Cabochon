@@ -12,7 +12,6 @@ class Input;
 #include <windows.h>
 #include <WindowsX.h>
 #include <string>
-#include <XInput.h>
 #include "constants.h"
 #include "game_error.h"
 
@@ -36,34 +35,6 @@ namespace inputNS
 	const UCHAR KEYS_MOUSE_TEXT = KEYS_DOWN + KEYS_PRESSED + MOUSE + TEXT_IN;
 }
 
-const DWORD GAMEPAD_THUMBSTICK_DEADZONE = (DWORD)(0.20f * 0X7FFF);    // default to 20% of range as deadzone
-const DWORD GAMEPAD_TRIGGER_DEADZONE = 30;                      // trigger range 0-255
-const DWORD MAX_CONTROLLERS = 4;                                // Maximum number of controllers supported by XInput
-
-// Bit corresponding to gamepad button in state.Gamepad.wButtons
-const DWORD GAMEPAD_DPAD_UP = XINPUT_GAMEPAD_DPAD_UP;
-const DWORD GAMEPAD_DPAD_DOWN = XINPUT_GAMEPAD_DPAD_DOWN;
-const DWORD GAMEPAD_DPAD_LEFT = XINPUT_GAMEPAD_DPAD_LEFT;
-const DWORD GAMEPAD_DPAD_RIGHT = XINPUT_GAMEPAD_DPAD_RIGHT;
-const DWORD GAMEPAD_START_BUTTON = XINPUT_GAMEPAD_START;
-const DWORD GAMEPAD_BACK_BUTTON = XINPUT_GAMEPAD_BACK;
-const DWORD GAMEPAD_LEFT_THUMB = XINPUT_GAMEPAD_LEFT_THUMB;
-const DWORD GAMEPAD_RIGHT_THUMB = XINPUT_GAMEPAD_RIGHT_THUMB;
-const DWORD GAMEPAD_LEFT_SHOULDER = XINPUT_GAMEPAD_LEFT_SHOULDER;
-const DWORD GAMEPAD_RIGHT_SHOULDER = XINPUT_GAMEPAD_RIGHT_SHOULDER;
-const DWORD GAMEPAD_A = XINPUT_GAMEPAD_A;
-const DWORD GAMEPAD_B = XINPUT_GAMEPAD_B;
-const DWORD GAMEPAD_X = XINPUT_GAMEPAD_X;
-const DWORD GAMEPAD_Y = XINPUT_GAMEPAD_Y;
-
-struct ControllerState
-{
-	XINPUT_STATE state;
-	XINPUT_VIBRATION vibration;
-	float vibrateTimeLeft;	// mSec
-	float vibrateTimeRight;	// mSec
-	bool connected;
-};
 
 class Input
 {
@@ -87,9 +58,6 @@ private:
 	bool mouseRButton;
 	bool mouseX1Button;
 	bool mouseX2Button;
-
-	//컨트롤러의 상태.
-	ControllerState controllers[MAX_CONTROLLERS];
 
 public:
 	Input();
@@ -141,73 +109,6 @@ public:
 	bool getMouseX1Button() const { return mouseX1Button; }
 	bool getMouseX2Button() const { return mouseX2Button; }
 
-	/*
-		컨트롤러 입력 메소드.
-	*/
-	void checkControllers();
-	void readControllers();
-	const ControllerState* getControllerState(UINT n);
-	const WORD getGamepadButtons(UINT n);
-
-	/*
-		컨트롤러 n 의 D 패드 버튼의 상태를 반환하는 함수들.
-	*/
-	bool getGamepadDPadUp(UINT n);
-	bool getGamepadDPadDown(UINT n);
-	bool getGamepadDPadLeft(UINT n);
-	bool getGamepadDPadRight(UINT n);
-	bool getGamepadStart(UINT n);
-	bool getGamepadBack(UINT n);
-	bool getGamepadLeftThumb(UINT n);
-	bool getGamepadRightThumb(UINT n);
-	bool getGamepadLeftShoulder(UINT n);
-	bool getGamepadRightShoulder(UINT n);
-	bool getGamepadA(UINT n);
-	bool getGamepadB(UINT n);
-	bool getGamepadX(UINT n);
-	bool getGamepadY(UINT n);
-
-	/*
-		컨트롤러 n의
-		아날로그 컨트롤러인 트리거의 상태를 반환하는 함수들.
-		0~255 사이의 BYTE 값을 반환한다. 0은 뗀 상태를 표현하고, 255는 완전히 누른 상태를 표현한다.
-		input.h 상단에 데드존이 명시되어 있다.
-	*/
-	BYTE getGamepadLeftTrigger(UINT n);
-	BYTE getGamepadRightTrigger(UINT n);
-
-	/*
-		컨트롤러 n의
-		아날로그 컨트롤인 썸스틱의 상태를 반환하는 함수들.
-		SHORT 값은 썸스틱의 위치를 알려주는데, 각 축에 대해 -32,768 ~ 32,768 의 값으로 표현된다.
-		0은 중앙을 의미한다. 
-		input.h 상단에 데드존이 명시되어 있다.
-	*/
-	SHORT getGamepadThumbLX(UINT n);
-	SHORT getGamepadThumbLY(UINT n);
-	SHORT getGamepadThumbRX(UINT n);
-	SHORT getGamepadThumbRY(UINT n);
-
-	/*
-		컨트롤러 n의 왼쪽 모터를 진동하게 만든다. 
-		왼쪽은 낮은 진동수의 진동을 생성한다. 
-		speed 0 = 사용하지 않음. 65536 = 100%.
-		sec = 진동할 초단위 시간.
-	*/
-	void gamePadVibrateLeft(UINT n, WORD speed, float sec);
-	/*
-		컨트롤러 n의 오른쪽 모터를 진동하게 만든다.
-		오른쪽은 높은 진동수의 진동을 생성한다.
-		speed 0 = 사용하지 않음. 65536 = 100%.
-		sec = 진동할 초단위 시간.
-	*/
-	void gamePadVibrateRight(UINT n, WORD speed, float sec);
-
-	/*
-		연결된 컨트롤러를 진동하게 만든다.
-		진동시간을 추적하며, 진동시간이 0이 되면 해당 모터 속도는 0으로 설정된다.
-	*/
-	void vibrateControllers(float frameTime);
 
 };
 

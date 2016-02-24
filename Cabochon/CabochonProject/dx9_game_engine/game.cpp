@@ -200,7 +200,6 @@ void Game::run(HWND hwnd)
 		update();
 		ai();
 		collisions();
-		input->vibrateControllers(frameTime);
 
 	}
 	renderGame();
@@ -214,10 +213,7 @@ void Game::run(HWND hwnd)
 	}
 	// 사용자가 입력한 콘솔 명령을 처리한다.
 	consoleCommand();
-
-	// 컨트롤러 상태를 읽는다.
-	input->readControllers();
-
+	
 	// 모든 키 확인이 끝난 후에 입력을 지운다.
 	input->clear(inputNS::KEYS_PRESSED);
 }
