@@ -109,6 +109,14 @@ namespace controls
 		// ( 타이머가 있을 경우 일정 턴 수 마다 )
 		// 한 줄 내리는 처리를 하며 동반되는 작용들을 함께 처리한다.
 		// 이 작업으로 인해 갱신된 현재 상태 BoardState를 반환한다.
+		BoardState dragDownOneLine();
+
+		// Marble들이 파괴되어 화면상에 보이는 Marble이 더이상 없을 경우 일정칸을 내린다.
+		// return 값은 이 함수가 drag를 일으켰는지를 반환한다.
+		// ( 이전에 처리되지 않은 drag 가 있을 경우, _dragged와 리턴값이 동일하지 않을 수 있다.)
+		bool dragDownHiddenLines();
+
+		// 조건에 맞춰 dragDownOneLine()과 dragDownHiddenLines를 모두 실행한다.
 		BoardState dragDown();
 
 		//void loadBoard(File* file);

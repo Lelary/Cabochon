@@ -7,7 +7,12 @@ TextureList::TextureList()
 {
 	_textureFiles[StartButton] = "images\\start_button.png";
 	_textureFiles[ExitButton] = "images\\exit_button.png";
+
+#if defined(DEBUG) | defined(_DEBUG)
 	_textureFiles[Marbles] = "images\\marbles_textures_lines.png";
+#else
+	_textureFiles[Marbles] = "images\\marbles_textures.png";
+#endif
 	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
 	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
 	_textureFiles[BackGroundCity] = "images\\back_ground_city.png";

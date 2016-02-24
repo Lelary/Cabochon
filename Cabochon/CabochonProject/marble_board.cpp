@@ -158,11 +158,10 @@ bool MarbleBoard::gameClear()
 	return false;
 }
 
-BoardState MarbleBoard::dragDown()
+BoardState MarbleBoard::dragDownOneLine()
 {
 	// remove Row Zero;
 	// Row Zero 가 삭제되면 자동으로 한칸씩 내려온다.
-	// ( 다른 함수에서. )
 	removeRowZero();
 	_dragged = true;
 
@@ -172,15 +171,28 @@ BoardState MarbleBoard::dragDown()
 	if (gameClear())
 		return _boardState = BoardState::GameClear;
 
+	return _boardState = BoardState::Play;
+}
+bool MarbleBoard::dragDownHiddenLines()
+{
 	// 화면 밖에만 Marble 이 존재. 
 	// 화면에 보일 때 까지 더 끌어내림.
+	bool result=false;
 	int toDrag = getFloor() - MIN_X;
 	if (toDrag > 0)
 	{
+		_dragged = result = true;
 		for (int i = 0; i < toDrag; i++)
 			_marbles.pop_front();
 	}
-	return _boardState = BoardState::Play;
+	return result;
+}
+BoardState MarbleBoard::dragDown()
+{
+	BoardState state;
+	dragDownHiddenLines();
+	state=dragDownOneLine();
+	return state;
 }
 void MarbleBoard::makeRandomBoard()
 {
@@ -362,6 +374,7 @@ void MarbleBoard::render()
 }
 void MarbleBoard::update(float frameTime)
 {
+	dragDown();
 	// 줄내림이 발생했을 때, 
 	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
 	if (_dragged)
