@@ -36,6 +36,15 @@ MarbleColor MarbleGenerator::getRandomMarbleColor(MarbleColorOn colorRange)
 			sum++;
 	}
 
+	// 2016. 2. 25.
+	// clear 시. 
+	// 이렇게 테스트 해보고 어떻게 처리할지 다시 생각.
+	// 이함수에 안오면 더 좋음.
+	//--------------------------------------
+	if (sum <= 0)
+		return MarbleColor::None;
+	//--------------------------------------
+
 	std::uniform_int_distribution<>  dist(1, sum);
 	int randomNumber = dist(gen);
 

@@ -175,12 +175,12 @@ BoardState MarbleBoard::dragDownOneLine()
 }
 bool MarbleBoard::dragDownHiddenLines()
 {
-	// 화면 밖에만 Marble 이 존재. 
-	// 화면에 보일 때 까지 더 끌어내림.
+	// 거의 화면 밖에만 Marble 이 존재. 
+	// 화면에 minLine 이상 보일 때 까지 더 끌어내림.
+	int minLine = 2;
 	bool result=false;
-	int toDrag = getFloor() - MIN_X;
-	if (toDrag > 0)
-	{
+	int toDrag = getFloor() - MIN_X + minLine;
+	if (toDrag >= 0)	{
 		_dragged = result = true;
 		for (int i = 0; i < toDrag; i++)
 			_marbles.pop_front();
@@ -191,8 +191,8 @@ BoardState MarbleBoard::dragDown()
 {
 	BoardState state;
 	dragDownHiddenLines();
-	state=dragDownOneLine();
-	return state;
+	//state=dragDownOneLine();
+	return state=BoardState::Play;
 }
 void MarbleBoard::makeRandomBoard()
 {
@@ -374,6 +374,9 @@ void MarbleBoard::render()
 }
 void MarbleBoard::update(float frameTime)
 {
+	if (_boardState != BoardState::Play)
+		return;
+
 	dragDown();
 	// 줄내림이 발생했을 때, 
 	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
