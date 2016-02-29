@@ -20,7 +20,7 @@ using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::LINE;
 
 MarbleBoard::MarbleBoard()
-	:_boardState(BoardState::Build), _dragged(false)
+	:_boardState(BoardState::Build), _dragged(false), _lineDragAnim(0), _marbleDisappearAnim(0)
 {
 	_colorCount.assign(0);
 }
@@ -158,20 +158,17 @@ bool MarbleBoard::gameClear()
 	return false;
 }
 
-BoardState MarbleBoard::dragDownOneLine()
+bool MarbleBoard::dragDownOneLine()
 {
+	// hidden line 을 drag한 턴은 제외 해야 하나 현재 _dragged가 턴마다 갱신되는 변수가아님.
+	//if (_dragged == false){return false;}
+
+	// 0이면 카운트가 다 되었으므로 한줄 드래그한다.
 	// remove Row Zero;
 	// Row Zero 가 삭제되면 자동으로 한칸씩 내려온다.
 	removeRowZero();
 	_dragged = true;
-
-	if (gameOver())
-		return _boardState = BoardState::GameOver;
-
-	if (gameClear())
-		return _boardState = BoardState::GameClear;
-
-	return _boardState = BoardState::Play;
+	return true;		
 }
 bool MarbleBoard::dragDownHiddenLines()
 {
@@ -187,6 +184,10 @@ bool MarbleBoard::dragDownHiddenLines()
 	}
 	return result;
 }
+/*
+// 2016. 2. 29.
+// dragDownHiddenLines() 와 dragDownOneLine()을 별개의 행동으로 취급함.
+// 아래 함수 (dragDown()은 사용하지 않음.)
 BoardState MarbleBoard::dragDown()
 {
 	BoardState state;
@@ -194,6 +195,7 @@ BoardState MarbleBoard::dragDown()
 	//state=dragDownOneLine();
 	return state=BoardState::Play;
 }
+*/
 void MarbleBoard::makeRandomBoard()
 {
 	if (_boardState != BoardState::Build)
@@ -377,7 +379,9 @@ void MarbleBoard::update(float frameTime)
 	if (_boardState != BoardState::Play)
 		return;
 
-	dragDown();
+	dragDownHiddenLines();
+	
+
 	// 줄내림이 발생했을 때, 
 	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
 	if (_dragged)

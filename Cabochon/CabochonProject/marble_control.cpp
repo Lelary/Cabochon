@@ -23,7 +23,7 @@ using cabochon_constants::NO_POSITION;
 using shooted_ptr = std::unique_ptr < ShootedMarble >;
 
 MarbleControl::MarbleControl()
-	:_justAttached(NO_POSITION), _shootedMarble(nullptr)
+	:_justAttached(NO_POSITION), _shootedMarble(nullptr), _lineDragDelay(LINE_DRAG_DELAY)
 {
 
 }
@@ -527,6 +527,17 @@ void MarbleControl::drop()
 					_marbleBoard.removeMarble({ checked.size()-1-row, col });
 			}
 		}
+	}
+}
+
+void MarbleControl::ceilingComeDown()
+{
+	_lineDragDelay--;
+	if (_lineDragDelay == 0)
+	{
+		_marbleBoard.dragDownOneLine();
+		_marbleBoard.updateMarblePositions();
+		_lineDragDelay = LINE_DRAG_DELAY;
 	}
 }
 

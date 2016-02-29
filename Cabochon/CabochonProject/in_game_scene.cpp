@@ -164,7 +164,8 @@ void InGameScene::lateUpdate(float frameTime)
 		// 현재 shooting 중 일 때,
 		if (_marbleControl.isShooting())
 		{
-			_marbleControl.attach(_marbleControl.getShootedMarble());
+			if (_marbleControl.attach(_marbleControl.getShootedMarble()))
+				_marbleControl.ceilingComeDown();
 		}
 		// shooting 된 marble이 방금 attach 되었을 때, 
 		// 부가효과 ( marble smach ) 확인, 처리.

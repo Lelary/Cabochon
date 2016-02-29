@@ -43,6 +43,17 @@ namespace controls
 		bool _dragged;
 		std::array<int, (int)MarbleColor::Num> _colorCount;
 		
+		//-------------------------------------
+		// 2016. 2. 29.
+		// Animation 효과. 상수와 변수.
+		// if var==0 return; if var<CONST playAnim()
+		// if boardState==Anim??
+		const int MARBLE_DISAPPEAR_ANIM = 3000; // msec
+		const int LINE_DRAG_ANIM = 3000;		// msec
+
+		int _marbleDisappearAnim;	// msec
+		int _lineDragAnim;			//msec
+		
 	public:
 		MarbleBoard();
 		MarbleBoard(const MarbleBoard& rhs) = delete;
@@ -109,7 +120,7 @@ namespace controls
 		// ( 타이머가 있을 경우 일정 턴 수 마다 )
 		// 한 줄 내리는 처리를 하며 동반되는 작용들을 함께 처리한다.
 		// 이 작업으로 인해 갱신된 현재 상태 BoardState를 반환한다.
-		BoardState dragDownOneLine();
+		bool dragDownOneLine();
 
 		// Marble들이 파괴되어 화면상에 보이는 Marble이 더이상 없을 경우 일정칸을 내린다.
 		// return 값은 이 함수가 drag를 일으켰는지를 반환한다.
@@ -117,7 +128,7 @@ namespace controls
 		bool dragDownHiddenLines();
 
 		// 조건에 맞춰 dragDownOneLine()과 dragDownHiddenLines를 모두 실행한다.
-		BoardState dragDown();
+		//BoardState dragDown();
 
 		//void loadBoard(File* file);
 		//void buildBoard();

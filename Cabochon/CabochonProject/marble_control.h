@@ -49,6 +49,12 @@ namespace controls
 		// 방금 부착된 marble의 board 상 위치. attach 가 성공한 시점부터, smash 체크가 끝날때까지 유효하다.
 		IntPosition _justAttached;		
 
+		//-------------------------------------
+		// 2016. 2. 29.
+		// 한줄 내림 처리가 _lineDragDelay 턴마다 실행됨.
+		const int LINE_DRAG_DELAY = 10;			//turn
+		int _lineDragDelay;			// turn
+
 	public:
 		MarbleControl();
 		MarbleControl(const MarbleControl& rhs) = delete;
@@ -101,6 +107,8 @@ namespace controls
 		std::vector<bool> linkFromUpperLine(const std::vector<bool>& upperLine, int upperRow) const;
 		void linkFromSideWays(std::vector<bool>& line, int row) const;
 		bool isNotMarbleColorNone(IntPosition index) const;
+		
+		void ceilingComeDown();
 
 		//pure virtual functions
 		virtual void render();
