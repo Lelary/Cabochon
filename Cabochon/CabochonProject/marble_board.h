@@ -55,7 +55,9 @@ namespace controls
 		int _lineDragFrame;			//msec
 
 		// 삭제 예정 marble 등록.
-		std::vector<marble_ptr&> _toRemove;
+		std::vector<IntPosition> _toRemove;
+		// 지울 라인 수
+		int _lineToDrag;
 		bool animationFisinished();
 
 	public:
@@ -169,9 +171,10 @@ namespace controls
 		//2016. 3. 2 추가.
 		int getMarbleDisappearFrame() const;
 		int getLineDragFrame() const;
+		int getNumRemoving() const;
 		void marbleDisappearAnimation(int elapsedFrame);
 		void lineDragAnimation(int elapsedFrame);
-		
+
 		//pure virtual functions
 		virtual void render();
 		virtual void update(float frameTime);

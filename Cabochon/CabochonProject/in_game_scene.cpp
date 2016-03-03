@@ -152,8 +152,11 @@ void InGameScene::updateAnimState(float frameTime)
 {	
 	if (getBoardState() != BoardState::Animation)
 		return;
-
-	_marbleControl.getMarbleBoard().marbleDisappearAnimation(frameTime);
+	if (_marbleControl.getMarbleBoard().getNumRemoving() > 0) {
+		_marbleControl.getMarbleBoard().marbleDisappearAnimation(frameTime);
+		// 이거 끝나고나서 line 애니메이션 해야하므로 return.
+		return;
+	}
 	_marbleControl.getMarbleBoard().lineDragAnimation(frameTime);
 }
 void InGameScene::update(float frameTime)

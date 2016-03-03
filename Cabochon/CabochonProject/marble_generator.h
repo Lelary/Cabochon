@@ -11,6 +11,7 @@
 
 namespace controls
 {
+	using mathematics::scalar;
 	using components::marble_ptr;
 	using components::Marble;
 	using components::MarbleColor;
