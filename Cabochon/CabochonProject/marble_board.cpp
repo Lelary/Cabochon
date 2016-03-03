@@ -20,7 +20,7 @@ using cabochon_constants::MARBLE_HEIGHT;
 using cabochon_constants::LINE;
 
 MarbleBoard::MarbleBoard()
-	:_boardState(BoardState::Build), _dragged(false), _lineDragAnim(0), _marbleDisappearAnim(0)
+	:_boardState(BoardState::Build), _dragged(false), _lineDragFrame(0), _marbleDisappearFrame(0)
 {
 	_colorCount.assign(0);
 }
@@ -360,40 +360,40 @@ void MarbleBoard::loadTextures(TextureList& textureList)
 			marble->loadLayers(textureList);
 }
 
-int MarbleBoard::getMarbleDisappearAnim() const
+int MarbleBoard::getMarbleDisappearFrame() const
 {
-	return _marbleDisappearAnim; 
+	return _marbleDisappearFrame; 
 }
-int MarbleBoard::getLineDragAnim() const
+int MarbleBoard::getLineDragFrame() const
 {
-	return _lineDragAnim; 
+	return _lineDragFrame; 
 }
 bool MarbleBoard::animationFisinished()
 {
-	if (_marbleDisappearAnim == 0 && _lineDragAnim == 0)
+	if (_marbleDisappearFrame == 0 && _lineDragFrame == 0)
 		return true;
 	return false;
 }
 void MarbleBoard::marbleDisappearAnimation(int elapsedFrame)
 {
-	_marbleDisappearAnim += elapsedFrame;
-	if (_marbleDisappearAnim >= MARBLE_DISAPPEAR_ANIM)
+	_marbleDisappearFrame += elapsedFrame;
+	if (_marbleDisappearFrame >= MARBLE_DISAPPEAR_FRAME)
 	{
-		_marbleDisappearAnim = 0;
+		_marbleDisappearFrame = 0;
 		_boardState = animationFisinished()==true?BoardState::Play:BoardState::Animation;
 	}
 	else
 	{
 		for (marble_ptr& marble : _toRemove)
-			marble->disappearing(_marbleDisappearAnim);
+			marble->disappearing(_marbleDisappearFrame, MARBLE_DISAPPEAR_FRAME);
 	}
 }
 void MarbleBoard::lineDragAnimation(int elapsedFrame)
 {
 	// percentage로 내려옴.
 	//currentframe/MAXFRAME
-	_lineDragAnim += elapsedFrame;
-	if (_lineDragAnim >= LINE_DRAG_ANIM){
+	_lineDragFrame += elapsedFrame;
+	if (_lineDragFrame >= LINE_DRAG_FRAME){
 		for (MarbleRow& row : _marbles)
 			for (marble_ptr& marble : row)
 			{
@@ -402,14 +402,14 @@ void MarbleBoard::lineDragAnimation(int elapsedFrame)
 				//position설정.
 				//ALL.position = newPosition;
 			}
-		_lineDragAnim = 0;
+		_lineDragFrame = 0;
 		_boardState = animationFisinished() == true ? BoardState::Play : BoardState::Animation;
 	}
 	else {
 		for (MarbleRow& row : _marbles)
 			for (marble_ptr& marble : row)
 				// 점점 내려옴.
-				marble->setPosition(marble->getPosition().x, marble->getPosition().y + MARBLE_HEIGHT*(_lineDragAnim / LINE_DRAG_ANIM));
+				marble->setPosition(marble->getPosition().x, marble->getPosition().y + MARBLE_HEIGHT*(_lineDragFrame / LINE_DRAG_FRAME));
 	}
 }
 void MarbleBoard::render()

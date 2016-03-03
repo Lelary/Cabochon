@@ -1,4 +1,5 @@
 #include "marble_generator.h"
+using mathematics::scalar;
 using components::marble_ptr;
 using components::MarbleColor;
 using controls::MarbleColorOn;
@@ -11,6 +12,14 @@ int MarbleGenerator::getRandomNumber(int min, int max)
 	static std::mt19937 gen(rd());
 	std::uniform_int_distribution<>  dist(min, max);
 
+	return dist(gen);
+}
+scalar MarbleGenerator::getGaussianRandomNumber(scalar mean, scalar sigma)
+{
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+
+	std::normal_distribution<float> dist(mean, sigma);
 	return dist(gen);
 }
 

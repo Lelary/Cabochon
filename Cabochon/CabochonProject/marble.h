@@ -55,9 +55,9 @@ namespace components
 		virtual void update(float frameTime);
 
 		virtual bool circularHitTest(const Marble& anotherMarble, scalar scale = 1.0f) const;
-		static bool circularHitTest(const Marble& marble1, const Marble& marble2, scalar scale = 1.0f);
-
-
+		static bool circularHitTest(const Marble& marble1, const Marble& marble2, scalar scale = 1.0f);		
+		
+		void disappearing(int progressedFrame, int totalFrame, Position position);
 	};
 }
 #endif

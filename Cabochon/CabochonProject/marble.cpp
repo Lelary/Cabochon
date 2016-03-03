@@ -1,11 +1,14 @@
 #include "marble.h"
 #include "texture_list.h"
 #include "dx9_game_engine\graphics.h"
+#include "marble_generator.h"
 using mathematics::scalar;
+using mathematics::Position;
 using mathematics::IntPosition;
 using components::Marble;
 using components::Layer;
 using components::MarbleColor;
+using controls::MarbleGenerator;
 using scenes::TextureList;
 
 Marble::Marble(const IntPosition& index, MarbleColor color)
@@ -143,4 +146,21 @@ bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2, scala
 		return false;
 	else
 		return true;
+}
+// Marble 한개가 사라지는 애니메이션.
+void Marble::disappearing(int progressedFrame, int totalFrame, Position position)
+{
+	scalar progress = static_cast<scalar>(progressedFrame) 
+					/ static_cast<scalar>(totalFrame);
+
+	// 종료. 애니메이션의 형태에 상관없이 동일.
+	if (progressedFrame >= totalFrame || progressedFrame<=0){
+		setColor(MarbleColor::None);
+		setPosition(position);
+		adjustLayersPosition();
+		return;
+	}
+	// 테스트용 약식수식
+	setPosition(position.x, position.y + progress*GAME_HEIGHT);
+	adjustLayersPosition();
 }

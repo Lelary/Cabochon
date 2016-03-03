@@ -48,11 +48,11 @@ namespace controls
 		// Animation 효과. 상수와 변수.
 		// if var==0 return; if var<CONST playAnim()
 		// if boardState==Anim??
-		const int MARBLE_DISAPPEAR_ANIM = 3000; // msec
-		const int LINE_DRAG_ANIM = 3000;		// msec
+		const int MARBLE_DISAPPEAR_FRAME = 3000; // msec
+		const int LINE_DRAG_FRAME = 3000;		// msec
 
-		int _marbleDisappearAnim;	// msec
-		int _lineDragAnim;			//msec
+		int _marbleDisappearFrame;	// msec
+		int _lineDragFrame;			//msec
 
 		// 삭제 예정 marble 등록.
 		std::vector<marble_ptr&> _toRemove;
@@ -165,8 +165,8 @@ namespace controls
 		bool isInvalidIndex(IntPosition index) const;
 
 		//2016. 3. 2 추가.
-		int getMarbleDisappearAnim() const;
-		int getLineDragAnim() const;
+		int getMarbleDisappearFrame() const;
+		int getLineDragFrame() const;
 		void marbleDisappearAnimation(int elapsedFrame);
 		void lineDragAnimation(int elapsedFrame);
 		

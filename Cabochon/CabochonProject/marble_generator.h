@@ -50,7 +50,7 @@ namespace controls
 		2. ¸Ê »ý¼º
 		*/
 		static int getRandomNumber(int min, int max);
-
+		static scalar getGaussianRandomNumber(scalar mean, scalar sigma);
 		static MarbleColor getRandomMarbleColor();
 		static MarbleColor getRandomMarbleColor(MarbleColorOn colorRange);
 
