@@ -28,6 +28,11 @@ namespace scenes
 		SteeringWheelControl _wheelControl;
 		MarbleControl _marbleControl;
 
+		void updatePlayState(float frameTime);
+		void updatePlayStateByKeyIn(float frameTime);
+
+		void updateAnimState(float frameTime);
+
 	public:
 		InGameScene(Graphics& graphics, Input& input, TextureList& textureList);
 		virtual ~InGameScene();
@@ -43,6 +48,8 @@ namespace scenes
 		//-----------------
 		BoardState getBoardState() const;
 		SteeringWheelControl& getSteeringWheelControl();
+
+
 
 	};
 }

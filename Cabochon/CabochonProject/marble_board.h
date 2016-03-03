@@ -20,13 +20,13 @@ namespace controls
 	using MarbleRows = std::deque <MarbleRow> ;
 
 	enum class RowType{ None = -1, Even, Odd };
-	enum class BoardState{Build, Ready, Play, GameOver, GameClear};
+	enum class BoardState{Build, Ready, Play, Animation, GameOver, GameClear};
 
 	class MarbleBoard
 		: public Control
 	{
 	private:
-		/*		
+		/*
 		// 2016. 2. 17.
 		// TODO.-------------------------------------------------------------
 		// level 은 Positive 일 경우 load 한 맵,
@@ -36,13 +36,13 @@ namespace controls
 		*/
 		//const char* levelFile = "data\\level_data.txt";
 		//const int maxLevel = 3;
-		
+
 		//int _level;
 		BoardState _boardState;
 		MarbleRows _marbles;
 		bool _dragged;
 		std::array<int, (int)MarbleColor::Num> _colorCount;
-		
+
 		//-------------------------------------
 		// 2016. 2. 29.
 		// Animation 효과. 상수와 변수.
@@ -53,7 +53,11 @@ namespace controls
 
 		int _marbleDisappearAnim;	// msec
 		int _lineDragAnim;			//msec
-		
+
+		// 삭제 예정 marble 등록.
+		std::vector<marble_ptr&> _toRemove;
+		bool animationFisinished();
+
 	public:
 		MarbleBoard();
 		MarbleBoard(const MarbleBoard& rhs) = delete;
@@ -68,7 +72,7 @@ namespace controls
 
 		// Marble 이 있을 경우 MarbleColor 반환, 없을 경우엔 MarbleColor::None 반환 (개체에 Color만 None으로 표시하여 없는척)
 		MarbleColor existMarble(IntPosition index) const;
-	
+
 		// 해당 색상의 Marble 추가 (실제로는 색깔만 바꾸고 카운트를 올림)
 		bool addMarble(IntPosition index, MarbleColor color);
 
@@ -146,7 +150,7 @@ namespace controls
 		// example : 0 <= x < 50 -> 10
 		int positionToColumnIndex(scalar x, RowType rowType) const;
 		// 자신의 중심점의 y 좌표를 파라미터로 주고 Row 번호를 얻는다.
-		int positionToRowIndex(scalar y) const ;
+		int positionToRowIndex(scalar y) const;
 		// 자신의 중심점의 좌표를 파라미터로 MarbleBoard에서의 Index 번호를 얻는다.
 		IntPosition positionToIndex(scalar x, scalar y) const;
 		// 자신의 중심점의 좌표를 파라미터로 MarbleBoard에서의 Index 번호를 얻는다.
@@ -155,11 +159,17 @@ namespace controls
 		// 자신의 중심점의 y 좌표를 통해 Even Row 인지 Odd Row인지 알 수 있다.
 		RowType getRowType(scalar y) const;
 		// 자신의 Row 번호를 통해, RowType이 Even인지 Odd인지 알 수 있다. 
-		RowType getRowType(int row) const; 
+		RowType getRowType(int row) const;
 
 		// 오류를 일으킬 index 값인지 검사한다.
 		bool isInvalidIndex(IntPosition index) const;
 
+		//2016. 3. 2 추가.
+		int getMarbleDisappearAnim() const;
+		int getLineDragAnim() const;
+		void marbleDisappearAnimation(int elapsedFrame);
+		void lineDragAnimation(int elapsedFrame);
+		
 		//pure virtual functions
 		virtual void render();
 		virtual void update(float frameTime);

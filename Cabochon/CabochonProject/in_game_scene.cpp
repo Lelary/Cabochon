@@ -51,34 +51,22 @@ void InGameScene::start()
 
 	_started = true;
 }
-void InGameScene::update(float frameTime)
+void InGameScene::updatePlayStateByKeyIn(float frameTime)
 {
-	//----------------------------------------------------------
-	// BoardState::Play 일 떄만
-	//----------------------------------------------------------
-
 	if (getBoardState() != BoardState::Play)
-		return;
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in updatePlayStateByKeyIn()"));
 
-	//----------------------------------------------------------
-	// Scene이 가진 Control 객체 들에 대한 업데이트.
-	//----------------------------------------------------------
-	_wheelControl.update(frameTime);
-	_marbleControl.update(frameTime);
-
-	//----------------------------------------------------------
+	// 스페이스 바를 눌렀고, 현재 발사된 marble이 없고, 방금부착한 marble이 없을 때
 	// MarbleCurrent 를 Shooting함.
-	//----------------------------------------------------------
-	// 스페이스 바를 눌렀고, 현재 발사된 marble이 없을 때.
-	if (_input.wasKeyPressed(VK_SPACE) && ! _marbleControl.isShooting())
+	if (_input.wasKeyPressed(VK_SPACE) && !_marbleControl.isShooting() && !_marbleControl.hasJustAttached())
 	{
 		// MarbleCurrent -> ShootedMarble
 		if (_wheelControl.getMarbleCurrent() != nullptr)
 		{
 			_marbleControl.setShootedMarble(
-				_wheelControl.getMarbleCurrent()->getColor(), 
+				_wheelControl.getMarbleCurrent()->getColor(),
 				_wheelControl.getMarbleCurrent()->getCentralPosition(),
-				ShootedMarble::getDefaultSpeed(), 
+				ShootedMarble::getDefaultSpeed(),
 				_wheelControl.getDegree(),
 				_textureList);
 		}
@@ -91,21 +79,51 @@ void InGameScene::update(float frameTime)
 		// New Color -> MarbleNext
 		MarbleColorOn colorOn = _marbleControl.getExistColors();
 		colorOn.bitData.None = false;
-		_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));	
+		_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));
 	}
-	else if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT))
-	{
+	else if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT)) {
 		// 아무것도안함
 	}
-	else if (_input.isKeyDown(VK_LEFT))
-	{
-		// Wheel 회전.
-		_wheelControl.rotateLeft(frameTime);
+	else if (_input.isKeyDown(VK_LEFT))	{
+		_wheelControl.rotateLeft(frameTime);		// Wheel 회전.
 	}
-	else if (_input.isKeyDown(VK_RIGHT))
+	else if (_input.isKeyDown(VK_RIGHT)) {
+		_wheelControl.rotateRight(frameTime);		// Wheel 회전.
+	}
+
+}
+void InGameScene::updatePlayState(float frameTime)
+{
+	if (getBoardState() != BoardState::Play)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in updatePlayState()"));
+
+	//----------------------------------------------------------
+	// Scene이 가진 Control 객체 들에 대한 업데이트.
+	//----------------------------------------------------------
+	_wheelControl.update(frameTime);
+	_marbleControl.update(frameTime);
+
+	//----------------------------------------------------------
+	// Keyboard 입력을 받아 행동.
+	//----------------------------------------------------------
+	updatePlayStateByKeyIn(frameTime);
+
+	//----------------------------------------------------------
+	// 현재 상태에 따른 계산 수행.
+	//----------------------------------------------------------
+	// 현재 shooting 중 일 때,
+	if (_marbleControl.isShooting())
 	{
-		// Wheel 회전.
-		_wheelControl.rotateRight(frameTime);
+		if (_marbleControl.attach(_marbleControl.getShootedMarble()))
+			_marbleControl.ceilingComeDown();
+	}
+	// shooting 된 marble이 방금 attach 되었을 때, 
+	// 부가효과 ( marble smach ) 판정 확인, 처리.
+	if (_marbleControl.hasJustAttached())
+	{
+		// 애니메이션과, 카운트가 필요하다.
+		if (_marbleControl.smash())
+			_marbleControl.drop();	// drop 오류 있음.
 	}
 
 	//----------------------------------------------------------
@@ -129,58 +147,45 @@ void InGameScene::update(float frameTime)
 		+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
 
 }
-void InGameScene::lateUpdate(float frameTime)
+void InGameScene::updateAnimState(float frameTime)
 {
-	//----------------------------------------------------------
-	// BoardState::Play 이외의 상태에 대한 처리.
-	//----------------------------------------------------------
-	// 로딩문구를 띄우는게 좋을 것 같다.
-	if (getBoardState() == BoardState::Build)
+	//Play 중 잠시 멈추고 animation '만'을 수행할경우.	
+	if (_marbleControl.forcingAnimation())	
 	{
+		_marbleControl.animation(frameTime);
 		return;
 	}
-	else if (getBoardState() == BoardState::Ready)
-	{
-		//GameStart (set BoardState::Play)
-		if (_input.isKeyDown(VK_SPACE))
-		{
-			_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
-		}
+
+}
+void InGameScene::update(float frameTime)
+{
+	switch (getBoardState())
+	{	
+	case BoardState::Build:
+		// 로딩문구를 띄우는게 좋을 것 같다.
+		break;
+	case BoardState::Ready:
+		// 하는일 없음.
+		// Play 상태로 이동하기전에 수행할 디테일한 부분 (애니메이션등) 이곳에 작성.
+		// if (_input.isKeyDown(VK_SPACE)) // 대기시킨다면 이런 코드 이용.
+		_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
+		break;
+	case BoardState::Play:
+		updatePlayState(frameTime);			// 너무 길어서 이동.
+		break;
+	case BoardState::GameOver:		// 게임 오버. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
+		_nextScene = SceneName::MainScene;
+		break;
+	case BoardState::GameClear:		// 게임 클리어. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
+		_nextScene = SceneName::MainScene;
+		break;
+	default:
+		break;
 	}
-
-	// 게임 클리어. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
-	else if (getBoardState() == BoardState::GameClear)
-		_nextScene = SceneName::MainScene;
-
-	// 게임 오버. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
-	else if (getBoardState() == BoardState::GameOver)
-		_nextScene = SceneName::MainScene;
+}
+void InGameScene::lateUpdate(float frameTime)
+{
 	 
-	//----------------------------------------------------------
-	// 현재 상태에 따른 계산 수행.
-	//----------------------------------------------------------
-	if (getBoardState() == BoardState::Play)
-	{
-		// 현재 shooting 중 일 때,
-		if (_marbleControl.isShooting())
-		{
-			if (_marbleControl.attach(_marbleControl.getShootedMarble()))
-				_marbleControl.ceilingComeDown();
-		}
-		// shooting 된 marble이 방금 attach 되었을 때, 
-		// 부가효과 ( marble smach ) 확인, 처리.
-		if (_marbleControl.hasJustAttached())
-		{
-			// 애니메이션과, 카운트가 필요하다.
-			if(_marbleControl.smash())
-				_marbleControl.drop();
-		}
-
-		// drop 오류 있음.
-
-
-
-	}
 }
 void InGameScene::render()
 {
