@@ -370,11 +370,11 @@ void MarbleBoard::loadTextures(TextureList& textureList)
 			marble->loadLayers(textureList);
 }
 
-int MarbleBoard::getMarbleDisappearFrame() const
+scalar MarbleBoard::getMarbleDisappearFrame() const
 {
 	return _marbleDisappearFrame; 
 }
-int MarbleBoard::getLineDragFrame() const
+scalar MarbleBoard::getLineDragFrame() const
 {
 	return _lineDragFrame; 
 }
@@ -390,7 +390,7 @@ bool MarbleBoard::animationFisinished()
 }
 // 2016. 3. 4.
 // position을 구하는 식을 함수로 묶어야함. (updateMarblePositions와 중복됨)
-void MarbleBoard::marbleDisappearAnimation(int elapsedFrame)
+void MarbleBoard::marbleDisappearAnimation(scalar elapsedFrame)
 {
 	_marbleDisappearFrame += elapsedFrame;
 
@@ -411,14 +411,13 @@ void MarbleBoard::marbleDisappearAnimation(int elapsedFrame)
 
 //한줄만처리.
 //->여러줄처리
-void MarbleBoard::lineDragAnimation(int elapsedFrame)
+void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 {
 	// percentage로 내려옴.
 	//currentframe/MAXFRAME
 	_lineDragFrame += elapsedFrame;
 
-	scalar progress = static_cast<scalar>(_lineDragFrame)
-					/ static_cast<scalar>(LINE_DRAG_FRAME);
+	scalar progress = _lineDragFrame / LINE_DRAG_FRAME;
 
 	if (_lineDragFrame > LINE_DRAG_FRAME)
 		_lineDragFrame = LINE_DRAG_FRAME;

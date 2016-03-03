@@ -172,6 +172,9 @@ void InGameScene::update(float frameTime)
 		// if (_input.isKeyDown(VK_SPACE)) // 대기시킨다면 이런 코드 이용.
 		_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
 		break;
+	case BoardState::Animation:
+		updateAnimState(frameTime);
+		break;
 	case BoardState::Play:
 		updatePlayState(frameTime);			// 너무 길어서 이동.
 		break;

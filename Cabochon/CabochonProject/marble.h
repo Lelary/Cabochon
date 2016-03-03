@@ -57,7 +57,7 @@ namespace components
 		virtual bool circularHitTest(const Marble& anotherMarble, scalar scale = 1.0f) const;
 		static bool circularHitTest(const Marble& marble1, const Marble& marble2, scalar scale = 1.0f);		
 		
-		void disappearing(int progressedFrame, int totalFrame, Position position);
+		void disappearing(scalar progressedFrame, scalar totalFrame, Position position);
 	};
 }
 #endif

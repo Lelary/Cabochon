@@ -148,10 +148,9 @@ bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2, scala
 		return true;
 }
 // Marble 한개가 사라지는 애니메이션.
-void Marble::disappearing(int progressedFrame, int totalFrame, Position position)
+void Marble::disappearing(scalar progressedFrame, scalar totalFrame, Position position)
 {
-	scalar progress = static_cast<scalar>(progressedFrame) 
-					/ static_cast<scalar>(totalFrame);
+	scalar progress = progressedFrame / totalFrame;
 
 	// 종료. 애니메이션의 형태에 상관없이 동일.
 	if (progressedFrame >= totalFrame || progressedFrame<=0){
