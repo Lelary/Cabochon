@@ -155,6 +155,8 @@ namespace controls
 		IntPosition positionToIndex(scalar x, scalar y) const;
 		// 자신의 중심점의 좌표를 파라미터로 MarbleBoard에서의 Index 번호를 얻는다.
 		IntPosition positionToIndex(Position position) const;
+		
+		Position indexToPosition(IntPosition index) const;
 
 		// 자신의 중심점의 y 좌표를 통해 Even Row 인지 Odd Row인지 알 수 있다.
 		RowType getRowType(scalar y) const;

@@ -278,24 +278,16 @@ marble_ptr MarbleBoard::makeRandomMarble(MarbleColorOn colorRange)
 void MarbleBoard::updateMarblePositions()
 {
 	//모든 Marble의 Position, IntPosition Update;
-	scalar x = 0;
-	scalar y = LINE;//LINE의 위치.
-	bool even = (getRowType(0)==RowType::Odd)?false:true;
 	// int position은 자신의 index,
 	// position은 offset + index*width, offset+index*height
 	for (unsigned int i = 0; i<(int)_marbles.size(); i++){
 		for (unsigned int j = 0; j < (int)_marbles[i].size(); j++){
 			if (_marbles[i][j] != nullptr){
 				_marbles[i][j]->setIndex({ i, j });
-				if (even)
-					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH, y - (i + 1)*MARBLE_HEIGHT);
-				else
-					_marbles[i][j]->setPosition(x + j*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), y - (i + 1)*MARBLE_HEIGHT);
+				_marbles[i][j]->setPosition(indexToPosition({ i, j }));
 			}
 		}
-		even = !even;
 	}
-	
 	_dragged = false;
 }
 int MarbleBoard::positionToColumnIndex(scalar x, RowType rowType) const
@@ -327,6 +319,18 @@ IntPosition MarbleBoard::positionToIndex(scalar x, scalar y) const
 IntPosition MarbleBoard::positionToIndex(Position position) const
 {
 	return positionToIndex(position.x, position.y);
+}
+
+Position MarbleBoard::indexToPosition(IntPosition index) const
+{
+	scalar x = 0;
+	scalar y = LINE;//LINE의 위치.
+	bool even = (getRowType(index.x) == RowType::Odd) ? false : true;
+
+	if (even)
+		return{ x + index.y*MARBLE_WIDTH, y - (index.x + 1)*MARBLE_HEIGHT };
+	else
+		return{ x + index.y*MARBLE_WIDTH + (MARBLE_WIDTH / 2.0f), y - (index.x + 1)*MARBLE_HEIGHT };
 }
 
 RowType MarbleBoard::getRowType(int row) const
@@ -374,6 +378,8 @@ bool MarbleBoard::animationFisinished()
 		return true;
 	return false;
 }
+// 2016. 3. 4.
+// position을 구하는 식을 함수로 묶어야함. (updateMarblePositions와 중복됨)
 void MarbleBoard::marbleDisappearAnimation(int elapsedFrame)
 {
 	_marbleDisappearFrame += elapsedFrame;
@@ -385,7 +391,11 @@ void MarbleBoard::marbleDisappearAnimation(int elapsedFrame)
 	else
 	{
 		for (marble_ptr& marble : _toRemove)
-			marble->disappearing(_marbleDisappearFrame, MARBLE_DISAPPEAR_FRAME);
+		{
+			Position position;
+			position = indexToPosition(marble->getIndex());
+			marble->disappearing(_marbleDisappearFrame, MARBLE_DISAPPEAR_FRAME, position);
+		}
 	}
 }
 void MarbleBoard::lineDragAnimation(int elapsedFrame)

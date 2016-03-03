@@ -147,15 +147,14 @@ void InGameScene::updatePlayState(float frameTime)
 		+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
 
 }
+//Play 중 잠시 멈추고 animation '만'을 수행할경우.
 void InGameScene::updateAnimState(float frameTime)
-{
-	//Play 중 잠시 멈추고 animation '만'을 수행할경우.	
-	if (_marbleControl.forcingAnimation())	
-	{
-		_marbleControl.animation(frameTime);
+{	
+	if (getBoardState() != BoardState::Animation)
 		return;
-	}
 
+	_marbleControl.getMarbleBoard().marbleDisappearAnimation(frameTime);
+	_marbleControl.getMarbleBoard().lineDragAnimation(frameTime);
 }
 void InGameScene::update(float frameTime)
 {
