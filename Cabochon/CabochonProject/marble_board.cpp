@@ -323,7 +323,11 @@ RowType MarbleBoard::getRowType(scalar y) const
 
 IntPosition MarbleBoard::positionToIndex(scalar x, scalar y) const
 {
-	return{ positionToRowIndex(y), positionToColumnIndex(x, getRowType(y)) };
+	int rowIndex = positionToRowIndex(y);
+	if (rowIndex < getHeight() && rowIndex >= 0)
+		return{ positionToRowIndex(y), positionToColumnIndex(x, getRowType(y)) };
+	else
+		return cabochon_constants::NO_POSITION;
 }
 
 IntPosition MarbleBoard::positionToIndex(Position position) const

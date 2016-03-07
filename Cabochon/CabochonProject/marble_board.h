@@ -55,7 +55,7 @@ namespace controls
 
 		// 삭제 예정 marble 등록.
 		std::vector<IntPosition> _toRemove;
-		// 지울 라인 수
+		// 지울 라인 수 (애니메이션을 의미)
 		int _lineToDrag;
 
 		void beginMarbleDisappear(){ _marbleDisappearFrame = MARBLE_DISAPPEAR_FRAME*0.001; }

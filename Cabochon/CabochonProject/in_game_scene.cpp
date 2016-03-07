@@ -123,20 +123,26 @@ void InGameScene::updatePlayState(float frameTime)
 	keyInPlayState(frameTime);
 	//----------------------------------------------------------
 	// 현재 상태에 따른 계산 수행.
+	// 함수 호출 순서가 유의미함.
+	// 2016. 3. 8
+	// 만약 나중에 순서나 if문의 괄호의 범위를 변경한다면
+	// removeRowZero()에서 justAttached을 업데이트 하도록 수정해야함.
 	//----------------------------------------------------------
 	// 현재 shooting 중 일 때,
 	if (_marbleControl.isShooting())
 	{
 		if (_marbleControl.attach(_marbleControl.getShootedMarble()))
+		{
+			// shooting 된 marble이 방금 attach 되었을 때, 
+			// 부가효과 ( marble smach ) 판정 확인, 처리.
+			if (_marbleControl.hasJustAttached())
+			{
+				// 애니메이션과, 카운트가 필요하다.
+				if (_marbleControl.smash())
+					_marbleControl.drop();	// drop 오류 있음.
+			}
 			_marbleControl.ceilingComeDown();
-	}
-	// shooting 된 marble이 방금 attach 되었을 때, 
-	// 부가효과 ( marble smach ) 판정 확인, 처리.
-	if (_marbleControl.hasJustAttached())
-	{
-		// 애니메이션과, 카운트가 필요하다.
-		if (_marbleControl.smash())
-			_marbleControl.drop();	// drop 오류 있음.
+		}
 	}
 
 	//----------------------------------------------------------
