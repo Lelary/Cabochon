@@ -30,11 +30,8 @@ namespace scenes
 
 		bool shootMarble();
 		void rotateWheel(float frameTime);
-		void handleKeyIn(float frameTime);
 		void keyInPlayState(float frameTime);
-		void keyInAnimState(float frameTime);
 		void updatePlayState(float frameTime);
-		void updateAnimState(float frameTime);
 
 	public:
 		InGameScene(Graphics& graphics, Input& input, TextureList& textureList);

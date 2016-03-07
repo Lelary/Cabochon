@@ -108,6 +108,7 @@ namespace controls
 		void linkFromSideWays(std::vector<bool>& line, int row) const;
 		bool isNotMarbleColorNone(IntPosition index) const;
 		
+		// 천장이 한칸 실제로 내려온다.
 		void ceilingComeDown();
 
 		//pure virtual functions

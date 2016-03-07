@@ -56,15 +56,13 @@ void InGameScene::keyInPlayState(float frameTime)
 	if (getBoardState() != BoardState::Play)
 		return;
 	
-	bool shooted;
-	shooted = shootMarble();
+	bool shooted = false;
+
+	if (_marbleControl.getMarbleBoard().animationFinished())
+		shooted = shootMarble();
 
 	if(!shooted)
 		rotateWheel(frameTime);
-}
-void InGameScene::keyInAnimState(float frameTime)
-{
-	rotateWheel(frameTime);
 }
 bool InGameScene::shootMarble()
 {
@@ -119,7 +117,10 @@ void InGameScene::updatePlayState(float frameTime)
 	//----------------------------------------------------------
 	_wheelControl.update(frameTime);
 	_marbleControl.update(frameTime);
-
+	//----------------------------------------------------------
+	// 키입력 처리.
+	//----------------------------------------------------------
+	keyInPlayState(frameTime);
 	//----------------------------------------------------------
 	// 현재 상태에 따른 계산 수행.
 	//----------------------------------------------------------
@@ -159,45 +160,8 @@ void InGameScene::updatePlayState(float frameTime)
 		+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
 
 }
-//Play 중 잠시 멈추고 animation '만'을 수행할경우.
-void InGameScene::updateAnimState(float frameTime)
-{	
-	if (getBoardState() != BoardState::Animation)
-		return;
-
-	if (_marbleControl.getMarbleBoard().getNumRemoving() > 0) {
-		_marbleControl.getMarbleBoard().marbleDisappearAnimation(frameTime);
-		// 이거 끝나고나서 line 애니메이션 해야하므로 return.
-		return;
-	}
-	_marbleControl.getMarbleBoard().lineDragAnimation(frameTime);
-}
-void InGameScene::handleKeyIn(float frameTime)
-{
-	switch (getBoardState())
-	{
-	case controls::BoardState::Build:
-		break;
-	case controls::BoardState::Ready:
-		break;
-	case controls::BoardState::Play:
-		keyInPlayState(frameTime);
-		break;
-	case controls::BoardState::Animation:
-		keyInAnimState(frameTime);
-		break;
-	case controls::BoardState::GameOver:
-		break;
-	case controls::BoardState::GameClear:
-		break;
-	default:
-		break;
-	}
-}
 void InGameScene::update(float frameTime)
 {
-	handleKeyIn(frameTime);
-
 	switch (getBoardState())
 	{	
 	case BoardState::Build:
@@ -207,9 +171,6 @@ void InGameScene::update(float frameTime)
 		// 하는일 없음.
 		// Play 상태로 이동하기전에 수행할 디테일한 부분 (애니메이션등) 이곳에 작성.
 		_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
-		break;
-	case BoardState::Animation:
-		updateAnimState(frameTime);
 		break;
 	case BoardState::Play:
 		updatePlayState(frameTime);			// 너무 길어서 이동.

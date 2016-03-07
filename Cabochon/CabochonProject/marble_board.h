@@ -20,7 +20,7 @@ namespace controls
 	using MarbleRows = std::deque <MarbleRow> ;
 
 	enum class RowType{ None = -1, Even, Odd };
-	enum class BoardState{Build, Ready, Play, Animation, GameOver, GameClear};
+	enum class BoardState{Build, Ready, Play, GameOver, GameClear};
 
 	class MarbleBoard
 		: public Control
@@ -47,7 +47,6 @@ namespace controls
 		// 2016. 2. 29.
 		// Animation 효과. 상수와 변수.
 		// if var==0 return; if var<CONST playAnim()
-		// if boardState==Anim??
 		const scalar MARBLE_DISAPPEAR_FRAME = 1.0f; // sec
 		const scalar LINE_DRAG_FRAME = 1.0f;		// sec
 
@@ -58,7 +57,13 @@ namespace controls
 		std::vector<IntPosition> _toRemove;
 		// 지울 라인 수
 		int _lineToDrag;
-		bool animationFisinished();
+
+		void beginMarbleDisappear(){ _marbleDisappearFrame = MARBLE_DISAPPEAR_FRAME*0.001; }
+		void beginLineDrag(){ _lineDragFrame = LINE_DRAG_FRAME*0.001; }
+		void finishMarbleDisappear(){ _marbleDisappearFrame = 0; }
+		void finishLineDrag(){ _lineDragFrame = 0; }
+		void progressMarbleDisappear(float elapsedTime){ _marbleDisappearFrame += elapsedTime; }
+		void progressLineDrag(float elapsedTime){ _lineDragFrame += elapsedTime; }
 
 	public:
 		MarbleBoard();
@@ -105,6 +110,7 @@ namespace controls
 		// 현재 Board의 상태 반환 (현재 게임의 상태이기도 하다.)
 		BoardState getBoardState() const;
 
+		bool animationFinished();
 		/*
 		// 이 함수로 알 수 있는 것.
 		// 반환값 :  현재 남은 Marble 이 존재하는 첫번 째 줄.
@@ -174,6 +180,7 @@ namespace controls
 		int getNumRemoving() const;
 		void marbleDisappearAnimation(scalar elapsedFrame);
 		void lineDragAnimation(scalar elapsedFrame);
+		void handleAnimation(float frameTime);
 
 		//pure virtual functions
 		virtual void render();

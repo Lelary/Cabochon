@@ -85,7 +85,7 @@ bool MarbleBoard::removeMarble(IntPosition index)
 	_colorCount[(int)_marbles[x][y]->getColor()]--;
 	//_marbles[x][y]->setColor(MarbleColor::None);
 	_toRemove.push_back({ x, y });
-	setBoardState(BoardState::Animation);	// Animation으로 나머지 처리.
+	beginMarbleDisappear();
 	return true;
 }
 void MarbleBoard::removeRowZero()
@@ -170,7 +170,7 @@ bool MarbleBoard::dragDownOneLine()
 	// Row Zero 가 삭제되면 자동으로 한칸씩 내려온다.
 	removeRowZero();
 	_lineToDrag++;
-	setBoardState(BoardState::Animation);
+	beginLineDrag();
 	_dragged = true;
 	return true;		
 }
@@ -186,7 +186,7 @@ bool MarbleBoard::dragDownHiddenLines()
 		_dragged = result = true;
 		for (int i = 0; i < toDrag; i++)
 			_marbles.pop_front();
-		setBoardState(BoardState::Animation);
+		beginLineDrag();
 	}
 	return result;
 }
@@ -386,7 +386,7 @@ int MarbleBoard::getNumRemoving() const
 {
 	return _toRemove.size();
 }
-bool MarbleBoard::animationFisinished()
+bool MarbleBoard::animationFinished()
 {
 	if (_marbleDisappearFrame == 0 && _lineDragFrame == 0 && _lineToDrag==0)
 		return true;
@@ -394,7 +394,7 @@ bool MarbleBoard::animationFisinished()
 }
 void MarbleBoard::marbleDisappearAnimation(scalar elapsedFrame)
 {
-	_marbleDisappearFrame += elapsedFrame;
+	progressMarbleDisappear(elapsedFrame);
 
 	for (IntPosition index : _toRemove)
 	{
@@ -405,9 +405,8 @@ void MarbleBoard::marbleDisappearAnimation(scalar elapsedFrame)
 
 	if (_marbleDisappearFrame >= MARBLE_DISAPPEAR_FRAME)
 	{
-		_marbleDisappearFrame = 0;
+		finishMarbleDisappear();
 		_toRemove.clear();
-		_boardState = animationFisinished() == true ? BoardState::Play : BoardState::Animation;
 	}
 }
 
@@ -417,8 +416,8 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 {
 	// percentage로 내려옴.
 	//currentframe/MAXFRAME
-	_lineDragFrame += elapsedFrame;
-	
+	progressLineDrag(elapsedFrame);
+
 	if (_lineDragFrame > LINE_DRAG_FRAME)
 		_lineDragFrame = LINE_DRAG_FRAME;
 
@@ -426,14 +425,17 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 		for (marble_ptr& marble : row)
 		{
 			// 점점 내려옴.
-			scalar progress = elapsedFrame / LINE_DRAG_FRAME;
-			marble->setPosition(marble->getPosition().x, marble->getPosition().y + MARBLE_HEIGHT*(progress));
+			// 실제 위치가 이미 업데이트 되었는지 / 애니메이션 후에 업데이트 되는지에 따라 아래 구현이 바뀜.
+			// 2016. 3. 8. 현재는 전자. 
+			// 후자의 형식을 취하기 위해서는 애니메이션이 방금끝났는지를 감시하여 board를 업데이트(라인 삭제와 업데이트포지션) 하는 구현이 필요함. removeMarble() 또한 동일.
+			scalar progress = _lineDragFrame / LINE_DRAG_FRAME;
+			Position realPosition = indexToPosition(marble->getIndex());			
+			marble->setPosition(realPosition.x, realPosition.y - MARBLE_HEIGHT*(1-progress));
 		}
 	
 	if (_lineDragFrame >= LINE_DRAG_FRAME){
-		_lineDragFrame = 0;
+		finishLineDrag();
 		_lineToDrag--;
-		_boardState = animationFisinished() == true ? BoardState::Play : BoardState::Animation;
 	}
 }
 void MarbleBoard::render()
@@ -451,13 +453,25 @@ void MarbleBoard::render()
 				if (_marbles[i][j]!=nullptr)
 					_marbles[i][j]->draw();
 }
+void MarbleBoard::handleAnimation(float frameTime)
+{
+	if (animationFinished())
+		return;
+	if (getNumRemoving() > 0) {
+		marbleDisappearAnimation(frameTime);
+		// 이거 끝나고나서 line 애니메이션 해야하므로 return.
+		return;
+	}
+	lineDragAnimation(frameTime);
+}
 void MarbleBoard::update(float frameTime)
 {
 	if (_boardState != BoardState::Play)
 		return;
 
 	dragDownHiddenLines();
-	
+
+	handleAnimation(frameTime);
 
 	// 줄내림이 발생했을 때, 
 	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
