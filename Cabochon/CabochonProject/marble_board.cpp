@@ -209,7 +209,10 @@ void MarbleBoard::makeRandomBoard()
 	
 	_marbles.clear();
 	bool even = true;
-	int row = MarbleGenerator::getRandomNumber(4, 20);
+	
+	//int row = MarbleGenerator::getRandomNumber(4, 20);
+	int row = 5;
+
 	// temporary Row in stack.
 	for (int i = 0; i < row; i++)
 	{
@@ -224,7 +227,8 @@ void MarbleBoard::makeRandomBoard()
 		even = !even;
 	}
 
-	row = MarbleGenerator::getRandomNumber(4, 6);
+	//row = MarbleGenerator::getRandomNumber(4, 6);
+	row = 5;
 	for (int i = 0; i < row; i++)
 	{
 		if (even == true)
@@ -388,8 +392,6 @@ bool MarbleBoard::animationFisinished()
 		return true;
 	return false;
 }
-// 2016. 3. 4.
-// position을 구하는 식을 함수로 묶어야함. (updateMarblePositions와 중복됨)
 void MarbleBoard::marbleDisappearAnimation(scalar elapsedFrame)
 {
 	_marbleDisappearFrame += elapsedFrame;
@@ -416,9 +418,7 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 	// percentage로 내려옴.
 	//currentframe/MAXFRAME
 	_lineDragFrame += elapsedFrame;
-
-	scalar progress = _lineDragFrame / LINE_DRAG_FRAME;
-
+	
 	if (_lineDragFrame > LINE_DRAG_FRAME)
 		_lineDragFrame = LINE_DRAG_FRAME;
 
@@ -426,6 +426,7 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 		for (marble_ptr& marble : row)
 		{
 			// 점점 내려옴.
+			scalar progress = elapsedFrame / LINE_DRAG_FRAME;
 			marble->setPosition(marble->getPosition().x, marble->getPosition().y + MARBLE_HEIGHT*(progress));
 		}
 	

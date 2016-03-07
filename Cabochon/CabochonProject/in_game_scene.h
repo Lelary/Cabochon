@@ -28,9 +28,12 @@ namespace scenes
 		SteeringWheelControl _wheelControl;
 		MarbleControl _marbleControl;
 
+		bool shootMarble();
+		void rotateWheel(float frameTime);
+		void handleKeyIn(float frameTime);
+		void keyInPlayState(float frameTime);
+		void keyInAnimState(float frameTime);
 		void updatePlayState(float frameTime);
-		void updatePlayStateByKeyIn(float frameTime);
-
 		void updateAnimState(float frameTime);
 
 	public:

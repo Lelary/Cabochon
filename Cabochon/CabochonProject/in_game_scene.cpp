@@ -51,11 +51,23 @@ void InGameScene::start()
 
 	_started = true;
 }
-void InGameScene::updatePlayStateByKeyIn(float frameTime)
+void InGameScene::keyInPlayState(float frameTime)
 {
 	if (getBoardState() != BoardState::Play)
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in updatePlayStateByKeyIn()"));
+		return;
+	
+	bool shooted;
+	shooted = shootMarble();
 
+	if(!shooted)
+		rotateWheel(frameTime);
+}
+void InGameScene::keyInAnimState(float frameTime)
+{
+	rotateWheel(frameTime);
+}
+bool InGameScene::shootMarble()
+{
 	// 스페이스 바를 눌렀고, 현재 발사된 marble이 없고, 방금부착한 marble이 없을 때
 	// MarbleCurrent 를 Shooting함.
 	if (_input.wasKeyPressed(VK_SPACE) && !_marbleControl.isShooting() && !_marbleControl.hasJustAttached())
@@ -80,8 +92,14 @@ void InGameScene::updatePlayStateByKeyIn(float frameTime)
 		MarbleColorOn colorOn = _marbleControl.getExistColors();
 		colorOn.bitData.None = false;
 		_wheelControl.setMarbleNext(MarbleGenerator::getRandomMarbleColor(colorOn));
+
+		return true;
 	}
-	else if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT)) {
+	return false;
+}
+void InGameScene::rotateWheel(float frameTime)
+{
+	if (_input.isKeyDown(VK_LEFT) && _input.isKeyDown(VK_RIGHT)) {
 		// 아무것도안함
 	}
 	else if (_input.isKeyDown(VK_LEFT))	{
@@ -90,7 +108,6 @@ void InGameScene::updatePlayStateByKeyIn(float frameTime)
 	else if (_input.isKeyDown(VK_RIGHT)) {
 		_wheelControl.rotateRight(frameTime);		// Wheel 회전.
 	}
-
 }
 void InGameScene::updatePlayState(float frameTime)
 {
@@ -102,11 +119,6 @@ void InGameScene::updatePlayState(float frameTime)
 	//----------------------------------------------------------
 	_wheelControl.update(frameTime);
 	_marbleControl.update(frameTime);
-
-	//----------------------------------------------------------
-	// Keyboard 입력을 받아 행동.
-	//----------------------------------------------------------
-	updatePlayStateByKeyIn(frameTime);
 
 	//----------------------------------------------------------
 	// 현재 상태에 따른 계산 수행.
@@ -152,6 +164,7 @@ void InGameScene::updateAnimState(float frameTime)
 {	
 	if (getBoardState() != BoardState::Animation)
 		return;
+
 	if (_marbleControl.getMarbleBoard().getNumRemoving() > 0) {
 		_marbleControl.getMarbleBoard().marbleDisappearAnimation(frameTime);
 		// 이거 끝나고나서 line 애니메이션 해야하므로 return.
@@ -159,8 +172,32 @@ void InGameScene::updateAnimState(float frameTime)
 	}
 	_marbleControl.getMarbleBoard().lineDragAnimation(frameTime);
 }
+void InGameScene::handleKeyIn(float frameTime)
+{
+	switch (getBoardState())
+	{
+	case controls::BoardState::Build:
+		break;
+	case controls::BoardState::Ready:
+		break;
+	case controls::BoardState::Play:
+		keyInPlayState(frameTime);
+		break;
+	case controls::BoardState::Animation:
+		keyInAnimState(frameTime);
+		break;
+	case controls::BoardState::GameOver:
+		break;
+	case controls::BoardState::GameClear:
+		break;
+	default:
+		break;
+	}
+}
 void InGameScene::update(float frameTime)
 {
+	handleKeyIn(frameTime);
+
 	switch (getBoardState())
 	{	
 	case BoardState::Build:
@@ -169,7 +206,6 @@ void InGameScene::update(float frameTime)
 	case BoardState::Ready:
 		// 하는일 없음.
 		// Play 상태로 이동하기전에 수행할 디테일한 부분 (애니메이션등) 이곳에 작성.
-		// if (_input.isKeyDown(VK_SPACE)) // 대기시킨다면 이런 코드 이용.
 		_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
 		break;
 	case BoardState::Animation:
