@@ -113,11 +113,6 @@ void InGameScene::updatePlayState(float frameTime)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in updatePlayState()"));
 
 	//----------------------------------------------------------
-	// Scene이 가진 Control 객체 들에 대한 업데이트.
-	//----------------------------------------------------------
-	_wheelControl.update(frameTime);
-	_marbleControl.update(frameTime);
-	//----------------------------------------------------------
 	// 키입력 처리.
 	//----------------------------------------------------------
 	keyInPlayState(frameTime);
@@ -193,6 +188,26 @@ void InGameScene::update(float frameTime)
 }
 void InGameScene::lateUpdate(float frameTime)
 {
+	switch (getBoardState())
+	{
+	case controls::BoardState::Build:
+		break;
+	case controls::BoardState::Ready:
+		break;
+	case controls::BoardState::Play:
+		//----------------------------------------------------------
+		// Scene이 가진 Control 객체 들에 대한 업데이트.
+		//----------------------------------------------------------
+		_wheelControl.update(frameTime);
+		_marbleControl.update(frameTime);
+		break;
+	case controls::BoardState::GameOver:
+		break;
+	case controls::BoardState::GameClear:
+		break;
+	default:
+		break;
+	}
 	 
 }
 void InGameScene::render()
