@@ -2,8 +2,12 @@
 #include "texture_list.h"
 #include "dx9_game_engine\graphics.h"
 #include "marble_generator.h"
+#include "angle.h"
+
+using mathematics::Angle;
 using mathematics::scalar;
 using mathematics::Position;
+using mathematics::Velocity;
 using mathematics::IntPosition;
 using components::Marble;
 using components::Layer;
@@ -11,8 +15,8 @@ using components::MarbleColor;
 using controls::MarbleGenerator;
 using scenes::TextureList;
 
-Marble::Marble(const IntPosition& index, MarbleColor color)
-	: _index(index), _color(color)
+Marble::Marble(const IntPosition& index, MarbleColor color, Velocity velocity)
+	: _index(index), _color(color), _velocity(velocity)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
@@ -24,7 +28,7 @@ Marble::Marble(MarbleColor color)
 }
 
 Marble::Marble(const Marble& rhs)
-	: Object(rhs), _index(rhs._index), _color(rhs._color)
+	: Object(rhs), _index(rhs._index), _color(rhs._color), _velocity(rhs._velocity)
 {
 	setWidth(marbleWidth);
 	setHeight(marbleHeight);
@@ -162,4 +166,28 @@ void Marble::disappearing(scalar progressedFrame, scalar totalFrame, Position po
 	// 테스트용 약식수식
 	setPosition(position.x, position.y + progress*GAME_HEIGHT);
 	adjustLayersPosition();
+}
+Velocity Marble::getVelocity() const
+{
+	return _velocity;
+}
+
+void Marble::setVelocity(Velocity velocity)
+{
+	_velocity = velocity;
+}
+void Marble::setVelocity(scalar vx, scalar vy)
+{
+	_velocity = { vx, vy };
+}
+void Marble::setVelocity(scalar speed, Angle angle)
+{
+	/*
+	2016. 1. 18.
+	0도를 어디로?
+
+	Steering Wheel Control 에서 올 정보. 이므로 윗쪽을 향하는 것이 0도
+	*/
+	_velocity = { speed*sinf(angle.getDegree()*PI / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
+
 }

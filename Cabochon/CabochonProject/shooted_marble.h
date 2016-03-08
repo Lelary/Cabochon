@@ -31,7 +31,6 @@ namespace components
 	private:
 		static const scalar defaultSpeed;
 		const MarbleBoard& _marbleBoard;
-		Velocity _velocity;
 
 		// 이전 위치
 		Position _prevPosition;
@@ -90,10 +89,6 @@ namespace components
 		
 		// 속도 설정 함수.
 		static scalar getDefaultSpeed();
-		virtual Velocity getVelocity() const;
-		virtual void setVelocity(Velocity velocity);
-		virtual void setVelocity(scalar vx, scalar vy);
-		virtual void setVelocity(scalar speed, Angle angle);
 
 		virtual void update(float frameTIme);
 	};

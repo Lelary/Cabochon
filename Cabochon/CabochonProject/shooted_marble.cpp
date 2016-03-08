@@ -17,7 +17,7 @@ using cabochon_constants::RIGHT_WALL;
 const scalar ShootedMarble::defaultSpeed = 600;
 
 ShootedMarble::ShootedMarble(const MarbleBoard& marbleBoard)
-	:Marble(), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
+	:Marble(), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
 {
 	/*
 	2016. 1. 18.
@@ -25,7 +25,7 @@ ShootedMarble::ShootedMarble(const MarbleBoard& marbleBoard)
 	*/
 }
 ShootedMarble::ShootedMarble(MarbleColor color, const MarbleBoard& marbleBoard)
-	:Marble(color), _velocity({ 0.0f, 0.0f }), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
+	:Marble(color), _currentIndex(NO_POSITION), _prevIndex(NO_POSITION), _indexChanged(false), _marbleBoard(marbleBoard)
 {
 
 }
@@ -71,18 +71,22 @@ Position ShootedMarble::getPrevCentralPosition() const
 
 void ShootedMarble::move(const MarbleBoard& board, float frameTIme)
 {
-	setPosition(getPosition().x + _velocity.x*frameTIme, getPosition().y + _velocity.y*frameTIme);
+	setPosition(getPosition().x + getVelocity().x*frameTIme, getPosition().y + getVelocity().y*frameTIme);
 
 	// 좌우벽
-	if (getCentralPosition().x-getWidth()/2.0f <  LEFT_WALL
+	if (getCentralPosition().x - getWidth() / 2.0f < LEFT_WALL
 		||
-		getCentralPosition().x+getWidth()/2.0f > RIGHT_WALL
+		getCentralPosition().x + getWidth() / 2.0f > RIGHT_WALL
 		)
-		_velocity.x *= -1;
+	{
+		setVelocity(getVelocity().x * -1, getVelocity().y);
+	}
 		
 
-	if (getCentralPosition().y-getHeight()/2.0f < board.getCeilingPosition())
-		_velocity.y *= -1;
+	if (getCentralPosition().y - getHeight() / 2.0f < board.getCeilingPosition())
+	{
+		setVelocity(getVelocity().x, getVelocity().y * -1);
+	}
 
 }
 scalar ShootedMarble::getDefaultSpeed()
@@ -90,30 +94,6 @@ scalar ShootedMarble::getDefaultSpeed()
 	return defaultSpeed;
 }
 
-Velocity ShootedMarble::getVelocity() const
-{
-	return _velocity;
-}
-
-void ShootedMarble::setVelocity(Velocity velocity)
-{
-	_velocity = velocity;
-}
-void ShootedMarble::setVelocity(scalar vx, scalar vy)
-{
-	_velocity = { vx, vy };
-}
-void ShootedMarble::setVelocity(scalar speed, Angle angle)
-{
-	/*
-	2016. 1. 18.
-	0도를 어디로?
-
-	Steering Wheel Control 에서 올 정보. 이므로 윗쪽을 향하는 것이 0도
-	*/
-	_velocity = { speed*sinf(angle.getDegree()*PI / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
-	
-}
 void ShootedMarble::update(float frameTIme)
 {
 	Marble::update(frameTIme);

@@ -1,6 +1,7 @@
 #ifndef _MARBLE_H
 #define _MARBLE_H
 #include "object.h"
+#include "angle.h"
 #include "texture_list.h"
 #include "cabochon_constants.h"
 /*
@@ -17,6 +18,8 @@
 
 namespace components
 {
+	using mathematics::Angle;
+	using mathematics::Velocity;
 	using mathematics::IntPosition;
 	using components::Marble;
 	using components::marble_ptr;
@@ -34,10 +37,11 @@ namespace components
 	private:
 		IntPosition _index;
 		MarbleColor _color;
+		Velocity _velocity;	// velocity, marble이 자신의 velocity를 가지고 직접 운동하지는 않는다. (외부에서 필요할때만 사용)
 
 	public:
 		Marble(MarbleColor color);
-		Marble(const IntPosition& index = NO_POSITION, MarbleColor color = MarbleColor::None);
+		Marble(const IntPosition& index = NO_POSITION, MarbleColor color = MarbleColor::None, Velocity velocity = {0.0f, 0.0f});
 		Marble(const Marble& rhs);
 		virtual ~Marble();
 		Marble& operator=(const Marble& rhs);
@@ -48,6 +52,11 @@ namespace components
 
 		virtual void setIndex(IntPosition index);
 		virtual IntPosition getIndex() const;
+
+		virtual Velocity getVelocity() const;
+		virtual void setVelocity(Velocity velocity);
+		virtual void setVelocity(scalar vx, scalar vy);
+		virtual void setVelocity(scalar speed, Angle angle);
 
 		// marble은 회전 성분을 가지고 있지 않지만, layer 를 회전시킨다.
 		virtual void rotate(scalar degree);
