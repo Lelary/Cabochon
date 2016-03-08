@@ -473,7 +473,11 @@ void MarbleBoard::update(float frameTime)
 	if (_boardState != BoardState::Play)
 		return;
 
-	dragDownHiddenLines();
+	// 2016. 3. 8.
+	// 현재 lineDragAnimation()의 로직이 실제줄내림처리이후 애니메이션을 수행하므로,
+	// 아래 함수가 marbleDisappearAnimation()과 같은 턴에 수행되면 안됨.
+	// dragDownOneLine() 또한 마찬가지.
+	// dragDownHiddenLines();
 
 	handleAnimation(frameTime);
 

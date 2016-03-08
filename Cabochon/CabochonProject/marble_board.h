@@ -58,10 +58,10 @@ namespace controls
 		// 지울 라인 수 (애니메이션을 의미)
 		int _lineToDrag;
 
-		void beginMarbleDisappear(){ _marbleDisappearFrame = MARBLE_DISAPPEAR_FRAME*0.001; }
-		void beginLineDrag(){ _lineDragFrame = LINE_DRAG_FRAME*0.001; }
-		void finishMarbleDisappear(){ _marbleDisappearFrame = 0; }
-		void finishLineDrag(){ _lineDragFrame = 0; }
+		void beginMarbleDisappear(){ _marbleDisappearFrame = MARBLE_DISAPPEAR_FRAME*0.001f; }
+		void beginLineDrag(){ _lineDragFrame = LINE_DRAG_FRAME*0.001f; }
+		void finishMarbleDisappear(){ _marbleDisappearFrame = 0.0f; }
+		void finishLineDrag(){ _lineDragFrame = 0.0f; }
 		void progressMarbleDisappear(float elapsedTime){ _marbleDisappearFrame += elapsedTime; }
 		void progressLineDrag(float elapsedTime){ _lineDragFrame += elapsedTime; }
 

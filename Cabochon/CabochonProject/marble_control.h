@@ -52,7 +52,7 @@ namespace controls
 		//-------------------------------------
 		// 2016. 2. 29.
 		// 한줄 내림 처리가 _lineDragDelay 턴마다 실행됨.
-		const int LINE_DRAG_DELAY = 10;			//turn
+		const int LINE_DRAG_DELAY = 5;			//turn
 		int _lineDragDelay;			// turn
 
 	public:

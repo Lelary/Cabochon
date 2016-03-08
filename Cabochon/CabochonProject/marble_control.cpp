@@ -384,6 +384,12 @@ bool MarbleControl::smash()
 		for (auto index : sameColors) {
 			_marbleBoard.removeMarble(index);
 		}
+		// 2016. 3. 8.
+		// 3개이상의 marble을 맞췄을 경우의 보상으로
+		// lineDragDelay (패널티) 완화.
+		// 이와 동시에 현재 MarbleBoard::lineDragAnimation() 의 처리순서로 인해 해당함수가
+		// MarbleBoard::marbleDisappearAnimation()과 같은 턴에 실행될 수 없는 문제를 피해감.
+		_lineDragDelay++;
 		return true;
 	}
 	else
