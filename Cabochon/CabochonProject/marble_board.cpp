@@ -1,7 +1,10 @@
 // 2016. 2. 17.
 #include "marble_board.h"
 #include "vector2.h"
+#include "angle.h"
 
+using mathematics::Angle;
+using mathematics::Velocity;
 using mathematics::Position;
 using mathematics::scalar;
 using mathematics::IntPosition;
@@ -85,6 +88,13 @@ bool MarbleBoard::removeMarble(IntPosition index)
 	_colorCount[(int)_marbles[x][y]->getColor()]--;
 	//_marbles[x][y]->setColor(MarbleColor::None);
 	_toRemove.push_back({ x, y });
+
+	// animation을 위한 velocity 설정.
+	scalar randomR = MarbleGenerator::getGaussianRandomNumber(cabochon_constants::MEAN_DROP_SPEED, 1.0f);
+	Angle randomAngle = MarbleGenerator::getGaussianRandomNumber(cabochon_constants::MEAN_DROP_ANGLE, 1.0f);
+	_marbles[x][y]->setVelocity(randomR, randomAngle);
+
+	// frame 설정.
 	beginMarbleDisappear();
 	return true;
 }
@@ -410,6 +420,10 @@ void MarbleBoard::marbleDisappearAnimation(scalar elapsedFrame)
 	if (_marbleDisappearFrame >= MARBLE_DISAPPEAR_FRAME)
 	{
 		finishMarbleDisappear();
+		for (IntPosition index : _toRemove)
+		{
+			_marbles[index.x][index.y]->setVelocity({ 0.0f, 0.0f });
+		}
 		_toRemove.clear();
 	}
 }

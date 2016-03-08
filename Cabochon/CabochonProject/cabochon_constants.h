@@ -22,6 +22,10 @@ namespace cabochon_constants
 	const char FONT[] = "Courier New";
 	const int POINT_SIZE = 14;
 	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);
+
+	const scalar MEAN_DROP_SPEED = 100.0f;
+	const scalar MEAN_DROP_ANGLE = 0.0f;
+	const scalar GRAVITY_ACCELERATION = 980.0f;
 }
 
 #endif

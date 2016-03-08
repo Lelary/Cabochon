@@ -154,8 +154,6 @@ bool Marble::circularHitTest(const Marble& marble1, const Marble& marble2, scala
 // Marble 한개가 사라지는 애니메이션.
 void Marble::disappearing(scalar progressedFrame, scalar totalFrame, Position position)
 {
-	scalar progress = progressedFrame / totalFrame;
-
 	// 종료. 애니메이션의 형태에 상관없이 동일.
 	if (progressedFrame >= totalFrame || progressedFrame<=0){
 		setColor(MarbleColor::None);
@@ -163,8 +161,19 @@ void Marble::disappearing(scalar progressedFrame, scalar totalFrame, Position po
 		adjustLayersPosition();
 		return;
 	}
-	// 테스트용 약식수식
-	setPosition(position.x, position.y + progress*GAME_HEIGHT);
+
+	// x축의 이동을 과장하기 위한 계수.
+	const scalar multiplier = 10.0f;
+	// Time t(0~1). deltaT가 아님에 유의.
+	scalar progress = progressedFrame / totalFrame;
+	// current velocity가 아닌 initial velocity로써 사용. 
+	// position 또한 마찬가지 (initial position을 받아옴).
+	Velocity v = getVelocity();	
+	scalar g = cabochon_constants::GRAVITY_ACCELERATION;
+	position.x += v.x*progress * multiplier;
+	position.y += v.y*progress + 0.5f*g*powf(progress, 2.0f);
+
+	setPosition(position);
 	adjustLayersPosition();
 }
 Velocity Marble::getVelocity() const

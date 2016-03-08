@@ -48,7 +48,7 @@ namespace controls
 		// Animation 효과. 상수와 변수.
 		// if var==0 return; if var<CONST playAnim()
 		const scalar MARBLE_DISAPPEAR_FRAME = 1.0f; // sec
-		const scalar LINE_DRAG_FRAME = 1.0f;		// sec
+		const scalar LINE_DRAG_FRAME = 0.5f;		// sec
 
 		scalar _marbleDisappearFrame;	// sec
 		scalar _lineDragFrame;			//sec
