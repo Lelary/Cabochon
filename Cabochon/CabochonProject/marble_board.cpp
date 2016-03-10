@@ -246,6 +246,11 @@ void MarbleBoard::makeRandomBoard()
 			colorOn.bitData.Red = true;
 			colorOn.bitData.Orange = true;
 			colorOn.bitData.Yellow = true;
+			colorOn.bitData.Green = true;
+			colorOn.bitData.Blue = true;
+			colorOn.bitData.Purple = true;
+			colorOn.bitData.Gray = false;
+
 			marble = makeRandomMarble(colorOn);
 		}
 		even = !even;

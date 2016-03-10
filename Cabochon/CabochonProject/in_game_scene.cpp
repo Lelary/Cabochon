@@ -214,10 +214,11 @@ void InGameScene::render()
 {
 	_backGround.draw();
 	_wheelControl.render();
-	_marbleControl.render();
-
+	_marbleControl.render(); 
+#if defined(DEBUG) | defined(_DEBUG)
 	_debugText.print(_debugMessage, 100, 100);
 	_errorText.print(_errorMessage, 100, 300);
+#endif
 }
 
 void InGameScene::releaseAll()
