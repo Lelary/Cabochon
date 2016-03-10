@@ -11,8 +11,8 @@ namespace scenes
 		:public Scene
 	{
 	private:
-		Image _startButton;
-		Image _exitButton;
+		Image _title;
+		Image _mainMessage;
 
 		TextDX _text;
 	public:

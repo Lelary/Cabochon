@@ -78,6 +78,13 @@ bool MarbleBoard::addMarble(IntPosition index, MarbleColor color)
 // 실제 메모리를 해제 하는 것이 아니라, None으로 컬러를 바꿈.
 bool MarbleBoard::removeMarble(IntPosition index, bool immediatly)
 {
+	//이미 삭제 중인지 (삭제 하려고 하고 있는지) 검사
+	for (IntPosition test : _toRemove)
+	{
+		if (test == index)
+			return false;
+	}
+
 	int x = index.x;
 	int y = index.y;
 	int maxY = (getRowType(x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
@@ -234,8 +241,13 @@ void MarbleBoard::makeRandomBoard()
 			_marbles.push_front(MarbleRow(MAX_Y - 1));
 
 		for (marble_ptr& marble : _marbles.front())
-			marble = makeRandomMarble();
-
+		{
+			MarbleColorOn colorOn;
+			colorOn.bitData.Red = true;
+			colorOn.bitData.Orange = true;
+			colorOn.bitData.Yellow = true;
+			marble = makeRandomMarble(colorOn);
+		}
 		even = !even;
 	}
 

@@ -13,7 +13,7 @@ namespace scenes
 	class TextureList
 	{
 	public:
-		enum TextureName { None = -1, StartButton = 0, ExitButton, Marbles, SteeringWheel, BackGroundCity, BackGroundMountain, Num };
+		enum TextureName { None = -1, Title = 0, MainMessage, Marbles, SteeringWheel, BackGroundCity, BackGroundMountain, Num };
 
 	private:
 		Graphics* _graphics;

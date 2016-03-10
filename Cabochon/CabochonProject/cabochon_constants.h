@@ -26,6 +26,9 @@ namespace cabochon_constants
 	const scalar MEAN_DROP_SPEED = 100.0f;
 	const scalar MEAN_DROP_ANGLE = 0.0f;
 	const scalar GRAVITY_ACCELERATION = 980.0f;
+
+	const std::string VERSION = "revision 170~";
+	const std::string MY_PAGE = "http://lemonelime.net";
 }
 
 #endif

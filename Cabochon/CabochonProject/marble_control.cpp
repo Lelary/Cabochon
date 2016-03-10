@@ -77,7 +77,7 @@ MarbleColorOn MarbleControl::getExistColors() const
 	for (int c = 0; c < (int)MarbleColor::Num; c++)
 	{
 		if (_marbleBoard.getMarbleCount((MarbleColor)c) > 0)
-			colors.data |= (true << c);
+			colors.data |= (true << (c+1));
 	}
 	return colors;
 }
@@ -328,7 +328,7 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 	}
 
 	// 천장에 닿아서 force attach.
-	if (shootedMarble->getCurrentIndex().x == _marbleBoard.getHeight()-1) {
+	if (gridPosition.x == _marbleBoard.getHeight() - 1) {
 		//attach 확정.
 		_marbleBoard.addMarble(gridPosition, shootedMarble->getColor());
 		shootedMarble.reset();

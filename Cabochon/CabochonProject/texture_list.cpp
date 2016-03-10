@@ -5,8 +5,8 @@ using scenes::TextureList;
 TextureList::TextureList()
 	:_graphics(nullptr)
 {
-	_textureFiles[StartButton] = "images\\start_button.png";
-	_textureFiles[ExitButton] = "images\\exit_button.png";
+	_textureFiles[Title] = "images\\title.png";
+	_textureFiles[MainMessage] = "images\\main_message.png";
 
 #if defined(DEBUG) | defined(_DEBUG)
 	_textureFiles[Marbles] = "images\\marbles_textures_lines.png";

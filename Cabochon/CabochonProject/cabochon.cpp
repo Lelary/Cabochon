@@ -94,6 +94,7 @@ void Cabochon::consoleCommand()
 {
 	// 콘솔로부터 명령을 얻는다.
 	command = console->getCommand();
+
 	if (command == "")
 		return;
 	if (command == "help")
@@ -111,6 +112,7 @@ void Cabochon::consoleCommand()
 		else
 			console->print("fps Off");
 	}
+
 	// Pre : Game::colsoleCommand()의 복사. ( return 형이 void로 , command를 넘겨주지 않기때문에 복사. (getCommand()는 한번호출될때 내용물을 비워버림.) )
 	// Post : Cabochon 게임에서 필요한 치트코드.
 	

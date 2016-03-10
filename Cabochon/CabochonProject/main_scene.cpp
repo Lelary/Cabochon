@@ -21,24 +21,24 @@ void MainScene::start()
 
 	Scene::start();
 	
-	if (!_startButton.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::StartButton)))
+	if (!_title.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::Title)))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
-	if (!_exitButton.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::ExitButton)))
+	if (!_mainMessage.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::MainMessage)))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Image"));
 
-	_startButton.setX(GAME_WIDTH / 2 - (_startButton.getWidth()/2.0f));
-	_startButton.setY(GAME_HEIGHT*(1.0f / 2.0f));
+	_title.setX(GAME_WIDTH / 2 - (_title.getWidth()/2.0f));
+	_title.setY(GAME_HEIGHT*(1.0f / 4.0f));
 
-	_exitButton.setX(GAME_WIDTH / 2 - (_exitButton.getWidth() / 2.0f));
-	_exitButton.setY(GAME_HEIGHT*(1.0f / 2.0f)+_exitButton.getHeight()*2);
+	_mainMessage.setX(GAME_WIDTH / 2 - (_mainMessage.getWidth() / 2.0f));
+	_mainMessage.setY(GAME_HEIGHT*(3.0f / 4.0f));
 
-	_text.initialize(&_graphics, 15, false, false, cabochon_constants::FONT);
+	_text.initialize(&_graphics, 14, false, false, cabochon_constants::FONT);
 	
 	_started = true;
 }
 void MainScene::update(float frameTime)
 {
-	if (_input.wasKeyPressed(ENTER_KEY))
+	if (_input.wasKeyPressed(VK_SPACE))
 	{
 		_nextScene = SceneName::InGameScene;
 	}
@@ -49,11 +49,11 @@ void MainScene::lateUpdate(float frameTime)
 }
 void MainScene::render()
 {
-	_startButton.draw();
-	_exitButton.draw();
-	_text.print(" Press Enter Key to Start Game. \n \
-				The Button Images are Dummy yet. TT. \
-				", 10, 10);
+	_title.draw();
+	_mainMessage.draw();
+	std::string message = "version: " + cabochon_constants::VERSION + " " + cabochon_constants::MY_PAGE;
+
+	_text.print(message, 10, 10);
 }
 
 void MainScene::releaseAll()
