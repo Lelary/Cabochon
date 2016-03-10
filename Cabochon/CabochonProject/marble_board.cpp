@@ -2,6 +2,7 @@
 #include "marble_board.h"
 #include "vector2.h"
 #include "angle.h"
+#include "board_link_checker.h"
 
 using mathematics::Angle;
 using mathematics::Velocity;
@@ -15,6 +16,8 @@ using controls::MarbleBoard;
 using controls::BoardState;
 using controls::RowType;
 using controls::MarbleGenerator;
+using controls::BoardLinkChecker;
+using controls::LinkState;
 using scenes::TextureList;
 using cabochon_constants::MAX_Y;
 using cabochon_constants::MIN_X;
@@ -73,7 +76,7 @@ bool MarbleBoard::addMarble(IntPosition index, MarbleColor color)
 }
 
 // 실제 메모리를 해제 하는 것이 아니라, None으로 컬러를 바꿈.
-bool MarbleBoard::removeMarble(IntPosition index)
+bool MarbleBoard::removeMarble(IntPosition index, bool immediatly)
 {
 	int x = index.x;
 	int y = index.y;
@@ -84,18 +87,22 @@ bool MarbleBoard::removeMarble(IntPosition index)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard : removeMarble()"));
 	if (_marbles[x][y]->getColor() == MarbleColor::None)
 		throw(GameError(gameErrorNS::FATAL_ERROR, std::to_string(x) + ", " + std::to_string(y) + " is already MarbleColor::None!"));
+	
+	if (immediatly){
+		_marbles[x][y]->setColor(MarbleColor::None);
+	}
+	else{
+		_toRemove.push_back({ x, y });
 
+		// animation을 위한 velocity 설정.
+		scalar randomR = MarbleGenerator::getGaussianRandomNumber(cabochon_constants::MEAN_DROP_SPEED, 1.0f);
+		Angle randomAngle = MarbleGenerator::getGaussianRandomNumber(cabochon_constants::MEAN_DROP_ANGLE, 1.0f);
+		_marbles[x][y]->setVelocity(randomR, randomAngle);
+
+		// frame 설정.
+		beginMarbleDisappear();
+	}
 	_colorCount[(int)_marbles[x][y]->getColor()]--;
-	//_marbles[x][y]->setColor(MarbleColor::None);
-	_toRemove.push_back({ x, y });
-
-	// animation을 위한 velocity 설정.
-	scalar randomR = MarbleGenerator::getGaussianRandomNumber(cabochon_constants::MEAN_DROP_SPEED, 1.0f);
-	Angle randomAngle = MarbleGenerator::getGaussianRandomNumber(cabochon_constants::MEAN_DROP_ANGLE, 1.0f);
-	_marbles[x][y]->setVelocity(randomR, randomAngle);
-
-	// frame 설정.
-	beginMarbleDisappear();
 	return true;
 }
 void MarbleBoard::removeRowZero()
@@ -265,9 +272,25 @@ void MarbleBoard::makeRandomBoard()
 	// marble의 y위치(intposition, position 모두)를
 	// 셋업해줘야함.
 	updateMarblePositions();
-
+	arrangeNotLinkedMarbles(true);
 	_boardState = BoardState::Ready;
 
+}
+void MarbleBoard::arrangeNotLinkedMarbles(bool immediatly)
+{
+	BoardLinkChecker linkChecker(*this);
+	std::deque<std::vector<LinkState>> linkBoard = linkChecker.getLinkedResult();
+
+	for (int row = 0; row < getHeight(); row++){
+		int maxY = (getRowType(row) == RowType::Even) ? MAX_Y : MAX_Y - 1;
+		for (int col = 0; col < maxY; col++){
+			if (linkBoard[row][col] != LinkState::Linked){
+				if (existMarble({ row, col }) != MarbleColor::None)
+					removeMarble({ row, col }, immediatly);
+
+			}
+		}
+	}
 }
 marble_ptr MarbleBoard::makeMarble(MarbleColor color)
 {

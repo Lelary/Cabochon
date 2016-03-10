@@ -83,7 +83,8 @@ namespace controls
 		bool addMarble(IntPosition index, MarbleColor color);
 
 		// 해당 위치의 Marble 삭제 (실제로는 색깔만 None으로, 카운트를 내림)
-		bool removeMarble(IntPosition index);
+		// immediatly는 즉시 삭제할지 결정 기본값은 false, 애니메이션 적용.
+		bool removeMarble(IntPosition index, bool immediatly=false);
 
 		// 해당 Color를 가진 Marble Instance 생성.
 		marble_ptr makeMarble(MarbleColor color);
@@ -148,6 +149,9 @@ namespace controls
 		// (Level 기능 추가 후에 한 Level로 치며, negative 값으로 센다.)
 		void makeRandomBoard();
 
+		//makeRandomBoard()내부에서 무작위로 만든 marble중에 link되지 않은 marble을 삭제한다.
+		void arrangeNotLinkedMarbles(bool immediatly=false);
+
 		// 모든 Marble들이 자신이 가지고 있는 Dequeue 에서의 번호를 기준으로,
 		// GridPosition 과 Position을 갱신한다. (Marble들이 정렬됨)
 		void updateMarblePositions();
@@ -180,6 +184,7 @@ namespace controls
 		void marbleDisappearAnimation(scalar elapsedFrame);
 		void lineDragAnimation(scalar elapsedFrame);
 		void handleAnimation(float frameTime);
+		const std::vector<IntPosition>& getToRemove() const{ return _toRemove;}
 
 		//pure virtual functions
 		virtual void render();

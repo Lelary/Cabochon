@@ -103,10 +103,6 @@ namespace controls
 		bool smash();
 		
 		void drop();
-
-		std::vector<bool> linkFromUpperLine(const std::vector<bool>& upperLine, int upperRow) const;
-		void linkFromSideWays(std::vector<bool>& line, int row) const;
-		bool isNotMarbleColorNone(IntPosition index) const;
 		
 		// 천장이 한칸 실제로 내려온다.
 		void ceilingComeDown();

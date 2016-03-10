@@ -32,7 +32,9 @@ namespace controls
 		void makeLinkedResult();
 	public:
 		BoardLinkChecker(const MarbleBoard& marbleBoard);
+		BoardLinkChecker(const BoardLinkChecker& rhs) = delete;
 		~BoardLinkChecker();
+		BoardLinkChecker& operator=(const BoardLinkChecker& rhs) = delete;
 		
 		const std::deque<std::vector<LinkState>>& getLinkedResult();
 	};

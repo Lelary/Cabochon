@@ -31,7 +31,7 @@ void BoardLinkChecker::linkUpper(IntPosition me)
 	if (me.x < 0 || me.y > _board.getHeight())
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker"));
 
-	if (me.x == _board.getHeight())
+	if (me.x >= _board.getHeight()-1)
 		return;
 
 	RowType myRowType = _board.getRowType(me.x);
@@ -65,6 +65,9 @@ void BoardLinkChecker::linkSide(IntPosition me)
 	if (me.x < 0 || me.y > _board.getHeight())
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker"));
 
+	if (me.x == _board.getHeight())
+		return;
+
 	RowType myRowType = _board.getRowType(me.x);
 	int myMaxY = myRowType == RowType::Even ? MAX_Y : MAX_Y - 1;
 	int left = me.y - 1;
@@ -90,7 +93,12 @@ void BoardLinkChecker::linkLower(IntPosition me)
 	if (me.x == 0)
 		return;
 
-	RowType myRowType = _board.getRowType(me.x);
+	RowType myRowType;
+	if (me.x == _board.getHeight())	{
+		myRowType = _board.getRowType(me.x - 2);
+	}
+	else
+		myRowType = _board.getRowType(me.x);
 
 	int left, right;
 	if (myRowType == RowType::Even)	{
@@ -144,11 +152,11 @@ void BoardLinkChecker::makeData()
 	ceiling.assign(ceilingCol, true);
 	_data.push_back(ceiling);
 
-	for (int row = 0; row < _board.getHeight(); row++)
+	for (int row = _board.getHeight()-1; row >= 0; row--)
 	{
 		int maxCol = (_board.getRowType(row) == RowType::Even)
 			? cabochon_constants::MAX_Y : cabochon_constants::MAX_Y - 1;
-		_data.push_back(std::vector<bool>());
+		_data.push_front(std::vector<bool>());
 		for (int col = 0; col < maxCol; col++)
 		{
 			switch (_board.existMarble({ row, col }))
@@ -157,14 +165,19 @@ void BoardLinkChecker::makeData()
 				throw(GameError(gameErrorNS::FATAL_ERROR, "Marble Color can not be MarbleColor::Num!"));
 				break;
 			case MarbleColor::None:
-				_data.at(row).push_back(false);
+				_data.front().push_back(false);
 				break;
 			default:
 				// Num과 None을 제외한 MarbleColor은 컬러 색상이다. (Marble이 있음을 의미).
-				_data.at(row).push_back(true);
+					_data.front().push_back(true);
 				break;
 			}
 		}
+	}
+
+	for (auto index : _board.getToRemove())
+	{
+		_data[index.x][index.y] = false;
 	}
 }
 void BoardLinkChecker::makeLinkedResult()
