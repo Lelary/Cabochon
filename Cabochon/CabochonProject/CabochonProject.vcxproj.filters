@@ -168,6 +168,9 @@
     <ClInclude Include="cheat.h">
       <Filter>헤더 파일\controls</Filter>
     </ClInclude>
+    <ClInclude Include="board_link_checker.h">
+      <Filter>헤더 파일\controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -246,6 +249,9 @@
       <Filter>소스 파일\controls</Filter>
     </ClCompile>
     <ClCompile Include="cheat.cpp">
+      <Filter>소스 파일\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="board_link_checker.cpp">
       <Filter>소스 파일\controls</Filter>
     </ClCompile>
   </ItemGroup>

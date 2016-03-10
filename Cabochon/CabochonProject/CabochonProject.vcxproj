@@ -74,6 +74,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="angle.h" />
+    <ClInclude Include="board_link_checker.h" />
     <ClInclude Include="cabochon_constants.h" />
     <ClInclude Include="ceiling_block.h" />
     <ClInclude Include="cheat.h" />
@@ -115,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="angle.cpp" />
+    <ClCompile Include="board_link_checker.cpp" />
     <ClCompile Include="cabochon.cpp" />
     <ClCompile Include="dx9_game_engine\console.cpp" />
     <ClCompile Include="dx9_game_engine\game.cpp" />

@@ -17,6 +17,11 @@ namespace controls
 	class MarbleGenerator;
 
 	class Cheat;
+	
+	// 2016. 3. 10. 추가.
+	// drop 함수에서 사용할 클래스.
+	class BoardLinkChecker;
+
 	// 나중에 구현
 	//class LifeCycleControl;
 	//class Timer;
