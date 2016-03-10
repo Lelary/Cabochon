@@ -163,7 +163,7 @@ bool MarbleBoard::gameOver()
 {
 	// 혹은 getFloor()==0
 	for (const marble_ptr& marble : _marbles.front())
-		if (marble != nullptr)
+		if (marble->getColor() != MarbleColor::None)
 		{
 			_boardState = BoardState::GameOver;
 			return true;
@@ -454,6 +454,8 @@ void MarbleBoard::marbleDisappearAnimation(scalar elapsedFrame)
 			_marbles[index.x][index.y]->setVelocity({ 0.0f, 0.0f });
 		}
 		_toRemove.clear();
+		// 게임 클리어 검사.
+		gameClear();
 	}
 }
 
@@ -484,6 +486,9 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 		updateMarblePositions();
 		finishLineDrag();
 		_lineToDrag--;
+
+		//gameOver검사. 한줄이 다 내려온 시점에 하는 것이 자연스럽다.
+		gameOver();
 	}
 }
 void MarbleBoard::render()
