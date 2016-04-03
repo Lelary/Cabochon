@@ -18,8 +18,8 @@ using scenes::TextureList;
 Marble::Marble(const IntPosition& index, MarbleColor color, Velocity velocity)
 	: _index(index), _color(color), _velocity(velocity)
 {
-	setWidth(marbleWidth);
-	setHeight(marbleHeight);
+	setWidth(static_cast<scalar>(marbleWidth));
+	setHeight(static_cast<scalar>(marbleHeight));
 }
 
 Marble::Marble(MarbleColor color)
@@ -30,8 +30,8 @@ Marble::Marble(MarbleColor color)
 Marble::Marble(const Marble& rhs)
 	: Object(rhs), _index(rhs._index), _color(rhs._color), _velocity(rhs._velocity)
 {
-	setWidth(marbleWidth);
-	setHeight(marbleHeight);
+	setWidth(static_cast<scalar>(marbleWidth));
+	setHeight(static_cast<scalar>(marbleHeight));
 	/*
 	2016. 1. 15
 	현재 자기 대입 처리 필요 없음

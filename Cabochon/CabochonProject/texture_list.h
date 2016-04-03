@@ -19,6 +19,7 @@ namespace scenes
 			MainMessage,
 			GameOverMessage, 
 			GameClearMessage,
+			BulletinBoard,
 			Marbles, 
 			SteeringWheel,
 			GameOverLine,

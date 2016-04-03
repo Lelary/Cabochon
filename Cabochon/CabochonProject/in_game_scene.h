@@ -23,6 +23,7 @@ namespace scenes
 		Image _gameOverLine;
 		Image _gameOverMessage;
 		Image _gameClearMessage;
+		Image _bulletinBoard;
 
 		TextDX _debugText;
 		TextDX _errorText;

@@ -34,13 +34,22 @@ void InGameScene::start()
 	_gameOverLine.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::GameOverLine));
 	_gameOverMessage.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::GameOverMessage));
 	_gameClearMessage.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::GameClearMessage));
+	_bulletinBoard.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BulletinBoard));
 	_debugText.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
 	_errorText.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
 
 	_gameOverLine.setX(0);
-	_gameOverLine.setY(gameOverLineY);
-	_gameOverMessage.setVisible(false);	
+	_gameOverLine.setY(gameOverLineY); 
+	_bulletinBoard.setVisible(false);
+	_gameOverMessage.setVisible(false);
 	_gameClearMessage.setVisible(false);
+
+	_bulletinBoard.setX(GAME_WIDTH / 2.0f - _bulletinBoard.getWidth() / 2.0f);
+	_bulletinBoard.setY(GAME_HEIGHT / 2.0f - _bulletinBoard.getHeight() / 2.0f);
+	_gameOverMessage.setX(GAME_WIDTH / 2.0f - _gameOverMessage.getWidth() / 2.0f);
+	_gameOverMessage.setY(GAME_HEIGHT / 2.0f - _gameOverMessage.getHeight() / 2.0f);
+	_gameClearMessage.setX(GAME_WIDTH / 2.0f - _gameClearMessage.getWidth() / 2.0f);
+	_gameClearMessage.setY(GAME_HEIGHT / 2.0f - _gameClearMessage.getHeight() / 2.0f);
 
 	// wheelControl
 	_wheelControl.loadTextures(_textureList);
@@ -163,7 +172,6 @@ void InGameScene::updatePlayState(float frameTime)
 	{
 		x = _marbleControl.getShootedMarble()->getCentralPosition().x;
 		y = _marbleControl.getShootedMarble()->getCentralPosition().y;
-	}
 
 	if (mathematics::IntPosition{ x, y } == cabochon_constants::NO_POSITION)
 		return;
@@ -173,6 +181,8 @@ void InGameScene::updatePlayState(float frameTime)
 		+ std::to_string(_marbleControl.getMarbleBoard().positionToRowIndex(y))
 		+ "\n Index Column: "
 		+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
+
+	}
 
 }
 void InGameScene::update(float frameTime)
@@ -185,18 +195,20 @@ void InGameScene::update(float frameTime)
 	case BoardState::Ready:
 		// 하는일 없음.
 		// Play 상태로 이동하기전에 수행할 디테일한 부분 (애니메이션등) 이곳에 작성.
-		_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
+ 		_marbleControl.getMarbleBoard().setBoardState(BoardState::Play);
 		break;
 	case BoardState::Play:
 		updatePlayState(frameTime);			// 너무 길어서 이동.
 		break;
 	case BoardState::GameOver:
+		_bulletinBoard.setVisible(true);
 		_gameOverMessage.setVisible(true);
 		if (_input.wasKeyPressed(VK_SPACE))	{
 			_nextScene = SceneName::MainScene;
 		}
 		break;
 	case BoardState::GameClear:
+		_bulletinBoard.setVisible(true);
 		_gameClearMessage.setVisible(true);
 		if (_input.wasKeyPressed(VK_SPACE))	{
 			_nextScene = SceneName::MainScene;
@@ -236,6 +248,7 @@ void InGameScene::render()
 	_gameOverLine.draw();
 	_wheelControl.render();
 	_marbleControl.render(); 
+	_bulletinBoard.draw();
 	_gameOverMessage.draw();
 	_gameClearMessage.draw();
 #if defined(DEBUG) | defined(_DEBUG)

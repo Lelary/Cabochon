@@ -9,6 +9,7 @@ TextureList::TextureList()
 	_textureFiles[MainMessage] = "images\\main_message.png";
 	_textureFiles[GameOverMessage] = "images\\game_over_message.png";
 	_textureFiles[GameClearMessage] = "images\\game_clear_message.png";
+	_textureFiles[BulletinBoard] = "images\\bulletin_board.png";
 
 #if defined(DEBUG) | defined(_DEBUG)
 	_textureFiles[Marbles] = "images\\marbles_textures_lines.png";
