@@ -243,13 +243,12 @@ void MarbleBoard::makeRandomBoard()
 		for (marble_ptr& marble : _marbles.front())
 		{
 			MarbleColorOn colorOn;
-			colorOn.bitData.Red = true;
-			colorOn.bitData.Orange = true;
 			colorOn.bitData.Yellow = true;
 			colorOn.bitData.Green = true;
+			colorOn.bitData.Mint = true;
 			colorOn.bitData.Blue = true;
-			colorOn.bitData.Purple = true;
-			colorOn.bitData.Gray = false;
+			colorOn.bitData.Violet = true;
+			colorOn.bitData.Pink = true;
 
 			marble = makeRandomMarble(colorOn);
 		}

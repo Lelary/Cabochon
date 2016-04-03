@@ -20,13 +20,12 @@ namespace controls
 	struct MarbleColorBitField
 	{
 		unsigned char None : 1;
-		unsigned char Red : 1;
-		unsigned char Orange : 1;
 		unsigned char Yellow : 1;
 		unsigned char Green : 1;
+		unsigned char Mint : 1;
 		unsigned char Blue : 1;
-		unsigned char Purple : 1;
-		unsigned char Gray : 1;
+		unsigned char Violet : 1;
+		unsigned char Pink : 1;
 	};
 	union MarbleColorOn
 	{

@@ -28,7 +28,7 @@ MarbleColor MarbleGenerator::getRandomMarbleColor()
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
 	// None~Gray
-	std::uniform_int_distribution<>  dist((int)MarbleColor::None, (int)MarbleColor::Gray);
+	std::uniform_int_distribution<>  dist((int)MarbleColor::None, (int)MarbleColor::Num-1);
 	int randomNumber = dist(gen);
 	return (MarbleColor)randomNumber;
 }
@@ -59,7 +59,7 @@ MarbleColor MarbleGenerator::getRandomMarbleColor(MarbleColorOn colorRange)
 
 	sum = 0;
 	int i = (int)MarbleColor::None + 1;
-	for (; i <= (int)MarbleColor::Gray + 1; i++){
+	for (; i <= (int)MarbleColor::Num; i++){
 		if ((colorRange.data >> i) & true){
 			sum++;
 			if (sum == randomNumber)

@@ -26,7 +26,7 @@ namespace components
 	using scenes::TextureList; 
 	using cabochon_constants::NO_POSITION;
 	
-	enum class MarbleColor { None=-1, Red, Orange, Yellow, Green, Blue, Purple, Gray, Num};
+	enum class MarbleColor { None=-1, Yellow, Green, Mint, Blue, Violet, Pink, Num};
 
 	class Marble
 		:public Object
