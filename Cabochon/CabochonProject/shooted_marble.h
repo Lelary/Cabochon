@@ -63,17 +63,12 @@ namespace components
 
 		// updateIndex 호출 시 마다 _currentIndex, _prevIndex 가 업데이트 된다.
 		// 이전 호출과 비교했을때 변경점이 있으면 true 리턴.
-		bool updateIndex(const MarbleBoard& board);
+		bool updateIndex();
 		// ShootedMarble이 MarbleBoard 상에서 몇번 자리 위에 있는지 검사하는 함수.
 		IntPosition getCurrentIndex() const;
 		// ShootedMarble이 MarbleBoard 상에서 몇번 자리 위에 있었는지 검사하는 함수.
 		IntPosition getPrevIndex() const;
 		bool indexChanged() const;
-		// 현재 위치가 MarbleBoard 의 인덱스 범위를 벗어남.
-		bool isInInvalidIndex() const;
-		// 이전 위치가 MarbleBoard 의 인덱스 범위를 벗어남. // 그러면 업데이트하지않음.
-		// 하지만 처음 위치는 invalid함.
-		bool wasInInvalidIndex() const;
 
 		/*
 		2016. 1. 17

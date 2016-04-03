@@ -135,6 +135,10 @@ void InGameScene::updatePlayState(float frameTime)
 				// 애니메이션과, 카운트가 필요하다.
 				if (_marbleControl.smash())
 					_marbleControl.drop();	// drop 오류 있음.
+
+				// gameOver 를 유발했는지 검사.
+				if (_marbleControl.getMarbleBoard().gameOver())
+					return;
 			}
 			_marbleControl.ceilingComeDown();
 		}

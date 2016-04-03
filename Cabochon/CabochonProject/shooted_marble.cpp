@@ -97,14 +97,12 @@ scalar ShootedMarble::getDefaultSpeed()
 void ShootedMarble::update(float frameTIme)
 {
 	Marble::update(frameTIme);
-	updateIndex(_marbleBoard);
+	updateIndex();
 }
 
 void ShootedMarble::setCurrentIndex(IntPosition index)
 {
-	//prevIndex는 무조건 업데이트되지는 않음. (전전 위치를 유지할 때가 있다.)
-	if(isInInvalidIndex()==false)
-		_prevIndex = _currentIndex;
+	_prevIndex = _currentIndex;
 	_currentIndex = index;
 }
 IntPosition ShootedMarble::getCurrentIndex() const
@@ -119,22 +117,17 @@ bool ShootedMarble::indexChanged() const
 {
 	return _indexChanged;
 }
-bool ShootedMarble::updateIndex(const MarbleBoard& board)
+bool ShootedMarble::updateIndex()
 {
-	if (board.positionToIndex(getCentralPosition()) != _currentIndex)
+	IntPosition newIndex = _marbleBoard.positionToIndex(getCentralPosition());
+	if (newIndex != _currentIndex)
 	{
-		setCurrentIndex(board.positionToIndex(getCentralPosition()));
-
-		return _indexChanged = true;
+		if (_marbleBoard.isInvalidIndex(newIndex) == false)
+		{
+			setCurrentIndex(newIndex);
+			return _indexChanged = true;
+		}
 	}
-	return _indexChanged = false;
-}
-bool ShootedMarble::isInInvalidIndex() const
-{
-	return _marbleBoard.isInvalidIndex(_currentIndex);
-}
-
-bool ShootedMarble:: wasInInvalidIndex() const
-{
-	return _marbleBoard.isInvalidIndex(_prevIndex);
+	
+	return _indexChanged=false;
 }

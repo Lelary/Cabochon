@@ -159,7 +159,7 @@ scalar MarbleBoard::getCeilingPosition() const
 {
 	return -1 * (getHeight()-1)*MARBLE_HEIGHT + LINE;
 }
-bool MarbleBoard::gameOver()
+bool MarbleBoard::gameOver() 
 {
 	// 혹은 getFloor()==0
 	for (const marble_ptr& marble : _marbles.front())
@@ -536,8 +536,8 @@ void MarbleBoard::update(float frameTime)
 	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
 
 	for (const MarbleRow& row : _marbles)
-		for (const marble_ptr& col : row)
-			col->update(frameTime);
+		for (const marble_ptr& marble : row)
+			marble->update(frameTime);
 
 	//Line, Drop 애니메이션 프레임 처리
 	handleAnimation(frameTime);
