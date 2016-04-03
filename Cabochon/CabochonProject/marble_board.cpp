@@ -536,5 +536,10 @@ void MarbleBoard::update(float frameTime)
 	// 줄내림이 발생했을 때, 
 	// marble의 y위치(intposition, position 모두)를 한칸씩 내림.
 
+	for (const MarbleRow& row : _marbles)
+		for (const marble_ptr& col : row)
+			col->update(frameTime);
+
+	//Line, Drop 애니메이션 프레임 처리
 	handleAnimation(frameTime);
 }

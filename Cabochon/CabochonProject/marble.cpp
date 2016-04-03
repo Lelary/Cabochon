@@ -68,15 +68,22 @@ void Marble::loadLayers(TextureList& textureList)
 	{
 		_layers.push_back(Layer());
 		_layers.back().initialize(textureList.getGraphics(), marbleTextureWidth, marbleTextureHeight, cols, textureList.getTexture(TextureList::TextureName::Marbles));
-		// 정말 애니메이션 미사용.
-		_layers.back().setFrames(row*cols, row*cols);
+		// 애니메이션 미사용.
+		//_layers.back().setFrames(row*cols, row*cols);
 
 		// 애니메이션 사용시.
-		// _layers.back().setFrames(row*cols, row*cols + cols - 1);
+		 _layers.back().setFrames(row*cols, row*cols + cols - 1);
 		_layers.back().setCurrentFrame(row*cols);
 		_layers.back().setFrameDelay(0.1);
-		_layers.back().setLoop(false);
-		_layers.back().setAnimationComplete(true);
+		
+		// 애니메이션 미사용시
+		//_layers.back().setLoop(false);
+		//_layers.back().setAnimationComplete(true);
+
+		// 애니메이션 사용시
+		_layers.back().setLoop(true);
+		_layers.back().setAnimationComplete(false);
+
 		_layers.back().setScaleFromWidth(1.0f, getWidth());
 		_layers.back().setDistanceFromCenter(getPosition(), getWidth(), getHeight(), { 0, 0 });
 		_layers.back().setVisible(false);
