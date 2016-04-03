@@ -20,6 +20,10 @@ namespace scenes
 	{
 	private:
 		Image _backGround;
+		Image _gameOverLine;
+		Image _gameOverMessage;
+		Image _gameClearMessage;
+
 		TextDX _debugText;
 		TextDX _errorText;
 		std::string _debugMessage;

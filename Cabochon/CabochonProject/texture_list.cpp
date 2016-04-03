@@ -7,6 +7,8 @@ TextureList::TextureList()
 {
 	_textureFiles[Title] = "images\\title.png";
 	_textureFiles[MainMessage] = "images\\main_message.png";
+	_textureFiles[GameOverMessage] = "images\\game_over_message.png";
+	_textureFiles[GameClearMessage] = "images\\game_clear_message.png";
 
 #if defined(DEBUG) | defined(_DEBUG)
 	_textureFiles[Marbles] = "images\\marbles_textures_lines.png";
@@ -14,7 +16,8 @@ TextureList::TextureList()
 	_textureFiles[Marbles] = "images\\marbles_textures.png";
 #endif
 	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
-	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
+	_textureFiles[GameOverLine] = "images\\game_over_line.png";
+	_textureFiles[Ceiling] = "images\\ceiling.png";
 	_textureFiles[BackGroundCity] = "images\\back_ground_city.png";
 	_textureFiles[BackGroundMountain] = "images\\back_ground_mountain.png";
 	

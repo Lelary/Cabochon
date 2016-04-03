@@ -22,6 +22,8 @@ InGameScene::~InGameScene()
 }
 void InGameScene::start()
 {
+	const float gameOverLineY = 448.0f;
+
 	if (_started)
 		return;
 
@@ -29,9 +31,17 @@ void InGameScene::start()
 	
 	// Image, Text
 	_backGround.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::BackGroundMountain));
+	_gameOverLine.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::GameOverLine));
+	_gameOverMessage.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::GameOverMessage));
+	_gameClearMessage.initialize(&_graphics, 0, 0, 0, _textureList.getTexture(TextureList::TextureName::GameClearMessage));
 	_debugText.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
 	_errorText.initialize(&_graphics, 20, false, false, cabochon_constants::FONT);
-	
+
+	_gameOverLine.setX(0);
+	_gameOverLine.setY(gameOverLineY);
+	_gameOverMessage.setVisible(false);	
+	_gameClearMessage.setVisible(false);
+
 	// wheelControl
 	_wheelControl.loadTextures(_textureList);
 
@@ -180,11 +190,17 @@ void InGameScene::update(float frameTime)
 	case BoardState::Play:
 		updatePlayState(frameTime);			// 너무 길어서 이동.
 		break;
-	case BoardState::GameOver:		// 게임 오버. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
-		_nextScene = SceneName::MainScene;
+	case BoardState::GameOver:
+		_gameOverMessage.setVisible(true);
+		if (_input.wasKeyPressed(VK_SPACE))	{
+			_nextScene = SceneName::MainScene;
+		}
 		break;
-	case BoardState::GameClear:		// 게임 클리어. 지금은 딱히 할 게 없어서 메인씬으로 돌려 보냄.
-		_nextScene = SceneName::MainScene;
+	case BoardState::GameClear:
+		_gameClearMessage.setVisible(true);
+		if (_input.wasKeyPressed(VK_SPACE))	{
+			_nextScene = SceneName::MainScene;
+		}
 		break;
 	default:
 		break;
@@ -217,8 +233,11 @@ void InGameScene::lateUpdate(float frameTime)
 void InGameScene::render()
 {
 	_backGround.draw();
+	_gameOverLine.draw();
 	_wheelControl.render();
 	_marbleControl.render(); 
+	_gameOverMessage.draw();
+	_gameClearMessage.draw();
 #if defined(DEBUG) | defined(_DEBUG)
 	_debugText.print(_debugMessage, 100, 100);
 	_errorText.print(_errorMessage, 100, 300);

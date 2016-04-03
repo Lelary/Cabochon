@@ -291,7 +291,6 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 	if (gridPosition.y >= maxY || gridPosition.y<0)
 		return false;
 	
-	/*
 	// 2016. 4. 3.
 	// 이 코드를 사용하면 다소 판정범위가 넓어진다.
 	// 블록의 인접블록을 검사하는 방법으로 attach.
@@ -304,7 +303,6 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 		_justAttached = gridPosition;
 		return true;
 	}
-	*/
 	
 	// 이전인덱스와 현재 인덱스 확인하여 attach
 	if (shootedMarble->indexChanged()) {
