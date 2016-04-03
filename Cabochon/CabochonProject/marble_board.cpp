@@ -44,10 +44,10 @@ MarbleColor MarbleBoard::existMarble(IntPosition index) const
 	int x = index.x;
 	int y = index.y;
 
-	if (x < 0 || x >= _marbles.size())
+	if (x < 0 || x >= (int)_marbles.size())
 		return MarbleColor::None;
 
-	if (y < 0 || y >= _marbles[x].size())
+	if (y < 0 || y >= (int)_marbles[x].size())
 		return MarbleColor::None;
 
 	if (_marbles[x][y] != nullptr)
@@ -157,7 +157,7 @@ int MarbleBoard::getFloor() const
 }
 scalar MarbleBoard::getCeilingPosition() const
 {
-	return -1 * (getHeight()-1)*MARBLE_HEIGHT + LINE;
+	return -1 * (getHeight())*MARBLE_HEIGHT + LINE;
 }
 bool MarbleBoard::gameOver() 
 {
@@ -358,7 +358,7 @@ RowType MarbleBoard::getRowType(scalar y) const
 {
 	int indexY = positionToRowIndex(y);
 
-	if (indexY >= _marbles.size())
+	if (indexY >= (int)_marbles.size())
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard::getRowType() !"));
 
 	return getRowType(indexY);
@@ -392,7 +392,7 @@ Position MarbleBoard::indexToPosition(IntPosition index) const
 
 RowType MarbleBoard::getRowType(int row) const
 {
-	if (row >= _marbles.size())
+	if (row >= (int)_marbles.size())
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in MarbleBoard::getRowType() !"));
  	if (_marbles.at(row).size() == MAX_Y)
 		return RowType::Even;
@@ -419,6 +419,10 @@ void MarbleBoard::loadTextures(TextureList& textureList)
 	for (MarbleRow& marbleRow : _marbles)
 		for (marble_ptr& marble : marbleRow)
 			marble->loadLayers(textureList);
+
+	_ceiling.initialize(textureList.getGraphics(), 0, 0, 0, textureList.getTexture(TextureList::TextureName::Ceiling));
+	_ceiling.setX(GAME_WIDTH / 2.0f - _ceiling.getWidth() / 2.0f);
+	_ceiling.setY(-_ceiling.getHeight());
 }
 
 scalar MarbleBoard::getMarbleDisappearFrame() const
@@ -473,6 +477,7 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 
 	if (_lineDragFrame > LINE_DRAG_FRAME)
 		_lineDragFrame = LINE_DRAG_FRAME;
+	scalar progress = _lineDragFrame / LINE_DRAG_FRAME;
 
 	for (MarbleRow& row : _marbles)
 		for (marble_ptr& marble : row)
@@ -481,11 +486,12 @@ void MarbleBoard::lineDragAnimation(scalar elapsedFrame)
 			// 실제 위치가 이미 업데이트 되었는지 / 애니메이션 후에 업데이트 되는지에 따라 아래 구현이 바뀜.
 			// 2016. 3. 8. 현재는 전자. 
 			// 후자의 형식을 취하기 위해서는 애니메이션이 방금끝났는지를 감시하여 board를 업데이트(라인 삭제와 업데이트포지션) 하는 구현이 필요함. removeMarble() 또한 동일.
-			scalar progress = _lineDragFrame / LINE_DRAG_FRAME;
 			Position realPosition = indexToPosition(marble->getIndex());			
 			marble->setPosition(realPosition.x, realPosition.y - MARBLE_HEIGHT*(1-progress));
 		}
 	
+	_ceiling.setY(_ceiling.getY() - MARBLE_HEIGHT*(1 - progress));
+
 	if (_lineDragFrame >= LINE_DRAG_FRAME){
 		updateMarblePositions();
 		finishLineDrag();
@@ -505,10 +511,11 @@ void MarbleBoard::render()
 	int minX = (MIN_X < _marbles.size()) ? MIN_X : _marbles.size();
 
 	if (_boardState!=BoardState::Build)
-		for (unsigned int i = 0; i < minX; i++)
+		for (int i = 0; i < minX; i++)
 			for (unsigned int j = 0; j < _marbles[i].size(); j++)
 				if (_marbles[i][j]!=nullptr)
 					_marbles[i][j]->draw();
+	_ceiling.draw();
 }
 void MarbleBoard::handleAnimation(float frameTime)
 {
@@ -538,6 +545,8 @@ void MarbleBoard::update(float frameTime)
 	for (const MarbleRow& row : _marbles)
 		for (const marble_ptr& marble : row)
 			marble->update(frameTime);
+
+	_ceiling.setY(getCeilingPosition()-_ceiling.getHeight());
 
 	//Line, Drop 애니메이션 프레임 처리
 	handleAnimation(frameTime);

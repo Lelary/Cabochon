@@ -40,6 +40,7 @@ namespace controls
 		//int _level;
 		BoardState _boardState;
 		MarbleRows _marbles;
+		Image _ceiling;
 		std::array<int, (int)MarbleColor::Num> _colorCount;
 
 		//-------------------------------------

@@ -74,7 +74,7 @@ void Marble::loadLayers(TextureList& textureList)
 		// 애니메이션 사용시.
 		 _layers.back().setFrames(row*cols, row*cols + cols - 1);
 		_layers.back().setCurrentFrame(row*cols);
-		_layers.back().setFrameDelay(0.1);
+		_layers.back().setFrameDelay(0.1f);
 		
 		// 애니메이션 미사용시
 		//_layers.back().setLoop(false);
@@ -204,6 +204,6 @@ void Marble::setVelocity(scalar speed, Angle angle)
 
 	Steering Wheel Control 에서 올 정보. 이므로 윗쪽을 향하는 것이 0도
 	*/
-	_velocity = { speed*sinf(angle.getDegree()*PI / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
+	_velocity = { speed*sinf(angle.getDegree()*static_cast<float>(PI) / 180.0f), -1 * speed*cosf(angle.getDegree()*PI / 180.0f) };
 
 }
