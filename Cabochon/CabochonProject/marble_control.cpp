@@ -290,7 +290,10 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 	int maxY = (_marbleBoard.getRowType(gridPosition.x) == RowType::Even) ? MAX_Y : MAX_Y - 1;
 	if (gridPosition.y >= maxY || gridPosition.y<0)
 		return false;
-
+	
+	
+	// 2016. 4. 3.
+	// 이 코드를 사용하면 다소 판정범위가 넓어진다.
 	// 블록의 인접블록을 검사하는 방법으로 attach.
 	if (isAttachable(shootedMarble, gridPosition))
 	{
@@ -301,6 +304,7 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 		_justAttached = gridPosition;
 		return true;
 	}
+	
 
 	// 이전인덱스와 현재 인덱스 확인하여 attach
 	if (shootedMarble->indexChanged()) {
@@ -317,7 +321,7 @@ bool MarbleControl::attach(shooted_ptr& shootedMarble)
 			}
 		}
 		// 이전 위치가 invalid인데 현재 위치에 color 가 있음.
-		// 사실 이 상황이 오기전에 이미 gameOver 처리가 되었어야함. (현재는 처리하는 로직이 미완성)
+		// 사실 이 상황이 오기전에 이미 gameOver 처리가 되었어야함.
 		// 나중에 예외처리로 교체.
 		else if (shootedMarble->isInInvalidIndex() == false && shootedMarble->wasInInvalidIndex())
 		{
