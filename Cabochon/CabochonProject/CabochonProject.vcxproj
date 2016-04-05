@@ -93,24 +93,19 @@
     <ClInclude Include="dx9_game_engine\text.h" />
     <ClInclude Include="dx9_game_engine\texture_manager.h" />
     <ClInclude Include="dx9_game_engine\text_dx.h" />
-    <ClInclude Include="dynamic_singleton.h" />
     <ClInclude Include="in_game_scene.h" />
     <ClInclude Include="layer.h" />
-    <ClInclude Include="local_static_singleton.h" />
     <ClInclude Include="main_scene.h" />
     <ClInclude Include="marble.h" />
     <ClInclude Include="marble_control.h" />
     <ClInclude Include="marble_generator.h" />
     <ClInclude Include="mathematics.h" />
     <ClInclude Include="object.h" />
-    <ClInclude Include="basic_singleton.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scenes.h" />
     <ClInclude Include="shooted_marble.h" />
     <ClInclude Include="steering_wheel.h" />
     <ClInclude Include="steering_wheel_control.h" />
-    <ClInclude Include="template_dynamic_singleton.h" />
-    <ClInclude Include="patterns.h" />
     <ClInclude Include="texture_list.h" />
     <ClInclude Include="vector2.h" />
   </ItemGroup>

@@ -29,7 +29,7 @@ void BoardLinkChecker::linkUpper(IntPosition me)
 	upper.assign(NO_POSITION);
 
 	if (me.x < 0 || me.y > _board.getHeight())
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker::linkUpper()"));
 
 	if (me.x >= _board.getHeight()-1)
 		return;
@@ -63,7 +63,7 @@ void BoardLinkChecker::linkSide(IntPosition me)
 	side.assign(NO_POSITION);
 
 	if (me.x < 0 || me.y > _board.getHeight())
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker::linkSide()"));
 
 	if (me.x == _board.getHeight())
 		return;
@@ -88,7 +88,7 @@ void BoardLinkChecker::linkLower(IntPosition me)
 	lower.assign(NO_POSITION);
 
 	if (me.x < 0 || me.y > _board.getHeight())
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in BoardLinkChecker::linkLower()"));
 
 	if (me.x == 0)
 		return;

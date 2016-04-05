@@ -19,9 +19,6 @@
     <Filter Include="헤더 파일\components">
       <UniqueIdentifier>{dde15dcc-1c21-480c-874f-0e8f6610fa33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\pattern">
-      <UniqueIdentifier>{8ce400a4-3ba7-409a-9f98-4749566f885c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\controls">
       <UniqueIdentifier>{c0c29410-8450-49bc-aa9a-98854aa2e2fa}</UniqueIdentifier>
     </Filter>
@@ -57,26 +54,11 @@
     <ClInclude Include="controls.h">
       <Filter>헤더 파일\namespaces</Filter>
     </ClInclude>
-    <ClInclude Include="patterns.h">
-      <Filter>헤더 파일\namespaces</Filter>
-    </ClInclude>
     <ClInclude Include="marble.h">
       <Filter>헤더 파일\components</Filter>
     </ClInclude>
     <ClInclude Include="object.h">
       <Filter>헤더 파일\components</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_singleton.h">
-      <Filter>헤더 파일\pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="dynamic_singleton.h">
-      <Filter>헤더 파일\pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="local_static_singleton.h">
-      <Filter>헤더 파일\pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="template_dynamic_singleton.h">
-      <Filter>헤더 파일\pattern</Filter>
     </ClInclude>
     <ClInclude Include="mathematics.h">
       <Filter>헤더 파일\namespaces</Filter>
