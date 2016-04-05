@@ -9,7 +9,6 @@ namespace components
 	class Marble;
 	class ShootedMarble;
 	class SteeringWheel;
-	class CeilingBlock;
 //===============================================
 //typedef 备巩===================================
 	//unique ptr肺 Marble阑 积己, 包府茄促
