@@ -44,7 +44,7 @@ private:
 	// 게임 루프가 동작하는 동안 특정 키를 누르고 있는 경우 true가 된다. 
 	bool keysPressed[inputNS::KEYS_ARRAY_LEN];
 
-	std::string textIn;			// 사용자가 입력한 텍스트.
+	std::wstring textIn;			// 사용자가 입력한 텍스트.
 	char charIn;				// 마지막에 입력한 문자.
 	bool newLine;				// 새로운 줄을 시작할 때 true가 된다.
 	int mouseX, mouseY;			// 화면 상에서의 마우스 위치.
@@ -85,7 +85,7 @@ public:
 	void clearAll();
 
 	void clearTextIn();
-	std::string getTextIn(){ return textIn; }
+	std::wstring getTextIn(){ return textIn; }
 	char getCharIn(){ return charIn; }
 
 	/*

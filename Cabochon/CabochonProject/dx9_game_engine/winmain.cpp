@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <stdlib.h> // 메모리 누수를 탐지하기 위해.
 #include <crtdbg.h> // 메모리 누수를 탐지하기 위해.
+#include <atlbase.h>// 2016. 4. 8. 
 #include "../cabochon.h"
 
 int WINAPI WinMain(HINSTANCE , HINSTANCE,  LPSTR, int);
@@ -64,19 +65,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		//game->deleteAll();
 		//DestroyWindow(hwnd);
-		MessageBox(NULL, err.getMessage(), "Error", MB_OK);
+		MessageBox(NULL, CA2CT(err.getMessage()), TEXT("Error"), MB_OK);
 	}
 	catch (const std::exception& err)
 	{
 		//game->deleteAll();
 		//DestroyWindow(hwnd);
-		MessageBox(NULL, err.what(), "Error", MB_OK);
+		MessageBox(NULL, CA2CT(err.what()), TEXT("Error"), MB_OK);
 	}
 	catch (...)
 	{
 		//game->deleteAll();
 		//DestroyWindow(hwnd);
-		MessageBox(NULL, "Unknown error occured in game.", "Error", MB_OK);
+		MessageBox(NULL, TEXT("Unknown error occured in game."), TEXT("Error"), MB_OK);
 	}
 
 	SAFE_DELETE(game);

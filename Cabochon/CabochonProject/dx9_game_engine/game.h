@@ -17,7 +17,7 @@
 
 namespace gameNS
 {
-	const char FONT[] = "Courier New";
+	const wchar_t FONT[] = TEXT("Courier New");
 	const int POINT_SIZE = 14;
 	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);
 }
@@ -45,7 +45,7 @@ protected :
 	bool paused;
 	bool initialized;
 
-	std::string command;
+	std::wstring command;
 
 public :
 	Game();

@@ -30,7 +30,7 @@ namespace scenes
 
 	private:
 		Graphics* _graphics;
-		std::string _textureFiles[TextureName::Num];
+		std::wstring _textureFiles[TextureName::Num];
 		std::array<TextureManager, Num> _textures;
 
 	public:

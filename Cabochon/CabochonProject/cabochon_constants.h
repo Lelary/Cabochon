@@ -19,7 +19,7 @@ namespace cabochon_constants
 
 	const IntPosition NO_POSITION = { -1, -1 };
 
-	const char FONT[] = "Courier New";
+	const wchar_t FONT[] = TEXT("Courier New");
 	const int POINT_SIZE = 14;
 	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 255, 255);
 
@@ -27,8 +27,8 @@ namespace cabochon_constants
 	const scalar MEAN_DROP_ANGLE = 0.0f;
 	const scalar GRAVITY_ACCELERATION = 980.0f;
 
-	const std::string VERSION = "revision 182";
-	const std::string MY_PAGE = "http://lemonelime.net";
+	const std::wstring VERSION = TEXT("revision 182");
+	const std::wstring MY_PAGE = TEXT("http://lemonelime.net");
 }
 
 #endif

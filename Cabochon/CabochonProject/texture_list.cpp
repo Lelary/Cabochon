@@ -5,22 +5,22 @@ using scenes::TextureList;
 TextureList::TextureList()
 	:_graphics(nullptr)
 {
-	_textureFiles[Title] = "images\\title.png";
-	_textureFiles[MainMessage] = "images\\main_message.png";
-	_textureFiles[GameOverMessage] = "images\\game_over_message.png";
-	_textureFiles[GameClearMessage] = "images\\game_clear_message.png";
-	_textureFiles[BulletinBoard] = "images\\bulletin_board.png";
+	_textureFiles[Title] = TEXT("images\\title.png");
+	_textureFiles[MainMessage] = TEXT("images\\main_message.png");
+	_textureFiles[GameOverMessage] = TEXT("images\\game_over_message.png");
+	_textureFiles[GameClearMessage] = TEXT("images\\game_clear_message.png");
+	_textureFiles[BulletinBoard] = TEXT("images\\bulletin_board.png");
 
 #if defined(DEBUG) | defined(_DEBUG)
-	_textureFiles[Marbles] = "images\\marbles_textures_lines.png";
+	_textureFiles[Marbles] = TEXT("images\\marbles_textures_lines.png");
 #else
-	_textureFiles[Marbles] = "images\\marbles_textures.png";
+	_textureFiles[Marbles] = TEXT("images\\marbles_textures.png");
 #endif
-	_textureFiles[SteeringWheel] = "images\\steering_wheel.png";
-	_textureFiles[GameOverLine] = "images\\game_over_line.png";
-	_textureFiles[Ceiling] = "images\\ceiling.png";
-	_textureFiles[BackGroundCity] = "images\\back_ground_city.png";
-	_textureFiles[BackGroundMountain] = "images\\back_ground_mountain.png";
+	_textureFiles[SteeringWheel] = TEXT("images\\steering_wheel.png");
+	_textureFiles[GameOverLine] = TEXT("images\\game_over_line.png");
+	_textureFiles[Ceiling] = TEXT("images\\ceiling.png");
+	_textureFiles[BackGroundCity] = TEXT("images\\back_ground_city.png");
+	_textureFiles[BackGroundMountain] = TEXT("images\\back_ground_mountain.png");
 	
 }
 TextureList::~TextureList()

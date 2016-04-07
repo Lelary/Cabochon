@@ -15,7 +15,7 @@ private:
 	UINT width;
 	UINT height;
 	LP_TEXTURE texture;
-	const char* file;
+	LPCTSTR file;
 	Graphics* graphics;
 	bool initialized;
 	HRESULT hr;
@@ -32,7 +32,7 @@ public:
 	UINT getHeight() const { return height; }
 
 	// 디스크로부터 텍스처 파일을 불러온다.
-	bool initialize(Graphics* g, const char* f);
+	bool initialize(Graphics* g, LPCTSTR f);
 	// 그래픽 디바이스가 로스트 상태일 때 호출된다.
 	void onLostDevice();
 	// 그래픽 디바이스가 리셋 됐을 때 호출된다.

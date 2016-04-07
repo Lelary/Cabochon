@@ -94,7 +94,7 @@ void Game::initialize(HWND hw)
 	// 콘솔을 초기화 한다.
 	console = new Console();
 	console->initialize(graphics, input);
-	console->print("---Console---");
+	console->print(TEXT("---Console---"));
 
 	// DirectX 글꼴 초기화
 	if (dxFont.initialize(graphics, gameNS::POINT_SIZE, false, false, gameNS::FONT) == false)
@@ -142,7 +142,7 @@ void Game::handleLostGraphicsDevice()
 void Game::renderGame()
 {
 	const int BUF_SIZE = 20;
-	static char buffer[BUF_SIZE];
+	static wchar_t buffer[BUF_SIZE];
 
 	if (SUCCEEDED(graphics->beginScene()))	// 렌더링 시작.
 	{
@@ -153,7 +153,7 @@ void Game::renderGame()
 		if (fpsOn)
 		{
 			// fps를 C string 으로 변환한다.
-			_snprintf_s(buffer, BUF_SIZE, "fps %d ", (int)fps);
+			_snwprintf_s(buffer, BUF_SIZE, TEXT("fps %d"), (int)fps);
 			dxFont.print(buffer, GAME_WIDTH - 100, GAME_HEIGHT - 28);
 		}
 		
@@ -226,22 +226,22 @@ void Game::consoleCommand()
 {
 	// 콘솔로부터 명령을 얻는다.
 	command = console->getCommand();
-	if (command == "")
+	if (command == TEXT(""))
 		return;
-	if (command == "help")
+	if (command == TEXT("help"))
 	{
-		console->print("Console Commands:");
-		console->print("fps - toggle display of frames per second");
+		console->print(TEXT("Console Commands:"));
+		console->print(TEXT("fps - toggle display of frames per second"));
 		return;
 	}
 
-	if (command == "fps")
+	if (command == TEXT("fps"))
 	{
 		fpsOn = !fpsOn;
 		if (fpsOn)
-			console->print("fps On");
+			console->print(TEXT("fps On"));
 		else
-			console->print("fps Off");
+			console->print(TEXT("fps Off"));
 	}
 }
 

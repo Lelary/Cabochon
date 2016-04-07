@@ -181,7 +181,7 @@ public:
 				texture는 텍스처를 가리키는 포인터이다.
 		HRESULT를 반환한다.
 	*/
-	HRESULT loadTexture(const char* filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture);
+	HRESULT loadTexture(LPCTSTR filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture);
 	void drawSprite(const SpriteData& spriteData, COLOR_ARGB color = graphicsNS::WHITE);
 
 	/*
@@ -194,7 +194,7 @@ public:
 				texture는 텍스처를 가리키는 포인터다.
 		HRESULT 를 반환 하고 TextureData 구조체를 채운다.
 	*/
-	HRESULT loadTextureSystemMem(const char* filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture);
+	HRESULT loadTextureSystemMem(LPCTSTR filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture);
 	
 };
 

@@ -51,7 +51,7 @@ void MainScene::render()
 {
 	_title.draw();
 	_mainMessage.draw();
-	std::string message = "version: " + cabochon_constants::VERSION + " " + cabochon_constants::MY_PAGE;
+	std::wstring message = std::wstring(TEXT("version: ")) + cabochon_constants::VERSION + std::wstring(TEXT(" ")) + cabochon_constants::MY_PAGE;
 
 	_text.print(message, 10, 10);
 }

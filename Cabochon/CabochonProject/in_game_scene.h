@@ -27,8 +27,8 @@ namespace scenes
 
 		TextDX _debugText;
 		TextDX _errorText;
-		std::string _debugMessage;
-		std::string _errorMessage;
+		std::wstring _debugMessage;
+		std::wstring _errorMessage;
 
 		SteeringWheelControl _wheelControl;
 		MarbleControl _marbleControl;

@@ -123,9 +123,6 @@
     <ClInclude Include="dx9_game_engine\console.h">
       <Filter>헤더 파일\dx9_game_engine</Filter>
     </ClInclude>
-    <ClInclude Include="dx9_game_engine\text.h">
-      <Filter>헤더 파일\dx9_game_engine</Filter>
-    </ClInclude>
     <ClInclude Include="dx9_game_engine\text_dx.h">
       <Filter>헤더 파일\dx9_game_engine</Filter>
     </ClInclude>
@@ -210,9 +207,6 @@
       <Filter>소스 파일\scenes</Filter>
     </ClCompile>
     <ClCompile Include="dx9_game_engine\text_dx.cpp">
-      <Filter>소스 파일\dx9_game_engine</Filter>
-    </ClCompile>
-    <ClCompile Include="dx9_game_engine\text.cpp">
       <Filter>소스 파일\dx9_game_engine</Filter>
     </ClCompile>
     <ClCompile Include="dx9_game_engine\console.cpp">

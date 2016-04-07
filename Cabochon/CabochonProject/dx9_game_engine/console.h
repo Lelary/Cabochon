@@ -17,7 +17,7 @@ namespace consoleNS
 	const UINT X = 5;
 	const UINT Y = 5;
 	const UINT MARGIN = 4;
-	const char FONT[] = "Courier New";
+	const wchar_t FONT[] = TEXT("Courier New");
 	const int FONT_HEIGHT = 14;
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 128, 128, 128);
@@ -32,9 +32,9 @@ private:
 	TextDX dxFont;
 	float x, y;
 	int rows;
-	std::string commandStr;
-	std::string inputStr;
-	std::deque<std::string> text;	// 콘솔 텍스트.
+	std::wstring commandStr;
+	std::wstring inputStr;
+	std::deque<std::wstring> text;	// 콘솔 텍스트.
 	RECT textRect;
 	COLOR_ARGB fontColor;
 	COLOR_ARGB backColor;
@@ -62,15 +62,15 @@ public:
 		콘솔에 텍스트를 추가한다.
 		str에 있는 텍스트의 첫 번째 줄만 표시될 것이다.
 	*/
-	void print(const std::string& str);
+	void print(const std::wstring& str);
 	/*
 		콘솔 명령을 반환한다.
 		콘솔의 단일 키 명령을 처리한다.
 		다른 모든 명령은 Game으로 반환한다.
 	*/
-	std::string getCommand();
-	std::string getInput(){ return inputStr; }
-	void clearInput(){ inputStr = ""; }
+	std::wstring getCommand();
+	std::wstring getInput(){ return inputStr; }
+	void clearInput(){ inputStr = TEXT(""); }
 
 	void onLostDevice();
 	void onResetDevice();

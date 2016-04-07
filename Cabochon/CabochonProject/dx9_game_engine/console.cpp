@@ -93,7 +93,7 @@ const void Console::draw()
 	textRect.left = 0;
 	textRect.top = 0;
 	// textRect의 하단을 한 행의 높이로 설정한다.
-	dxFont.print("|", textRect, DT_CALCRECT);	// "I" 는 전체 높이 캐릭터로 사용된다.
+	dxFont.print(TEXT("|"), textRect, DT_CALCRECT);	// "I" 는 전체 높이 캐릭터로 사용된다.
 	int rowHeight = textRect.bottom + 2;		// 한 행의 높이 (+2 는 행 간격이다.)
 	if (rowHeight <= 0)							// true가 되면 안되므로 가능한 결과로 강제한다.
 		rowHeight = 20;
@@ -123,7 +123,7 @@ const void Console::draw()
 	// 프롬프트 텍스트를 표시하는 사각형을 설정한다.
 	textRect.bottom = (long)(y + consoleNS::HEIGHT - consoleNS::MARGIN);
 	textRect.top = textRect.bottom - rowHeight;
-	std::string prompt = ">";					// 프롬프트 문자열 구축.
+	std::wstring prompt = TEXT(">");					// 프롬프트 문자열 구축.
 	prompt += input->getTextIn();
 	dxFont.print(prompt, textRect, DT_LEFT);	// 프롬프트와 명령 표시.
 
@@ -140,7 +140,7 @@ void Console::showHide()
 	input->clear(inputNS::KEYS_PRESSED | inputNS::TEXT_IN);	// 이전의 입력을 지운다.
 }
 
-void Console::print(const std::string& str)
+void Console::print(const std::wstring& str)
 {
 	if (!initialized)
 		return;
@@ -149,16 +149,16 @@ void Console::print(const std::string& str)
 		text.pop_back();						// 가장 오래된 줄을 삭제한다.
 }
 
-std::string Console::getCommand()
+std::wstring Console::getCommand()
 {
 	if (!initialized | !visible)
-		return "";
+		return TEXT("");
 
 	if (input->wasKeyPressed(CONSOLE_KEY))
 		hide();
 
 	if (input->wasKeyPressed(ESC_KEY))
-		return "";
+		return TEXT("");
 
 	if (input->wasKeyPressed(VK_UP))
 		scrollAmount++;
@@ -181,9 +181,9 @@ std::string Console::getCommand()
 	input->clear(inputNS::KEYS_DOWN | inputNS::KEYS_PRESSED | inputNS::MOUSE);
 	
 	if (commandStr.length() == 0)						// 명령이 입력되지 않았다면
-		return "";
+		return TEXT("");
 	if (commandStr.at(commandStr.length() - 1) != '\r')	// Enter키를 누르지 않았다면
-		return "";
+		return TEXT("");
 	commandStr.erase(commandStr.length() - 1);
 	input->clearTextIn();								// 입력 줄을 지운다.
 	return commandStr;									// 명령을 반환한다.

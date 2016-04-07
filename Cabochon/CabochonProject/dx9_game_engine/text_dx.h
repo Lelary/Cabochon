@@ -23,7 +23,7 @@ public:
 	virtual ~TextDX();
 
 	// DirectX 글꼴 생성.
-	virtual bool initialize(Graphics* g, int height, bool bold, bool italic, const std::string& fontName);
+	virtual bool initialize(Graphics* g, int height, bool bold, bool italic, const std::wstring& fontName);
 	
 	/*
 		x, y 위치에 텍스트를 출력한다.
@@ -31,14 +31,14 @@ public:
 		Pre : spriteBegin()
 		Post : spriteEnd()
 	*/
-	virtual int print(const std::string& str, int x, int y);
+	virtual int print(const std::wstring& str, int x, int y);
 	/*
 		DirectX 텍스트 서식을 사용해 RECT 안에 텍스트를 출력한다.
 		실패할 경우 0을, 성공할 경우 텍스트의 높이를 반환한다.
 		Pre : spriteBegin()
 		Post : spriteEnd()
 	*/
-	virtual int print(const std::string& str, RECT& rect, UINT format);
+	virtual int print(const std::wstring& str, RECT& rect, UINT format);
 
 	virtual float getDegrees(){ return angle*(180.0f / (float)PI); }
 	virtual float getRadians() { return angle; }

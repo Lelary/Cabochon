@@ -1,5 +1,6 @@
 // 2016. 2. 2.
 
+#include <atlbase.h> // 2016. 4. 8
 #include "cabochon.h"
 #include "cheat.h"
 using scenes::SceneName;
@@ -87,7 +88,7 @@ void Cabochon::render()
 	if (_currentScene != nullptr)
 		_currentScene->render();
 
-	_text.print(_errorMessage, 0, 0);
+	_text.print(std::wstring(CA2CT(_errorMessage.c_str())), 0, 0);
 	graphics->spriteEnd();
 }
 void Cabochon::consoleCommand()
@@ -95,22 +96,22 @@ void Cabochon::consoleCommand()
 	// 콘솔로부터 명령을 얻는다.
 	command = console->getCommand();
 
-	if (command == "")
+	if (command == TEXT(""))
 		return;
-	if (command == "help")
+	if (command == TEXT("help"))
 	{
-		console->print("Console Commands:");
-		console->print("fps - toggle display of frames per second");
+		console->print(TEXT("Console Commands:"));
+		console->print(TEXT("fps - toggle display of frames per second"));
 		return;
 	}
 
-	if (command == "fps")
+	if (command == TEXT("fps"))
 	{
 		fpsOn = !fpsOn;
 		if (fpsOn)
-			console->print("fps On");
+			console->print(TEXT("fps On"));
 		else
-			console->print("fps Off");
+			console->print(TEXT("fps Off"));
 	}
 
 	// Pre : Game::colsoleCommand()의 복사. ( return 형이 void로 , command를 넘겨주지 않기때문에 복사. (getCommand()는 한번호출될때 내용물을 비워버림.) )
@@ -124,21 +125,21 @@ void Cabochon::consoleCommand()
 	if (static_cast<InGameScene*>(_currentScene)->getBoardState() != controls::BoardState::Play)	// currentMarble을 참조해도 될지 검사.
 		return;
 
-	if (std::string(command, 0, 12) == "cheat color ")
+	if (std::wstring(command, 0, 12) == TEXT("cheat color "))
 	{
-		std::string color(command, 12);
+		std::wstring color(command, 12);
 
-		if (color == "yellow")	
+		if (color == TEXT("yellow"))	
 			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Yellow);
-		else if (color == "green")
+		else if (color == TEXT("green"))
 			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Green);
-		else if (color == "mint")
+		else if (color == TEXT("mint"))
 			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Mint);
-		else if (color == "blue")
+		else if (color == TEXT("blue"))
 			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Blue);
-		else if (color == "violet")
+		else if (color == TEXT("violet"))
 			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Violet);
-		else if (color == "pink")
+		else if (color == TEXT("pink"))
 			controls::Cheat::cheatColor(static_cast<InGameScene*>(_currentScene)->getSteeringWheelControl(), components::MarbleColor::Pink);			
 	}
 #endif

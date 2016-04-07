@@ -177,10 +177,10 @@ void InGameScene::updatePlayState(float frameTime)
 		return;
 
 	_debugMessage =
-		"\n Index Row: "
-		+ std::to_string(_marbleControl.getMarbleBoard().positionToRowIndex(y))
-		+ "\n Index Column: "
-		+ std::to_string(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
+		TEXT("\n Index Row: ")
+		+ std::to_wstring(_marbleControl.getMarbleBoard().positionToRowIndex(y))
+		+ TEXT("\n Index Column: ")
+		+ std::to_wstring(_marbleControl.getMarbleBoard().positionToColumnIndex(x, _marbleControl.getMarbleBoard().getRowType(y)));
 
 	}
 

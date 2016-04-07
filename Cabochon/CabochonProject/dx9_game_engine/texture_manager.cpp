@@ -19,7 +19,7 @@ TextureManager::~TextureManager()
 	SAFE_RELEASE(texture);
 }
 
-bool TextureManager::initialize(Graphics* g, const char* f)
+bool TextureManager::initialize(Graphics* g, LPCTSTR f)
 {
 	try {
 		graphics = g;

@@ -14,7 +14,7 @@ Input::Input()
 		keysPressed[i] = false;
 
 	newLine = true;
-	textIn = "";
+	textIn = TEXT("");
 	charIn = 0;
 
 	mouseX = 0;

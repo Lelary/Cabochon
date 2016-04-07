@@ -34,7 +34,7 @@ namespace controls
 		// Negative 일 경우 랜덤맵을 생성. (level 값은 abs()를 통해 얻음)
 		//-------------------------------------------------------------------
 		*/
-		//const char* levelFile = "data\\level_data.txt";
+		//LPCTSTR levelFile = "data\\level_data.txt";
 		//const int maxLevel = 3;
 
 		//int _level;

@@ -178,7 +178,7 @@ HRESULT Graphics::endScene()
 	return result;
 }
 
-HRESULT Graphics::loadTexture(const char* filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture)
+HRESULT Graphics::loadTexture(LPCTSTR filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture)
 {
 	// 파일 정보를 읽기 위한 구조체.
 	D3DXIMAGE_INFO info;
@@ -225,7 +225,7 @@ HRESULT Graphics::loadTexture(const char* filename, COLOR_ARGB transcolor, UINT&
 	return result;
 }
 
-HRESULT Graphics::loadTextureSystemMem(const char* filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture)
+HRESULT Graphics::loadTextureSystemMem(LPCTSTR filename, COLOR_ARGB transcolor, UINT& width, UINT& height, LP_TEXTURE& texture)
 {
 	// 비트맵 파일 정보를 읽기 위한 구조체
 	D3DXIMAGE_INFO info;

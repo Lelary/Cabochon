@@ -86,8 +86,8 @@ inline void safeOnResetDevice(T& ptr)
 //                  Constants
 //-----------------------------------------------
 // window
-const char CLASS_NAME[] = "Cabochon";
-const char GAME_TITLE[] = "Cabochon";
+const wchar_t CLASS_NAME[] = TEXT("Cabochon");
+const wchar_t GAME_TITLE[] = TEXT("Cabochon");
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH = 400;               // width of game in pixels
 const UINT GAME_HEIGHT = 600;               // height of game in pixels
@@ -113,7 +113,7 @@ const UCHAR ENTER_KEY = VK_RETURN;   // Enter key
 	2016. 1. 30.
 	unique한 뮤텍스 문자열 상수 추가.
 */
-const char MUTEX_STRING[] = "temporary_characters_should_be_unique_for_each_program";
+const wchar_t MUTEX_STRING[] = TEXT("temporary_characters_should_be_unique_for_each_program");
 
 
 #endif
