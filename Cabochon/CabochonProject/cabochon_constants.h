@@ -27,7 +27,7 @@ namespace cabochon_constants
 	const scalar MEAN_DROP_ANGLE = 0.0f;
 	const scalar GRAVITY_ACCELERATION = 980.0f;
 
-	const std::wstring VERSION = TEXT("revision 182");
+	const std::wstring VERSION = TEXT("revision 186");
 	const std::wstring MY_PAGE = TEXT("http://lemonelime.net");
 }
 
